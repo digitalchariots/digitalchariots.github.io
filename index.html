@@ -10,36 +10,29 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     :root {
-      --bg-dark: #0a0a0a;
+      --bg: #0a0a0a;
       --bg-secondary: #111111;
       --fg: #f0f0f0;
-      --muted: #888888;
-      --accent-gold: #d4a537;
+      --muted: #6b6b6b;
+      --accent: #d4a537;
       --accent-bright: #f4c942;
       --accent-dark: #8b7020;
-      --gradient-gold: linear-gradient(135deg, var(--accent-bright), var(--accent-gold));
+      --card: #161616;
+      --border: #2a2a2a;
+      --gradient-gold: linear-gradient(135deg, var(--accent-bright) 0%, var(--accent) 50%, var(--accent-dark) 100%);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Space Grotesk', sans-serif;
-      background-color: var(--bg-dark);
+      background: var(--bg);
       color: var(--fg);
       overflow-x: hidden;
     }
 
-    /* Background Gradient Overlay */
-    body::before {
-      content: ''; 
-      position: fixed; 
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle at 50% 0%, rgba(212, 165, 55, 0.08) 0%, transparent 60%);
-      pointer-events: none; 
-      z-index: 0;
-    }
-
-    /* --- NAVBAR (Hidden initially, slides down) --- */
+    /* --- NAVBAR (Hidden initially) --- */
     .navbar {
       background: rgba(10, 10, 10, 0.95);
       backdrop-filter: blur(20px);
@@ -76,7 +69,7 @@
 
     .navbar__list {
       display: flex;
-      gap: 1rem;
+      gap: 1.5rem;
       list-style: none;
       align-items: center;
     }
@@ -84,20 +77,24 @@
     .navbar__link {
       color: var(--fg);
       text-decoration: none;
-      padding: 0.6rem 1.2rem;
-      border-radius: 25px;
       font-size: 0.9rem;
       text-transform: uppercase;
       letter-spacing: 1px;
-      transition: all 0.3s ease;
-      border: 1px solid transparent;
+      transition: color 0.3s;
+      position: relative;
     }
 
-    .navbar__link:hover {
-      background: rgba(212, 165, 55, 0.1);
-      border: 1px solid var(--accent-gold);
-      box-shadow: 0 0 15px rgba(212, 165, 55, 0.2);
+    .navbar__link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width 0.3s;
     }
+
+    .navbar__link:hover { color: var(--accent); }
+    .navbar__link:hover::after { width: 100%; }
 
     /* --- HERO SECTION --- */
     .hero-section {
@@ -107,7 +104,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: var(--bg-dark);
+      background-color: var(--bg);
       overflow: hidden;
     }
 
@@ -163,11 +160,10 @@
       background: var(--gradient-gold);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 40px rgba(212, 165, 55, 0.2);
     }
 
     .subtitle {
-      color: var(--fg);
+      color: var(--accent);
       text-transform: uppercase;
       letter-spacing: 0.4em;
       font-size: 0.9rem;
@@ -180,7 +176,6 @@
       line-height: 1.6;
     }
 
-    /* Scroll Button */
     .scroll-down-btn {
       position: absolute;
       bottom: 40px;
@@ -188,8 +183,8 @@
       transform: translateX(-50%);
       z-index: 10;
       background: transparent;
-      border: 2px solid var(--accent-gold);
-      color: var(--accent-gold);
+      border: 2px solid var(--accent);
+      color: var(--accent);
       width: 50px; height: 50px;
       border-radius: 50%;
       cursor: pointer;
@@ -203,8 +198,8 @@
     }
 
     .scroll-down-btn:hover {
-      background: var(--accent-gold);
-      color: var(--bg-dark);
+      background: var(--accent);
+      color: var(--bg);
       box-shadow: 0 0 20px rgba(212, 165, 55, 0.6);
     }
 
@@ -215,117 +210,121 @@
     }
 
     /* --- CONTENT SECTIONS --- */
-    .content {
-      position: relative;
-      z-index: 1;
-      padding-top: 50px;
-    }
+    .content { position: relative; z-index: 1; }
 
-    .info-section {
-      display: flex;
-      align-items: stretch;
-      justify-content: center;
-      gap: 50px;
+    .section-padding {
+      padding: 6rem 2rem;
       max-width: 1200px;
-      margin: 0 auto 60px auto;
-      padding: 0 20px;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      margin: 0 auto;
     }
 
-    .info-section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .info-section:nth-child(odd) {
-      flex-direction: row-reverse;
-    }
-
-    .info-card {
-      background: rgba(20, 20, 20, 0.8);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 3rem;
-      border: 1px solid rgba(212, 165, 55, 0.2);
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-
-    .info-image {
-      flex: 1;
-      position: relative;
-      border-radius: 20px;
-      overflow: hidden;
-      min-height: 300px;
-      background: var(--bg-secondary);
-    }
-
-    .info-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.8;
-      transition: opacity 0.3s;
-    }
-
-    .info-image:hover img { opacity: 1; }
-
-    .info-text h2 {
+    .section-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
+      font-size: 4rem;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .text-gold-gradient {
       background: var(--gradient-gold);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    .info-text p {
-      color: #d0d0d0;
-      line-height: 1.8;
-      font-size: 1rem;
+    /* About & Stats */
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    
+    .stat-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
     }
 
-    /* --- FOOTER --- */
-    footer {
-      background: rgba(5, 5, 5, 0.95);
-      border-top: 1px solid rgba(212, 165, 55, 0.3);
-      padding: 3rem 2rem;
-      text-align: center;
-      margin-top: 4rem;
+    .stat-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; text-align: center;
+      position: relative; overflow: hidden;
     }
 
-    footer a {
-      color: var(--muted);
-      font-size: 1.5rem;
-      margin: 0 1rem;
-      transition: color 0.3s, transform 0.3s;
-      display: inline-block;
+    .stat-card::before {
+      content: ''; position: absolute; inset: 0; padding: 1px;
+      background: linear-gradient(135deg, var(--accent-bright), transparent, var(--accent-dark));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      border-radius: 12px;
     }
 
-    footer a:hover {
-      color: var(--accent-gold);
-      transform: translateY(-3px);
+    .stat-number { font-family: 'Bebas Neue', sans-serif; font-size: 4rem; line-height: 1; color: var(--accent); }
+    .stat-label { color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem; margin-top: 0.5rem; }
+
+    /* Projects Grid */
+    .projects-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;
     }
 
-    footer p {
-      margin-top: 1.5rem;
-      color: var(--muted);
-      font-size: 0.9rem;
+    .project-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem;
+      transition: all 0.3s ease; position: relative; overflow: hidden;
     }
+
+    .project-card::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      border-color: var(--accent-dark);
+    }
+    .project-card:hover::after { opacity: 1; }
+
+    .project-tag {
+      display: inline-block; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem;
+      text-transform: uppercase; letter-spacing: 0.5px; margin-right: 0.5rem;
+      background: rgba(212, 165, 55, 0.2); color: var(--accent-bright);
+    }
+
+    .project-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; margin: 1rem 0; color: var(--fg); }
+    .project-desc { color: var(--muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem; }
+    .project-tech { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .tech-pill { font-size: 0.75rem; padding: 0.25rem 0.5rem; background: var(--bg-secondary); border-radius: 4px; color: var(--muted); }
+
+    /* Team Grid */
+    .team-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;
+    }
+
+    .team-card {
+      position: relative; aspect-ratio: 3/4; border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--border); background: var(--bg-secondary);
+      transition: all 0.3s ease;
+    }
+
+    .team-card:hover { border-color: var(--accent-dark); transform: translateY(-5px); }
+
+    .team-overlay {
+      position: absolute; inset: 0; 
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
+      padding: 2rem; display: flex; flex-direction: column; justify-content: flex-end;
+    }
+
+    .team-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--fg); }
+    .team-role { color: var(--accent); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+    .team-bio { color: var(--muted); font-size: 0.9rem; margin-top: 0.5rem; }
+
+    /* Reveal Animations */
+    .reveal {
+      opacity: 0; transform: translateY(30px); transition: all 0.8s ease;
+    }
+    .reveal.active { opacity: 1; transform: translateY(0); }
 
     /* Responsive */
     @media (max-width: 768px) {
-      .navbar__container { flex-direction: column; gap: 1rem; }
-      .navbar__list { gap: 0.5rem; }
-      .navbar__link { padding: 0.5rem 0.8rem; font-size: 0.8rem; }
-      
-      .info-section { flex-direction: column !important; gap: 20px; }
-      .info-card { padding: 2rem; }
+      .navbar__list { display: none; } /* Simple hide for mobile for now */
+      .about-grid { grid-template-columns: 1fr; }
+      .section-title { font-size: 3rem; }
     }
   </style>
 </head>
@@ -351,13 +350,8 @@
     <canvas id="particleCanvas"></canvas>
     
     <div class="overlay-text">
-      <!-- Slides in from Top -->
       <div class="subtitle slide-in-top">Hackathon Collective</div>
-      
-      <!-- Main Title -->
       <h1 class="hero-title">DIGITAL<br>CHARIOTS</h1>
-      
-      <!-- Slides in from Bottom -->
       <div class="description slide-in-bottom">
         We build the future. A collective of engineers, designers, and visionaries racing toward innovation.
       </div>
@@ -371,53 +365,170 @@
   <!-- MAIN CONTENT -->
   <main class="content">
     
-    <div id="about" class="info-section">
-      <div class="info-image">
-        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Team working">
-      </div>
-      <div class="info-card">
-        <div class="info-text">
-          <h2>Who We Are</h2>
-          <p>Digital Chariots emerged from the crucible of competitive programming. What started as a ragtag team at a local hackathon has evolved into a formidable collective of technologists who thrive under pressure. We don't just participate—we dominate.</p>
+    <!-- ABOUT SECTION -->
+    <section id="about" class="section-padding">
+      <div class="about-grid reveal">
+        <div>
+          <h2 class="section-title" style="text-align: left;">FORGED IN<br><span class="text-gold-gradient">COMPETITION</span></h2>
+          <p class="description" style="text-align: left; max-width: 100%; margin-top: 1.5rem;">
+            Digital Chariots emerged from the crucible of competitive programming. What started as a ragtag team at a local hackathon has evolved into a formidable collective of technologists who thrive under pressure.
+          </p>
+        </div>
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-number">15</div>
+            <div class="stat-label">Hackathon Wins</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">42</div>
+            <div class="stat-label">Projects Built</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">08</div>
+            <div class="stat-label">Core Members</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">500+</div>
+            <div class="stat-label">Cups of Coffee</div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div id="projects" class="info-section">
-      <div class="info-image">
-        <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Coding screen">
-      </div>
-      <div class="info-card">
-        <div class="info-text">
-          <h2>Our Projects</h2>
-          <p>From AI-driven healthcare solutions to decentralized finance platforms, our portfolio spans the cutting edge of technology. We build functional prototypes in 48 hours that others take months to conceptualize.</p>
+    <!-- PROJECTS SECTION -->
+    <section id="projects" class="section-padding" style="background: var(--bg-secondary);">
+      <h2 class="section-title reveal">VICTORIOUS<br><span class="text-gold-gradient">CREATIONS</span></h2>
+      
+      <div class="projects-grid reveal">
+        <!-- Project 1 -->
+        <div class="project-card">
+          <span class="project-tag">Winner</span>
+          <span class="project-tag" style="background: transparent; color: var(--muted);">2024</span>
+          <h3 class="project-title">NeuralPulse</h3>
+          <p class="project-desc">Real-time EEG signal processing for early seizure detection. Built in 36 hours at MedHack Boston.</p>
+          <div class="project-tech">
+            <span class="tech-pill">Python</span>
+            <span class="tech-pill">TensorFlow</span>
+            <span class="tech-pill">ML</span>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <div id="team" class="info-section">
-      <div class="info-image">
-        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Team meeting">
-      </div>
-      <div class="info-card">
-        <div class="info-text">
-          <h2>Join The Crew</h2>
-          <p>We are always looking for exceptional builders to join our chariot. If you thrive under pressure and dream in code, we want to meet you. Check out our upcoming events.</p>
+        <!-- Project 2 -->
+        <div class="project-card">
+          <span class="project-tag">Winner</span>
+          <span class="project-tag" style="background: transparent; color: var(--muted);">2024</span>
+          <h3 class="project-title">ChainGuard</h3>
+          <p class="project-desc">Decentralized identity verification system using zero-knowledge proofs. ETHGlobal Paris finalist.</p>
+          <div class="project-tech">
+            <span class="tech-pill">Solidity</span>
+            <span class="tech-pill">ZK-Proofs</span>
+            <span class="tech-pill">Web3</span>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="project-card">
+          <span class="project-tag" style="background: transparent; border: 1px solid var(--accent); color: var(--accent);">Finalist</span>
+          <span class="project-tag" style="background: transparent; color: var(--muted);">2023</span>
+          <h3 class="project-title">EchoStream</h3>
+          <p class="project-desc">Distributed audio streaming protocol optimized for low-latency live performances. 48-hour sprint.</p>
+          <div class="project-tech">
+            <span class="tech-pill">Rust</span>
+            <span class="tech-pill">WebRTC</span>
+            <span class="tech-pill">Audio</span>
+          </div>
+        </div>
+
+        <!-- Project 4 -->
+        <div class="project-card">
+          <span class="project-tag">Winner</span>
+          <span class="project-tag" style="background: transparent; color: var(--muted);">2023</span>
+          <h3 class="project-title">FluxCanvas</h3>
+          <p class="project-desc">Collaborative whiteboard with AI-powered diagramming. HackMIT Grand Prize winner.</p>
+          <div class="project-tech">
+            <span class="tech-pill">TypeScript</span>
+            <span class="tech-pill">Canvas</span>
+            <span class="tech-pill">AI</span>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
+
+    <!-- TEAM SECTION -->
+    <section id="team" class="section-padding">
+      <h2 class="section-title reveal">DRIVERS OF<br><span class="text-gold-gradient">INNOVATION</span></h2>
+      
+      <div class="team-grid reveal">
+        <!-- Team Member 1 -->
+        <div class="team-card">
+          <div class="team-overlay">
+            <div>
+              <h3 class="team-name">Marcus Chen</h3>
+              <p class="team-role">Team Lead</p>
+              <p class="team-bio">Systems Architecture</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Team Member 2 -->
+        <div class="team-card">
+          <div class="team-overlay">
+            <div>
+              <h3 class="team-name">Sarah Voss</h3>
+              <p class="team-role">Tech Lead</p>
+              <p class="team-bio">Full-Stack & AI</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Team Member 3 -->
+        <div class="team-card">
+          <div class="team-overlay">
+            <div>
+              <h3 class="team-name">Dev Park</h3>
+              <p class="team-role">Design Lead</p>
+              <p class="team-bio">UI/UX & Branding</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Team Member 4 -->
+        <div class="team-card">
+          <div class="team-overlay">
+            <div>
+              <h3 class="team-name">Aisha Rahman</h3>
+              <p class="team-role">Hardware Lead</p>
+              <p class="team-bio">IoT & Embedded</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section id="contact" class="section-padding" style="background: linear-gradient(to right, var(--accent-dark), var(--accent), var(--accent-dark)); opacity: 0.1;">
+      <div style="position: relative; z-index: 2; text-align: center;">
+        <h2 class="section-title reveal" style="color: var(--fg);">READY TO JOIN THE RIDE?</h2>
+        <p class="description reveal" style="color: var(--fg); margin-bottom: 2rem; opacity: 0.8;">
+          We're always looking for exceptional builders. If you thrive under pressure, we want you.
+        </p>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer style="background: var(--bg-secondary); padding: 2rem; text-align: center; border-top: 1px solid var(--border);">
+      <div style="margin-bottom: 1rem;">
+        <a href="#" style="color: var(--muted); font-size: 1.5rem; margin: 0 1rem;"><i class="fab fa-github"></i></a>
+        <a href="#" style="color: var(--muted); font-size: 1.5rem; margin: 0 1rem;"><i class="fab fa-twitter"></i></a>
+        <a href="#" style="color: var(--muted); font-size: 1.5rem; margin: 0 1rem;"><i class="fab fa-linkedin"></i></a>
+      </div>
+      <p style="color: var(--muted); font-size: 0.9rem;">2024 Digital Chariots. Racing toward tomorrow.</p>
+    </footer>
 
   </main>
 
-  <footer id="contact">
-    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-    <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
-    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-    <p>&copy; 2024 Digital Chariots. Racing toward tomorrow.</p>
-  </footer>
-
   <script>
-    // --- Smooth Scroll Function (Same as reference) ---
+    // --- Smooth Scroll Function ---
     function smoothScrollTo(targetPosition, duration) {
       const startPosition = window.pageYOffset;
       const distance = targetPosition - startPosition;
@@ -457,19 +568,15 @@
     // --- Navbar Scroll Visibility ---
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
-      // If we are near the top, hide navbar (unless button was clicked)
-      if (window.pageYOffset < 100) {
-        // Check if we are at the very top to force hide, 
-        // but allow it to stay if user scrolled down and back up slightly
-        if(window.pageYOffset < 50) {
-             navbar.classList.remove('is-visible');
-        }
+      // If we are near the top, hide navbar
+      if (window.pageYOffset < 50) {
+         navbar.classList.remove('is-visible');
       } else {
         navbar.classList.add('is-visible');
       }
     });
 
-    // --- Particle System (Adapted for Gold/Grey) ---
+    // --- Particle System ---
     const canvas = document.getElementById('particleCanvas');
     const ctx = canvas.getContext('2d');
     let width, height;
@@ -514,7 +621,7 @@
         let dy = mouse.y - this.y;
         let distance = Math.sqrt(dx * dx + dy * dy);
         
-        if (distance === 0) return; // Prevent division by zero
+        if (distance === 0) return;
 
         let forceDirectionX = dx / distance;
         let forceDirectionY = dy / distance;
@@ -561,7 +668,6 @@
                          ((particles[a].y - particles[b].y) * (particles[a].y - particles[b].y));
           if (distance < 10000) {
             opacityValue = 1 - (distance / 10000);
-            // Gold connection lines
             ctx.strokeStyle = `rgba(212, 165, 55, ${opacityValue * 0.3})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
@@ -575,19 +681,17 @@
     animateParticles();
 
     // --- Intersection Observer for Content Sections ---
-    const observerOptions = {
-      threshold: 0.2
-    };
+    const observerOptions = { threshold: 0.1 };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+          entry.target.classList.add('active');
         }
       });
     }, observerOptions);
 
-    document.querySelectorAll('.info-section').forEach(section => {
+    document.querySelectorAll('.reveal').forEach(section => {
       observer.observe(section);
     });
 

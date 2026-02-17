@@ -345,7 +345,7 @@
       <nav>
         <ul class="navbar__list">
           <li><a href="#about" class="navbar__link">About</a></li>
-          <li><a href="#projects" class="navbar__link">Projects</a></li>
+          <li><a href="#projects" class="navbar__link" id="nav-projects">Projects</a></li>
           <li><a href="#team" class="navbar__link">Team</a></li>
           <li><a href="#contact" class="navbar__link">Contact</a></li>
         </ul>
@@ -384,20 +384,20 @@
         </div>
         <div class="stat-grid">
           <div class="stat-card">
-            <div class="stat-number">15</div>
+            <div class="stat-number">0</div>
             <div class="stat-label">Hackathon Wins</div>
           </div>
           <div class="stat-card">
-            <div class="stat-number">42</div>
+            <div class="stat-number">0</div>
             <div class="stat-label">Projects Built</div>
           </div>
           <div class="stat-card">
-            <div class="stat-number">08</div>
+            <div class="stat-number">05</div>
             <div class="stat-label">Core Members</div>
           </div>
           <div class="stat-card">
             <div class="stat-number">500+</div>
-            <div class="stat-label">Cups of Coffee</div>
+            <div class="stat-label">Cups of Coffee (and tea)</div>
           </div>
         </div>
       </div>
@@ -527,6 +527,21 @@
   </footer>
 
   <script>
+    // --- CONFIGURATION ---
+    // Set to 'true' to show the Projects section, 'false' to hide it.
+    const SHOW_PROJECTS_SECTION = false; 
+
+    // Apply configuration
+    document.addEventListener('DOMContentLoaded', () => {
+      const projectsSection = document.getElementById('projects');
+      const navProjectsLink = document.getElementById('nav-projects');
+      
+      if (!SHOW_PROJECTS_SECTION) {
+        if (projectsSection) projectsSection.style.display = 'none';
+        if (navProjectsLink) navProjectsLink.parentElement.style.display = 'none';
+      }
+    });
+
     // --- Smooth Scroll Function ---
     function smoothScrollTo(targetPosition, duration) {
       const startPosition = window.pageYOffset;

@@ -291,6 +291,25 @@
     .project-tech { display: flex; gap: 0.5rem; flex-wrap: wrap; }
     .tech-pill { font-size: 0.75rem; padding: 0.25rem 0.5rem; background: var(--bg-secondary); border-radius: 4px; color: var(--muted); }
 
+    /* Coming Soon Message */
+    .coming-soon-message {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: rgba(0,0,0,0.2);
+      border-radius: 16px;
+      border: 1px dashed var(--accent-dark);
+    }
+    .coming-soon-message h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5rem;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .coming-soon-message p {
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+
     /* Team Grid */
     .team-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;
@@ -333,6 +352,7 @@
       .navbar__list { display: none; } /* Simple hide for mobile for now */
       .about-grid { grid-template-columns: 1fr; }
       .section-title { font-size: 3rem; }
+      .coming-soon-message h3 { font-size: 2.5rem; }
     }
   </style>
 </head>
@@ -345,7 +365,7 @@
       <nav>
         <ul class="navbar__list">
           <li><a href="#about" class="navbar__link">About</a></li>
-          <li><a href="#projects" class="navbar__link" id="nav-projects">Projects</a></li>
+          <li><a href="#projects" class="navbar__link">Projects</a></li>
           <li><a href="#team" class="navbar__link">Team</a></li>
           <li><a href="#contact" class="navbar__link">Contact</a></li>
         </ul>
@@ -407,7 +427,8 @@
     <section id="projects" class="section-padding" style="background: var(--bg-secondary);">
       <h2 class="section-title reveal">VICTORIOUS<br><span class="text-gold-gradient">CREATIONS</span></h2>
       
-      <div class="projects-grid reveal">
+      <!-- The actual projects grid (Hidden by default via JS) -->
+      <div id="projects-grid" class="projects-grid reveal">
         <!-- Project 1 -->
         <div class="project-card">
           <span class="project-tag">Winner</span>
@@ -459,6 +480,12 @@
             <span class="tech-pill">AI</span>
           </div>
         </div>
+      </div>
+
+      <!-- Coming Soon Message (Shown by default via JS) -->
+      <div id="projects-coming-soon" class="coming-soon-message reveal">
+        <h3>COMING SOON!!!!!!</h3>
+        <p>Our trophy case is currently being polished.</p>
       </div>
     </section>
 
@@ -528,17 +555,20 @@
 
   <script>
     // --- CONFIGURATION ---
-    // Set to 'true' to show the Projects section, 'false' to hide it.
+    // Set to 'true' to show the Project Cards, 'false' to show "Coming Soon" message.
     const SHOW_PROJECTS_SECTION = false; 
 
     // Apply configuration
     document.addEventListener('DOMContentLoaded', () => {
-      const projectsSection = document.getElementById('projects');
-      const navProjectsLink = document.getElementById('nav-projects');
+      const projectsGrid = document.getElementById('projects-grid');
+      const comingSoon = document.getElementById('projects-coming-soon');
       
-      if (!SHOW_PROJECTS_SECTION) {
-        if (projectsSection) projectsSection.style.display = 'none';
-        if (navProjectsLink) navProjectsLink.parentElement.style.display = 'none';
+      if (SHOW_PROJECTS_SECTION) {
+        if (projectsGrid) projectsGrid.style.display = 'grid'; // or block/flex depending on css
+        if (comingSoon) comingSoon.style.display = 'none';
+      } else {
+        if (projectsGrid) projectsGrid.style.display = 'none';
+        if (comingSoon) comingSoon.style.display = 'block';
       }
     });
 

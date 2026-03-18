@@ -1,23 +1,381 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- ... Keep your <head> section exactly the same ... -->
-  <!-- Ensure you include the candidates.js script -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkillBridge Demo | Employer View</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <!-- Link the external database file -->
   <script src="candidates.js"></script>
+
   <style>
-    /* ... Keep your existing styles ... */
-    /* Added a small tweak to allow skills to wrap nicely if there are many */
+    :root {
+      --primary: #2563EB;
+      --primary-dark: #1E40AF;
+      --primary-light: #DBEAFE;
+      --bg: #FFFFFF;
+      --bg-alt: #F8FAFC;
+      --text-main: #0F172A;
+      --text-muted: #64748B;
+      --border: #E2E8F0;
+      --success: #10B981;
+      --accent: #F59E0B;
+      --radius: 8px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-alt);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; }
+
+    /* --- NAVBAR --- */
+    .navbar {
+      background: white;
+      height: 70px;
+      width: 100%;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: var(--primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .logo i { color: var(--accent); }
+    .demo-badge {
+      background: var(--primary-light);
+      color: var(--primary);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-left: 1rem;
+      text-transform: uppercase;
+    }
+    .nav-actions { margin-left: auto; display: flex; gap: 1rem; align-items: center; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--radius);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+    .btn-primary { background: var(--primary); color: white; box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2); }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    .btn-outline { background: white; color: var(--text-main); border: 1px solid var(--border); }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* --- LAYOUT --- */
+    .app-container {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      flex: 1;
+      height: calc(100vh - 70px);
+    }
+
+    /* --- SIDEBAR --- */
+    .sidebar {
+      background: white;
+      border-right: 1px solid var(--border);
+      padding: 2rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar-header { margin-bottom: 2rem; }
+    .sidebar-header h2 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+    .sidebar-header p { font-size: 0.9rem; color: var(--text-muted); }
+
+    .form-group { margin-bottom: 1.5rem; }
+    .form-group label { display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--text-main); }
+    
+    .input-style {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      transition: border-color 0.2s;
+      background: white;
+    }
+    .input-style:focus { outline: none; border-color: var(--primary); }
+    
+    /* Toggle Styles */
+    .toggle-group {
+      display: flex;
+      background: var(--bg-alt);
+      border-radius: var(--radius);
+      padding: 4px;
+      border: 1px solid var(--border);
+    }
+    .toggle-option {
+      flex: 1;
+      text-align: center;
+      padding: 0.6rem;
+      cursor: pointer;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s;
+      color: var(--text-muted);
+    }
+    .toggle-option.active {
+      background: white;
+      color: var(--primary);
+      font-weight: 600;
+      box-shadow: var(--shadow);
+    }
+    
+    /* Hidden field animation */
+    .hidden-field {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+    }
+    .hidden-field.show {
+      max-height: 500px;
+      opacity: 1;
+    }
+    
+    /* Dropdown Container */
+    .dropdown-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .dropdown-row .form-group { margin-bottom: 0; flex: 1; }
+
+    /* --- SKILL SELECTOR --- */
+    .skills-container {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      background: var(--bg-alt);
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    
+    .skill-category { margin-bottom: 1.2rem; }
+    .skill-category:last-child { margin-bottom: 0; }
+    
+    .skill-cat-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
     .skill-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 0.5rem;
+    }
+
+    .skill-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.6rem;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.85rem;
+      user-select: none;
+    }
+    
+    .skill-item:hover { border-color: var(--primary); background: var(--bg); }
+    .skill-item.active { background: var(--primary); color: white; border-color: var(--primary); }
+    .skill-item.active .skill-icon { color: white; }
+    .skill-icon { width: 18px; text-align: center; color: var(--text-muted); font-size: 0.85rem; }
+
+    .search-btn { width: 100%; padding: 1rem; font-size: 1rem; margin-top: auto; }
+
+    /* --- MAIN CONTENT --- */
+    .main-content {
+      padding: 2rem;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      text-align: center;
+      color: var(--text-muted);
+      padding: 2rem;
+    }
+    .empty-state i { font-size: 4rem; margin-bottom: 1.5rem; color: var(--border); }
+    .empty-state h3 { color: var(--text-main); margin-bottom: 0.5rem; }
+
+    .results-header {
+      display: none; /* Hidden by default */
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    .results-header.active { display: flex; }
+    
+    .candidate-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .candidate-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .candidate-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(37, 99, 235, 0.3);
+    }
+
+    .card-top { display: flex; gap: 1rem; margin-bottom: 1rem; }
+    .avatar {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .info h3 { font-size: 1.1rem; margin-bottom: 0.2rem; }
+    .info p { color: var(--text-muted); font-size: 0.9rem; }
+    
+    .match-badge {
+      position: absolute; top: 1rem; right: 1rem;
+      background: #ECFDF5; color: #065F46;
+      font-weight: 700; font-size: 0.85rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      text-align: right;
+    }
+    .match-badge.transferable { background: #FFFBEB; color: #92400E; }
+
+    .verified-skills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+    .v-skill {
+      background: var(--bg-alt);
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      color: var(--text-main);
+    }
+    .v-skill i { color: var(--success); font-size: 0.7rem; }
+
+    .card-actions { display: flex; gap: 0.5rem; border-top: 1px solid var(--border); padding-top: 1rem; }
+    .card-actions .btn { flex: 1; justify-content: center; padding: 0.5rem; font-size: 0.85rem; }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .modal-overlay.active { opacity: 1; pointer-events: all; }
+    
+    .modal-content {
+      background: white;
+      width: 500px;
+      max-width: 90%;
+      border-radius: 12px;
+      padding: 2rem;
+      position: relative;
+      transform: scale(0.9);
+      transition: transform 0.3s;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-overlay.active .modal-content { transform: scale(1); }
+    .close-btn {
+      position: absolute; top: 1rem; right: 1rem;
+      background: none; border: none;
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .modal-profile { text-align: center; margin-bottom: 1.5rem; }
+    .modal-profile .avatar { width: 80px; height: 80px; font-size: 1.5rem; margin: 0 auto 1rem; }
+    .skill-score-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+    .score-item { background: var(--bg-alt); padding: 0.8rem; border-radius: 6px; text-align: center; }
+    .score-item h5 { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.3rem; font-weight: 500; }
+    .score-item .val { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.2rem; color: var(--text-main); }
+    .score-item .val.high { color: var(--success); }
+    
+    /* Responsive */
+    @media (max-width: 900px) {
+      .app-container { grid-template-columns: 1fr; height: auto; }
+      .sidebar { border-right: none; border-bottom: 1px solid var(--border); }
+      .search-btn { margin-top: 1rem; margin-bottom: 1rem; }
+      .dropdown-row { flex-direction: column; }
+      .skill-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
   <!-- NAVBAR -->
-  <!-- ... Keep your Navbar code the same ... -->
   <nav class="navbar">
     <a href="index.html" class="logo">
       <i class="fas fa-bridge"></i> SkillBridge
@@ -75,7 +433,7 @@
       <div class="form-group">
         <label>Required Verified Skills</label>
         <div class="skills-container" id="skillSelector">
-          <!-- Skills are now populated by JavaScript below -->
+          <!-- Skills populated by JS -->
         </div>
       </div>
 
@@ -85,7 +443,6 @@
     </aside>
 
     <!-- MAIN CONTENT -->
-    <!-- ... Keep your Main Content and Modal code the same ... -->
     <main class="main-content">
       <div class="empty-state" id="emptyState">
         <i class="fas fa-database"></i>
@@ -102,12 +459,12 @@
           Showing <strong id="candidateCount">0</strong> matches
         </div>
       </div>
+
       <div class="candidate-grid" id="candidateGrid"></div>
     </main>
   </div>
 
   <!-- MODAL -->
-  <!-- ... Keep your Modal code the same ... -->
   <div class="modal-overlay" id="modalOverlay">
     <div class="modal-content">
       <button class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
@@ -129,10 +486,9 @@
     </div>
   </div>
 
-
   <script>
     // --- INITIALIZE DATA FROM EXTERNAL FILE ---
-    
+    // These are populated by candidates.js
     const locationData = window.locationData;
     const candidatesDatabase = window.candidatesDatabase;
 
@@ -146,6 +502,7 @@
     const candidateGrid = document.getElementById('candidateGrid');
     const modalOverlay = document.getElementById('modalOverlay');
     const locationField = document.getElementById('locationField');
+    const candidateCount = document.getElementById('candidateCount');
 
     // --- INITIALIZIZATION ---
     
@@ -179,10 +536,10 @@
 
         cat.skills.forEach(skillName => {
           const item = document.createElement('div');
-          item.className = 'skill-item'; // NOT active by default
+          item.className = 'skill-item';
           item.setAttribute('data-skill', skillName);
           
-          // Aesthetic: Match specific icons if possible, otherwise default to check
+          // Aesthetic: Match specific icons if possible
           let iconClass = 'fa-check';
           if (skillName === 'Python') iconClass = 'fa-python fab';
           else if (skillName === 'React') iconClass = 'fa-react fab';
@@ -192,7 +549,7 @@
           else if (skillName === 'Figma') iconClass = 'fa-figma fab';
           else if (['Leadership', 'Problem Solving', 'Communication'].includes(skillName)) iconClass = 'fa-user-tie';
 
-          item.innerHTML = `<i class="skill-icon fas ${iconClass}"></i> ${skillName}`;
+          item.innerHTML = `<i class="skill-icon ${iconClass}"></i> ${skillName}`;
           gridDiv.appendChild(item);
         });
 
@@ -202,14 +559,24 @@
     }
 
     function populateCountries() {
+      // Clear existing options
+      countrySelect.innerHTML = '';
+      
+      // Sort countries alphabetically
       const countries = Object.keys(locationData).sort();
+      
       countries.forEach(country => {
         const option = document.createElement('option');
         option.value = country;
         option.textContent = country;
         countrySelect.appendChild(option);
       });
-      countrySelect.value = "United States";
+      
+      // Set default value
+      if (countries.includes("United States")) {
+        countrySelect.value = "United States";
+      }
+      
       updateCities();
     }
 
@@ -218,14 +585,14 @@
       const cities = locationData[selectedCountry] || [];
       
       citySelect.innerHTML = '';
-      if (cities.length === 0) {
-        const option = document.createElement('option');
-        option.value = "Any";
-        option.textContent = "Any City";
-        citySelect.appendChild(option);
-        return;
-      }
-
+      
+      // Add "Any" option
+      const anyOption = document.createElement('option');
+      anyOption.value = "Any";
+      anyOption.textContent = "Any City";
+      citySelect.appendChild(anyOption);
+      
+      // Add specific cities
       cities.forEach(city => {
         const option = document.createElement('option');
         option.value = city;
@@ -234,8 +601,9 @@
       });
     }
 
+    // Initialize
     populateCountries();
-    populateSkillFilters(); // Run the new population function
+    populateSkillFilters();
 
     // --- INTERACTION LOGIC ---
 
@@ -279,6 +647,7 @@
       // Filter Location
       let filteredCandidates = candidatesDatabase.filter(c => {
         const matchCountry = c.country === selectedCountry;
+        // If "Any" is selected, match any city, otherwise match specific city
         const matchCity = (selectedCity === "Any") || (c.city === selectedCity);
         return matchCountry && matchCity;
       });
@@ -288,7 +657,7 @@
       const requiredSkills = Array.from(activeSkillNodes).map(n => n.dataset.skill.toLowerCase());
 
       filteredCandidates.forEach(c => {
-        let score = 70; 
+        let score = 70; // Base score
         
         const candidateSkillsLower = c.verified.map(s => s.toLowerCase());
         let skillMatches = 0;
@@ -297,9 +666,10 @@
           requiredSkills.forEach(rs => {
             if(candidateSkillsLower.includes(rs)) skillMatches++;
           });
+          // Calculate boost based on how many skills match
           score += (skillMatches / requiredSkills.length) * 30;
         } else {
-          score += 15; 
+          score += 15; // Small boost if no skills selected
         }
 
         c.match = Math.min(Math.floor(score), 99);
@@ -317,83 +687,7 @@
           <div class="empty-state" style="grid-column: 1 / -1;">
             <i class="fas fa-search"></i>
             <h3>No Exact Matches</h3>
-            <p>No candidates found in ${selectedCity}, ${selectedCountry} matching those skills. Try adjusting filters.</p>
-          </div>
-        `;
-        return;
-      }
-
-      displayCandidates.forEach(c => {
-        const card = document.createElement('div');
-        card.className = 'candidate-card';
-        
-        const badgeClass = c.matchType === 'perfect' ? 'match-badge' : 'match-badge transferable';
-        const badgeText = c.matchType === 'perfect' ? 'Best Match' : 'Good Match';
-
-        card.innerHTML = `
-          <div class="${badgeClass}">${c.match}% <span style="font-size:0.7rem; font-weight:400; display:block;">${badgeText}</span></div>
-          <div class="card-top">
-            <div class="avatar">${c.initials}</div>
-            <div class="info">
-              <h3>${c.name}</h3>
-              <p>${c.role}</p>
-              <p style="font-size:0.8rem; color:var(--primary);"><i class="fas fa-map-marker-alt"></i> ${c.city}</p>
-            </div>
-          </div>
-          
-          <div class="verified-skills">
-            ${c.verified.slice(0, 4).map(skill => `<div class="v-skill"><i class="fas fa-check-circle"></i> ${skill}</div>`).join('')}
-          </div>
-
-          <div class="card-actions">
-            <button class="btn btn-outline" onclick="openModal(${c.id})">View Profile</button>
-            <button class="btn btn-primary">Invite</button>
-          </div>
-        `;
-        candidateGrid.appendChild(card);
-      });
-    }
-
-    function openModal(id) {
-      const candidate = candidatesDatabase.find(c => c.id === id);
-      if(!candidate) return;
-
-      document.getElementById('modalAvatar').innerText = candidate.initials;
-      document.getElementById('modalName').innerText = candidate.name;
-      document.getElementById('modalRole').innerText = candidate.role;
-      document.getElementById('modalLocation').innerText = `${candidate.city}, ${candidate.country}`;
-      document.getElementById('modalMatch').innerText = candidate.match + '%';
-      
-      const skillsGrid = document.getElementById('modalSkillsGrid');
-      skillsGrid.innerHTML = candidate.skills.map(s => `
-        <div class="score-item">
-          <h5>${s.name}</h5>
-          <div class="val ${s.score > 90 ? 'high' : ''}">${s.score}%</div>
-        </div>
-      `).join('');
-
-      modalOverlay.classList.add('active');
-    }
-
-    function closeModal() {
-      modalOverlay.classList.remove('active');
-    }
-
-    modalOverlay.addEventListener('click', (e) => {
-      if (e.target === modalOverlay) closeModal();
-    });
-      filteredCandidates.sort((a, b) => b.match - a.match);
-      const displayCandidates = filteredCandidates.slice(0, 12);
-
-      candidateGrid.innerHTML = '';
-      candidateCount.innerText = filteredCandidates.length;
-
-      if (displayCandidates.length === 0) {
-        candidateGrid.innerHTML = `
-          <div class="empty-state" style="grid-column: 1 / -1;">
-            <i class="fas fa-search"></i>
-            <h3>No Exact Matches</h3>
-            <p>No candidates found in ${selectedCity}, ${selectedCountry} matching those skills. Try broadening your search.</p>
+            <p>No candidates found in ${selectedCity === 'Any' ? selectedCountry : selectedCity + ', ' + selectedCountry} matching those skills. Try broadening your search.</p>
           </div>
         `;
         return;

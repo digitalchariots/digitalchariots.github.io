@@ -129,8 +129,9 @@
     </div>
   </div>
 
+
   <script>
-    // --- INITIALIZATION ---
+    // --- INITIALIZE DATA FROM EXTERNAL FILE ---
     
     const locationData = window.locationData;
     const candidatesDatabase = window.candidatesDatabase;
@@ -146,40 +147,58 @@
     const modalOverlay = document.getElementById('modalOverlay');
     const locationField = document.getElementById('locationField');
 
-    // --- SETUP FUNCTIONS ---
-
+    // --- INITIALIZIZATION ---
+    
     if (candidatesDatabase) {
       document.getElementById('dbCount').innerText = candidatesDatabase.length.toLocaleString();
     } else {
       console.error("Database not found. Ensure candidates.js is loaded.");
     }
 
-    // Dynamically populate skills from the database pool
+    // Populate Skills based on the Categories defined in JS
     function populateSkillFilters() {
-      if (!window.availableSkills) return;
-      
-      // Sort skills alphabetically for better UX
-      const sortedSkills = [...window.availableSkills].sort();
-      
-      let html = '<div class="skill-category"><div class="skill-grid">';
-      
-      sortedSkills.forEach(skill => {
-        // Simple icon logic (default to check-circle)
-        let icon = 'fa-check-circle';
-        if (['Python', 'Java', 'JavaScript', 'React', 'SQL'].includes(skill)) icon = 'fa-code';
-        else if (['AWS', 'Azure', 'Docker', 'Kubernetes'].includes(skill)) icon = 'fa-cloud';
-        else if (['Leadership', 'Communication', 'Team Building'].includes(skill)) icon = 'fa-users';
+      const categories = window.skillCategories;
+      if (!categories) return;
+
+      skillSelector.innerHTML = ''; // Clear static HTML
+
+      categories.forEach(cat => {
+        const catDiv = document.createElement('div');
+        catDiv.className = 'skill-category';
         
-        // Note: No 'active' class is added here, solving your pre-selection issue
-        html += `
-          <div class="skill-item" data-skill="${skill}">
-            <i class="skill-icon fas ${icon}"></i> ${skill}
+        // Category Header
+        catDiv.innerHTML = `
+          <div class="skill-cat-title">
+            <i class="fas ${cat.icon}"></i> ${cat.name}
           </div>
         `;
+
+        // Skill Grid
+        const gridDiv = document.createElement('div');
+        gridDiv.className = 'skill-grid';
+
+        cat.skills.forEach(skillName => {
+          const item = document.createElement('div');
+          item.className = 'skill-item'; // NOT active by default
+          item.setAttribute('data-skill', skillName);
+          
+          // Aesthetic: Match specific icons if possible, otherwise default to check
+          let iconClass = 'fa-check';
+          if (skillName === 'Python') iconClass = 'fa-python fab';
+          else if (skillName === 'React') iconClass = 'fa-react fab';
+          else if (skillName === 'Excel') iconClass = 'fa-file-excel';
+          else if (skillName === 'SQL') iconClass = 'fa-database';
+          else if (skillName === 'Cloud') iconClass = 'fa-cloud';
+          else if (skillName === 'Figma') iconClass = 'fa-figma fab';
+          else if (['Leadership', 'Problem Solving', 'Communication'].includes(skillName)) iconClass = 'fa-user-tie';
+
+          item.innerHTML = `<i class="skill-icon fas ${iconClass}"></i> ${skillName}`;
+          gridDiv.appendChild(item);
+        });
+
+        catDiv.appendChild(gridDiv);
+        skillSelector.appendChild(catDiv);
       });
-      
-      html += '</div></div>';
-      skillSelector.innerHTML = html;
     }
 
     function populateCountries() {
@@ -215,13 +234,12 @@
       });
     }
 
-    // Initialize Dropdowns and Skills
     populateCountries();
-    populateSkillFilters();
+    populateSkillFilters(); // Run the new population function
 
     // --- INTERACTION LOGIC ---
 
-    // Toggle skill selection
+    // Skill Toggle Logic
     skillSelector.addEventListener('click', (e) => {
       const item = e.target.closest('.skill-item');
       if (item) item.classList.toggle('active');
@@ -246,7 +264,7 @@
         renderResults();
         searchBtn.innerHTML = '<i class="fas fa-search"></i> Find Candidates';
         searchBtn.disabled = false;
-      }, 300); // Slightly increased delay for realism
+      }, 400);
     });
 
     function renderResults() {
@@ -270,7 +288,7 @@
       const requiredSkills = Array.from(activeSkillNodes).map(n => n.dataset.skill.toLowerCase());
 
       filteredCandidates.forEach(c => {
-        let score = 70; // Base score
+        let score = 70; 
         
         const candidateSkillsLower = c.verified.map(s => s.toLowerCase());
         let skillMatches = 0;
@@ -279,10 +297,8 @@
           requiredSkills.forEach(rs => {
             if(candidateSkillsLower.includes(rs)) skillMatches++;
           });
-          // Calculate score: 70 base + up to 30 points for skills
           score += (skillMatches / requiredSkills.length) * 30;
         } else {
-          // If no skills selected, give average boost
           score += 15; 
         }
 
@@ -290,6 +306,82 @@
         c.matchType = c.match > 90 ? "perfect" : "transferable";
       });
 
+      filteredCandidates.sort((a, b) => b.match - a.match);
+      const displayCandidates = filteredCandidates.slice(0, 12);
+
+      candidateGrid.innerHTML = '';
+      candidateCount.innerText = filteredCandidates.length;
+
+      if (displayCandidates.length === 0) {
+        candidateGrid.innerHTML = `
+          <div class="empty-state" style="grid-column: 1 / -1;">
+            <i class="fas fa-search"></i>
+            <h3>No Exact Matches</h3>
+            <p>No candidates found in ${selectedCity}, ${selectedCountry} matching those skills. Try adjusting filters.</p>
+          </div>
+        `;
+        return;
+      }
+
+      displayCandidates.forEach(c => {
+        const card = document.createElement('div');
+        card.className = 'candidate-card';
+        
+        const badgeClass = c.matchType === 'perfect' ? 'match-badge' : 'match-badge transferable';
+        const badgeText = c.matchType === 'perfect' ? 'Best Match' : 'Good Match';
+
+        card.innerHTML = `
+          <div class="${badgeClass}">${c.match}% <span style="font-size:0.7rem; font-weight:400; display:block;">${badgeText}</span></div>
+          <div class="card-top">
+            <div class="avatar">${c.initials}</div>
+            <div class="info">
+              <h3>${c.name}</h3>
+              <p>${c.role}</p>
+              <p style="font-size:0.8rem; color:var(--primary);"><i class="fas fa-map-marker-alt"></i> ${c.city}</p>
+            </div>
+          </div>
+          
+          <div class="verified-skills">
+            ${c.verified.slice(0, 4).map(skill => `<div class="v-skill"><i class="fas fa-check-circle"></i> ${skill}</div>`).join('')}
+          </div>
+
+          <div class="card-actions">
+            <button class="btn btn-outline" onclick="openModal(${c.id})">View Profile</button>
+            <button class="btn btn-primary">Invite</button>
+          </div>
+        `;
+        candidateGrid.appendChild(card);
+      });
+    }
+
+    function openModal(id) {
+      const candidate = candidatesDatabase.find(c => c.id === id);
+      if(!candidate) return;
+
+      document.getElementById('modalAvatar').innerText = candidate.initials;
+      document.getElementById('modalName').innerText = candidate.name;
+      document.getElementById('modalRole').innerText = candidate.role;
+      document.getElementById('modalLocation').innerText = `${candidate.city}, ${candidate.country}`;
+      document.getElementById('modalMatch').innerText = candidate.match + '%';
+      
+      const skillsGrid = document.getElementById('modalSkillsGrid');
+      skillsGrid.innerHTML = candidate.skills.map(s => `
+        <div class="score-item">
+          <h5>${s.name}</h5>
+          <div class="val ${s.score > 90 ? 'high' : ''}">${s.score}%</div>
+        </div>
+      `).join('');
+
+      modalOverlay.classList.add('active');
+    }
+
+    function closeModal() {
+      modalOverlay.classList.remove('active');
+    }
+
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) closeModal();
+    });
       filteredCandidates.sort((a, b) => b.match - a.match);
       const displayCandidates = filteredCandidates.slice(0, 12);
 

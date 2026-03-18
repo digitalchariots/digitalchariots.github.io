@@ -96,4 +96,5 @@ function generateCandidates(count) {
 
 // Generate 10,000 candidates and expose globally
 window.candidatesDatabase = generateCandidates(10000);
+window.availableSkills = skillPool; 
 console.log("Database loaded: " + window.candidatesDatabase.length + " candidates ready.");

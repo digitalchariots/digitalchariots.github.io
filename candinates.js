@@ -1,8 +1,8 @@
 // candidates.js
 
-// --- 1. DEFINE LOCATIONS & SKILLS (Must be at the top) ---
+// --- 1. DEFINE DATA SOURCES (Must be defined first!) ---
 
-// Define Location Data so the script knows it exists
+// 1. Locations (Needed for generation and HTML dropdowns)
 const locationData = {
   "United States": ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego", "Dallas", "San Jose", "Austin", "Seattle"],
   "United Kingdom": ["London", "Birmingham", "Liverpool", "Glasgow", "Sheffield", "Manchester", "Edinburgh", "Leeds"],
@@ -17,7 +17,7 @@ const locationData = {
   "China": ["Shanghai", "Beijing", "Guangzhou", "Shenzhen"]
 };
 
-// Define Categories for the UI (Must be defined before skillPool)
+// 2. Skill Categories (Needed for UI and generation)
 const skillCategories = [
   {
     name: "Management & Leadership",
@@ -41,8 +41,7 @@ const skillCategories = [
   }
 ];
 
-// --- 2. DATA SOURCE ARRAYS ---
-
+// 3. Names & Jobs
 const firstNames = ["James", "Mary", "John", "Patricia", "Robert", "Jennifer", "Michael", "Linda", "William", "Elizabeth", "David", "Barbara", "Richard", "Susan", "Joseph", "Jessica", "Thomas", "Sarah", "Charles", "Karen", "Christopher", "Nancy", "Daniel", "Lisa", "Matthew", "Betty", "Anthony", "Margaret", "Mark", "Sandra", "Donald", "Ashley", "Steven", "Kimberly", "Paul", "Emily", "Andrew", "Donna", "Joshua", "Michelle", "Kenneth", "Dorothy", "Kevin", "Carol", "Brian", "Amanda", "George", "Melissa", "Timothy", "Deborah", "Zhang", "Wei", "Li", "Wang", "Singh", "Patel", "Kim", "Lee", "Park", "Tanaka", "Sato", "Suzuki", "Muller", "Schmidt"];
 
 const lastNames = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez", "Hernandez", "Lopez", "Gonzalez", "Wilson", "Anderson", "Thomas", "Taylor", "Moore", "Jackson", "Martin", "Lee", "Perez", "Thompson", "White", "Harris", "Sanchez", "Clark", "Ramirez", "Lewis", "Robinson", "Walker", "Young", "Allen", "King", "Wright", "Scott", "Torres", "Nguyen", "Hill", "Flores", "Green", "Adams", "Nelson", "Baker", "Hall", "Rivera", "Campbell", "Mitchell", "Carter", "Roberts", "Kim", "Cox", "Ward", "Richardson", "Watson", "Brooks", "Chavez", "Wood", "James", "Bennett", "Gray", "Mendoza", "Ruiz", "Hughes", "Price", "Alvarez", "Castillo", "Sanders", "Patel", "Myers", "Long", "Ross", "Foster"];
@@ -59,12 +58,14 @@ const jobTitles = [
   "Architect", "Interior Designer", "Veterinarian", "Pharmacist", "Pilot"
 ];
 
-// Flatten skills from categories for random generation
+// --- 2. GENERATION LOGIC ---
+
+// Flatten skills from categories
 const skillPool = skillCategories.flatMap(cat => cat.skills);
 
+// Get location keys NOW that locationData is defined
 const locationKeys = Object.keys(locationData);
 
-// --- GENERATOR FUNCTION ---
 function generateCandidates(count) {
   const generatedList = [];
 
@@ -81,7 +82,7 @@ function generateCandidates(count) {
     const cities = locationData[country];
     const city = cities[Math.floor(Math.random() * cities.length)];
 
-    // Skills logic (pick 3-5 random skills)
+    // Skills logic
     const numSkills = Math.floor(Math.random() * 3) + 3;
     const skills = [];
     const usedIndices = new Set();
@@ -116,9 +117,9 @@ function generateCandidates(count) {
   return generatedList;
 }
 
-// --- EXPOSE DATA GLOBALLY ---
-window.locationData = locationData;     // CRITICAL: HTML needs this for dropdowns
-window.skillCategories = skillCategories; // CRITICAL: HTML needs this for the sidebar UI
+// --- 3. EXPOSE DATA GLOBALLY (CRITICAL) ---
+window.locationData = locationData;
+window.skillCategories = skillCategories;
 window.candidatesDatabase = generateCandidates(10000);
 
 console.log("Database loaded: " + window.candidatesDatabase.length + " candidates ready.");

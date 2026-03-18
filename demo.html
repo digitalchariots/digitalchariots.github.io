@@ -178,7 +178,7 @@
     }
     .dropdown-row .form-group { margin-bottom: 0; flex: 1; }
 
-    /* --- REDESIGNED SKILL SELECTOR --- */
+    /* --- SKILL SELECTOR --- */
     .skills-container {
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -393,13 +393,8 @@
     <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="sidebar-header">
-        <h2>Define Your Role</h2>
-        <p>Search through the global database.</p>
-      </div>
-
-      <div class="form-group">
-        <label>Job Title</label>
-        <input type="text" class="input-style" id="jobTitleInput" placeholder="e.g., Walmart Clerk, Scuba Instructor..." value="Operations Manager">
+        <h2>Find Talent</h2>
+        <p>Filter by location and skills.</p>
       </div>
 
       <div class="form-group">
@@ -508,7 +503,7 @@
       <div class="results-header" id="resultsHeader">
         <div>
           <h2 style="font-size: 1.5rem;">Top Candidates</h2>
-          <p style="font-size: 0.9rem; color: var(--text-muted);">Results for "<span id="jobTitleText">Job</span>" in <span id="locationText">Location</span></p>
+          <p style="font-size: 0.9rem; color: var(--text-muted);">Results in <span id="locationText">Location</span></p>
         </div>
         <div style="font-size: 0.9rem; color: var(--text-muted);">
           Showing <strong id="candidateCount">0</strong> matches
@@ -544,19 +539,10 @@
   </div>
 
   <script>
-    // --- DATA: Locations (Embedded for the UI logic) ---
-    const locationData = {
-      "United States": ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "San Francisco", "Austin"],
-      "United Kingdom": ["London", "Birmingham", "Manchester", "Glasgow", "Liverpool"],
-      "Germany": ["Berlin", "Munich", "Frankfurt", "Hamburg", "Cologne"],
-      "Japan": ["Tokyo", "Osaka", "Kyoto", "Yokohama", "Nagoya"],
-      "Canada": ["Toronto", "Montreal", "Vancouver", "Calgary", "Ottawa"],
-      "Australia": ["Sydney", "Melbourne", "Brisbane", "Perth", "Adelaide"],
-      "Singapore": ["Singapore", "Woodlands", "Tampines"],
-      "Brazil": ["São Paulo", "Rio de Janeiro", "Brasília", "Salvador"],
-      "India": ["Mumbai", "Delhi", "Bangalore", "Chennai", "Kolkata"],
-      "France": ["Paris", "Marseille", "Lyon", "Toulouse", "Nice"]
-    };
+    // --- INITIALIZE DATA FROM EXTERNAL FILE ---
+    
+    const locationData = window.locationData;
+    const candidatesDatabase = window.candidatesDatabase;
 
     // --- DOM ELEMENTS ---
     const countrySelect = document.getElementById('countrySelect');
@@ -571,14 +557,12 @@
 
     // --- INITIALIZATION ---
     
-    // Check if database loaded
-    if (window.candidatesDatabase) {
-      document.getElementById('dbCount').innerText = window.candidatesDatabase.length.toLocaleString();
+    if (candidatesDatabase) {
+      document.getElementById('dbCount').innerText = candidatesDatabase.length.toLocaleString();
     } else {
       console.error("Database not found. Ensure candidates.js is loaded.");
     }
 
-    // Populate Countries
     function populateCountries() {
       const countries = Object.keys(locationData).sort();
       countries.forEach(country => {
@@ -616,13 +600,11 @@
 
     // --- INTERACTION LOGIC ---
 
-    // 1. Toggle Skill Chips
     skillSelector.addEventListener('click', (e) => {
       const item = e.target.closest('.skill-item');
       if (item) item.classList.toggle('active');
     });
 
-    // 2. Work Mode Toggle
     function setWorkMode(mode) {
       const options = document.querySelectorAll('.toggle-option');
       options.forEach(opt => {
@@ -634,96 +616,76 @@
       else locationField.classList.remove('show');
     }
 
-    // 3. Search Action
     searchBtn.addEventListener('click', () => {
       searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Scanning Database...';
       searchBtn.disabled = true;
 
-      // Use setTimeout to prevent UI freeze during heavy filtering
       setTimeout(() => {
         renderResults();
         searchBtn.innerHTML = '<i class="fas fa-search"></i> Find Candidates';
         searchBtn.disabled = false;
-      }, 100); // Small delay allows button to update
+      }, 100);
     });
 
-    // 4. Render Results
     function renderResults() {
       emptyState.style.display = 'none';
       resultsHeader.classList.add('active');
       
-      // Get filters
-      const jobTitle = document.getElementById('jobTitleInput').value.toLowerCase() || "";
       const selectedCountry = countrySelect.value;
       const selectedCity = citySelect.value;
 
-      document.getElementById('jobTitleText').innerText = jobTitle || "Any Role";
       document.getElementById('locationText').innerText = `${selectedCity}, ${selectedCountry}`;
 
-      // Filter Logic
-      // We filter the global window.candidatesDatabase
-      let filteredCandidates = window.candidatesDatabase.filter(c => {
-        // Location Match
+      // Filter Logic (Location only)
+      let filteredCandidates = candidatesDatabase.filter(c => {
         const matchCountry = c.country === selectedCountry;
         const matchCity = (selectedCity === "Any") || (c.city === selectedCity);
-        
-        // Job Title Match (substring match for flexibility)
-        const matchJob = !jobTitle || c.role.toLowerCase().includes(jobTitle);
-
-        return matchCountry && matchCity && matchJob;
+        return matchCountry && matchCity;
       });
 
-      // Skill Matching (Secondary sort)
-      // Get selected skills from UI
+      // Skill Scoring Logic
       const activeSkillNodes = document.querySelectorAll('.skill-item.active');
       const requiredSkills = Array.from(activeSkillNodes).map(n => n.dataset.skill.toLowerCase());
 
-      // Calculate score for each candidate
       filteredCandidates.forEach(c => {
         let score = 70; // Base score
         
-        // Boost for job title exact match
-        if(jobTitle && c.role.toLowerCase() === jobTitle) score += 15;
-
-        // Boost for skills
         const candidateSkillsLower = c.verified.map(s => s.toLowerCase());
         let skillMatches = 0;
+        
         requiredSkills.forEach(rs => {
           if(candidateSkillsLower.includes(rs)) skillMatches++;
         });
 
         if (requiredSkills.length > 0) {
-          score += (skillMatches / requiredSkills.length) * 15; // Up to 15 points boost
+          // Calculate score based on how many skills match
+          // Up to 30 points boost
+          score += (skillMatches / requiredSkills.length) * 30;
         } else {
-          score += 10; // Small boost if no skills required
+          score += 15; // Small boost if no skills required
         }
 
-        // Cap score at 99
         c.match = Math.min(Math.floor(score), 99);
         c.matchType = c.match > 90 ? "perfect" : "transferable";
       });
 
-      // Sort by match score
       filteredCandidates.sort((a, b) => b.match - a.match);
-
-      // Limit results to top 12 for performance/UI cleanliness
       const displayCandidates = filteredCandidates.slice(0, 12);
 
       candidateGrid.innerHTML = '';
-      candidateCount.innerText = filteredCandidates.length; // Show total count found
+      candidateCount.innerText = filteredCandidates.length;
 
       if (displayCandidates.length === 0) {
         candidateGrid.innerHTML = `
           <div class="empty-state" style="grid-column: 1 / -1;">
             <i class="fas fa-search"></i>
             <h3>No Exact Matches</h3>
-            <p>No candidates found in ${selectedCity}, ${selectedCountry} with that title. Try broadening the search.</p>
+            <p>No candidates found in ${selectedCity}, ${selectedCountry}. Try a nearby city or Remote work.</p>
           </div>
         `;
         return;
       }
 
-      // Generate Cards
       displayCandidates.forEach(c => {
         const card = document.createElement('div');
         card.className = 'candidate-card';
@@ -755,10 +717,8 @@
       });
     }
 
-    // 5. Modal Logic
-    // Need to find candidate from the array using ID
     function openModal(id) {
-      const candidate = window.candidatesDatabase.find(c => c.id === id);
+      const candidate = candidatesDatabase.find(c => c.id === id);
       if(!candidate) return;
 
       document.getElementById('modalAvatar').innerText = candidate.initials;

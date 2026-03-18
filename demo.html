@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   
-  <!-- Link the external database file -->
+  <!-- Load Database -->
   <script src="candidates.js"></script>
 
   <style>
@@ -23,7 +23,6 @@
       --text-muted: #64748B;
       --border: #E2E8F0;
       --success: #10B981;
-      --accent: #F59E0B;
       --radius: 8px;
       --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
       --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
@@ -64,7 +63,7 @@
       align-items: center;
       gap: 0.5rem;
     }
-    .logo i { color: var(--accent); }
+    .logo i { color: #F59E0B; }
     .demo-badge {
       background: var(--primary-light);
       color: var(--primary);
@@ -127,6 +126,7 @@
       font-size: 0.95rem;
       transition: border-color 0.2s;
       background: white;
+      color: var(--text-main);
     }
     .input-style:focus { outline: none; border-color: var(--primary); }
     
@@ -161,7 +161,7 @@
       max-height: 0;
       overflow: hidden;
       opacity: 0;
-      transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+      transition: max-height 0.3s ease, opacity 0.3s ease;
     }
     .hidden-field.show {
       max-height: 500px;
@@ -221,7 +221,7 @@
       user-select: none;
     }
     
-    .skill-item:hover { border-color: var(--primary); background: var(--bg); }
+    .skill-item:hover { border-color: var(--primary); background: #F8FAFC; }
     .skill-item.active { background: var(--primary); color: white; border-color: var(--primary); }
     .skill-item.active .skill-icon { color: white; }
     .skill-icon { width: 18px; text-align: center; color: var(--text-muted); font-size: 0.85rem; }
@@ -249,7 +249,7 @@
     .empty-state h3 { color: var(--text-main); margin-bottom: 0.5rem; }
 
     .results-header {
-      display: none; /* Hidden by default */
+      display: none;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 1.5rem;
@@ -409,13 +409,13 @@
           <div class="form-group">
             <label>Country</label>
             <select class="input-style" id="countrySelect" onchange="updateCities()">
-              <!-- Options populated by JS -->
+              <!-- JS Populated -->
             </select>
           </div>
           <div class="form-group">
             <label>City</label>
             <select class="input-style" id="citySelect">
-              <!-- Options populated by JS -->
+              <!-- JS Populated -->
             </select>
           </div>
         </div>
@@ -433,7 +433,7 @@
       <div class="form-group">
         <label>Required Verified Skills</label>
         <div class="skills-container" id="skillSelector">
-          <!-- Skills populated by JS -->
+          <!-- JS Populated -->
         </div>
       </div>
 
@@ -487,8 +487,8 @@
   </div>
 
   <script>
-    // --- INITIALIZE DATA FROM EXTERNAL FILE ---
-    // These are populated by candidates.js
+    // --- INITIALIZE DATA ---
+    // Get data from the loaded candidates.js file
     const locationData = window.locationData;
     const candidatesDatabase = window.candidatesDatabase;
 
@@ -506,31 +506,27 @@
 
     // --- INITIALIZIZATION ---
     
-    if (candidatesDatabase) {
-      document.getElementById('dbCount').innerText = candidatesDatabase.length.toLocaleString();
+    // Safety Check
+    if (!locationData || !candidatesDatabase) {
+      console.error("Critical Error: Database not loaded. Check candidates.js.");
+      alert("Error: Could not load database. Please ensure candidates.js is correct.");
     } else {
-      console.error("Database not found. Ensure candidates.js is loaded.");
+      document.getElementById('dbCount').innerText = candidatesDatabase.length.toLocaleString();
+      populateCountries();
+      populateSkillFilters();
     }
 
-    // Populate Skills based on the Categories defined in JS
+    // Populate Skill Filters
     function populateSkillFilters() {
       const categories = window.skillCategories;
       if (!categories) return;
 
-      skillSelector.innerHTML = ''; // Clear static HTML
-
+      skillSelector.innerHTML = '';
       categories.forEach(cat => {
         const catDiv = document.createElement('div');
         catDiv.className = 'skill-category';
         
-        // Category Header
-        catDiv.innerHTML = `
-          <div class="skill-cat-title">
-            <i class="fas ${cat.icon}"></i> ${cat.name}
-          </div>
-        `;
-
-        // Skill Grid
+        catDiv.innerHTML = `<div class="skill-cat-title"><i class="fas ${cat.icon}"></i> ${cat.name}</div>`;
         const gridDiv = document.createElement('div');
         gridDiv.className = 'skill-grid';
 
@@ -539,7 +535,6 @@
           item.className = 'skill-item';
           item.setAttribute('data-skill', skillName);
           
-          // Aesthetic: Match specific icons if possible
           let iconClass = 'fa-check';
           if (skillName === 'Python') iconClass = 'fa-python fab';
           else if (skillName === 'React') iconClass = 'fa-react fab';
@@ -558,11 +553,9 @@
       });
     }
 
+    // Populate Country Dropdown
     function populateCountries() {
-      // Clear existing options
       countrySelect.innerHTML = '';
-      
-      // Sort countries alphabetically
       const countries = Object.keys(locationData).sort();
       
       countries.forEach(country => {
@@ -572,27 +565,22 @@
         countrySelect.appendChild(option);
       });
       
-      // Set default value
-      if (countries.includes("United States")) {
-        countrySelect.value = "United States";
-      }
-      
+      if (countries.includes("United States")) countrySelect.value = "United States";
       updateCities();
     }
 
+    // Populate City Dropdown
     function updateCities() {
       const selectedCountry = countrySelect.value;
       const cities = locationData[selectedCountry] || [];
       
       citySelect.innerHTML = '';
       
-      // Add "Any" option
       const anyOption = document.createElement('option');
       anyOption.value = "Any";
       anyOption.textContent = "Any City";
       citySelect.appendChild(anyOption);
       
-      // Add specific cities
       cities.forEach(city => {
         const option = document.createElement('option');
         option.value = city;
@@ -601,38 +589,28 @@
       });
     }
 
-    // Initialize
-    populateCountries();
-    populateSkillFilters();
-
     // --- INTERACTION LOGIC ---
 
-    // Skill Toggle Logic
     skillSelector.addEventListener('click', (e) => {
       const item = e.target.closest('.skill-item');
       if (item) item.classList.toggle('active');
     });
 
     function setWorkMode(mode) {
-      const options = document.querySelectorAll('.toggle-option');
-      options.forEach(opt => {
-        if(opt.dataset.val === mode) opt.classList.add('active');
-        else opt.classList.remove('active');
+      document.querySelectorAll('.toggle-option').forEach(opt => {
+        opt.classList.toggle('active', opt.dataset.val === mode);
       });
-
-      if (mode === 'in-person') locationField.classList.add('show');
-      else locationField.classList.remove('show');
+      locationField.classList.toggle('show', mode === 'in-person');
     }
 
     searchBtn.addEventListener('click', () => {
-      searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Scanning Database...';
+      searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
       searchBtn.disabled = true;
-
       setTimeout(() => {
         renderResults();
         searchBtn.innerHTML = '<i class="fas fa-search"></i> Find Candidates';
         searchBtn.disabled = false;
-      }, 400);
+      }, 300);
     });
 
     function renderResults() {
@@ -641,67 +619,47 @@
       
       const selectedCountry = countrySelect.value;
       const selectedCity = citySelect.value;
+      document.getElementById('locationText').innerText = `${selectedCity === 'Any' ? 'All' : selectedCity}, ${selectedCountry}`;
 
-      document.getElementById('locationText').innerText = `${selectedCity}, ${selectedCountry}`;
-
-      // Filter Location
-      let filteredCandidates = candidatesDatabase.filter(c => {
-        const matchCountry = c.country === selectedCountry;
-        // If "Any" is selected, match any city, otherwise match specific city
-        const matchCity = (selectedCity === "Any") || (c.city === selectedCity);
-        return matchCountry && matchCity;
+      // Filter
+      let filtered = candidatesDatabase.filter(c => {
+        return c.country === selectedCountry && (selectedCity === "Any" || c.city === selectedCity);
       });
 
-      // Skill Scoring Logic
-      const activeSkillNodes = document.querySelectorAll('.skill-item.active');
-      const requiredSkills = Array.from(activeSkillNodes).map(n => n.dataset.skill.toLowerCase());
-
-      filteredCandidates.forEach(c => {
-        let score = 70; // Base score
+      // Score
+      const activeSkills = Array.from(document.querySelectorAll('.skill-item.active')).map(n => n.dataset.skill.toLowerCase());
+      
+      filtered.forEach(c => {
+        let score = 70;
+        const cSkills = c.verified.map(s => s.toLowerCase());
+        let matches = 0;
         
-        const candidateSkillsLower = c.verified.map(s => s.toLowerCase());
-        let skillMatches = 0;
-        
-        if (requiredSkills.length > 0) {
-          requiredSkills.forEach(rs => {
-            if(candidateSkillsLower.includes(rs)) skillMatches++;
-          });
-          // Calculate boost based on how many skills match
-          score += (skillMatches / requiredSkills.length) * 30;
+        if (activeSkills.length > 0) {
+          activeSkills.forEach(sk => { if(cSkills.includes(sk)) matches++; });
+          score += (matches / activeSkills.length) * 30;
         } else {
-          score += 15; // Small boost if no skills selected
+          score += 15;
         }
-
+        
         c.match = Math.min(Math.floor(score), 99);
         c.matchType = c.match > 90 ? "perfect" : "transferable";
       });
 
-      filteredCandidates.sort((a, b) => b.match - a.match);
-      const displayCandidates = filteredCandidates.slice(0, 12);
-
+      filtered.sort((a, b) => b.match - a.match);
+      const display = filtered.slice(0, 12);
+      candidateCount.innerText = filtered.length;
       candidateGrid.innerHTML = '';
-      candidateCount.innerText = filteredCandidates.length;
 
-      if (displayCandidates.length === 0) {
-        candidateGrid.innerHTML = `
-          <div class="empty-state" style="grid-column: 1 / -1;">
-            <i class="fas fa-search"></i>
-            <h3>No Exact Matches</h3>
-            <p>No candidates found in ${selectedCity === 'Any' ? selectedCountry : selectedCity + ', ' + selectedCountry} matching those skills. Try broadening your search.</p>
-          </div>
-        `;
+      if (display.length === 0) {
+        candidateGrid.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;"><i class="fas fa-search"></i><h3>No Matches</h3><p>Try adjusting your filters.</p></div>`;
         return;
       }
 
-      displayCandidates.forEach(c => {
+      display.forEach(c => {
         const card = document.createElement('div');
         card.className = 'candidate-card';
-        
-        const badgeClass = c.matchType === 'perfect' ? 'match-badge' : 'match-badge transferable';
-        const badgeText = c.matchType === 'perfect' ? 'Best Match' : 'Good Match';
-
         card.innerHTML = `
-          <div class="${badgeClass}">${c.match}% <span style="font-size:0.7rem; font-weight:400; display:block;">${badgeText}</span></div>
+          <div class="${c.matchType === 'perfect' ? 'match-badge' : 'match-badge transferable'}">${c.match}% <span style="font-size:0.7rem; font-weight:400; display:block;">${c.matchType === 'perfect' ? 'Best' : 'Good'}</span></div>
           <div class="card-top">
             <div class="avatar">${c.initials}</div>
             <div class="info">
@@ -710,48 +668,33 @@
               <p style="font-size:0.8rem; color:var(--primary);"><i class="fas fa-map-marker-alt"></i> ${c.city}</p>
             </div>
           </div>
-          
           <div class="verified-skills">
             ${c.verified.slice(0, 4).map(skill => `<div class="v-skill"><i class="fas fa-check-circle"></i> ${skill}</div>`).join('')}
           </div>
-
           <div class="card-actions">
             <button class="btn btn-outline" onclick="openModal(${c.id})">View Profile</button>
             <button class="btn btn-primary">Invite</button>
-          </div>
-        `;
+          </div>`;
         candidateGrid.appendChild(card);
       });
     }
 
     function openModal(id) {
-      const candidate = candidatesDatabase.find(c => c.id === id);
-      if(!candidate) return;
-
-      document.getElementById('modalAvatar').innerText = candidate.initials;
-      document.getElementById('modalName').innerText = candidate.name;
-      document.getElementById('modalRole').innerText = candidate.role;
-      document.getElementById('modalLocation').innerText = `${candidate.city}, ${candidate.country}`;
-      document.getElementById('modalMatch').innerText = candidate.match + '%';
-      
-      const skillsGrid = document.getElementById('modalSkillsGrid');
-      skillsGrid.innerHTML = candidate.skills.map(s => `
-        <div class="score-item">
-          <h5>${s.name}</h5>
-          <div class="val ${s.score > 90 ? 'high' : ''}">${s.score}%</div>
-        </div>
+      const c = candidatesDatabase.find(x => x.id === id);
+      if(!c) return;
+      document.getElementById('modalAvatar').innerText = c.initials;
+      document.getElementById('modalName').innerText = c.name;
+      document.getElementById('modalRole').innerText = c.role;
+      document.getElementById('modalLocation').innerText = `${c.city}, ${c.country}`;
+      document.getElementById('modalMatch').innerText = c.match + '%';
+      document.getElementById('modalSkillsGrid').innerHTML = c.skills.map(s => `
+        <div class="score-item"><h5>${s.name}</h5><div class="val ${s.score > 90 ? 'high' : ''}">${s.score}%</div></div>
       `).join('');
-
       modalOverlay.classList.add('active');
     }
 
-    function closeModal() {
-      modalOverlay.classList.remove('active');
-    }
-
-    modalOverlay.addEventListener('click', (e) => {
-      if (e.target === modalOverlay) closeModal();
-    });
+    function closeModal() { modalOverlay.classList.remove('active'); }
+    modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
   </script>
 </body>
 </html>

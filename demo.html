@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SkillBridge Demo | Employer View</title>
+  <title>SkillBridge 2.0 | Job Matching</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
@@ -11,219 +11,301 @@
   
   <style>
     :root {
-      --primary: #2563EB;
-      --primary-dark: #1E40AF;
-      --primary-light: #DBEAFE;
-      --bg: #FFFFFF;
-      --bg-alt: #F8FAFC;
+      --primary: #6366F1;
+      --primary-dark: #4F46E5;
+      --bg: #F1F5F9;
+      --bg-card: #FFFFFF;
       --text-main: #0F172A;
       --text-muted: #64748B;
       --border: #E2E8F0;
       --success: #10B981;
-      --radius: 8px;
-      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --danger: #EF4444;
+      --radius: 16px;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Inter', sans-serif;
-      background: var(--bg-alt);
+      background: var(--bg);
       color: var(--text-main);
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      overflow: hidden; 
     }
 
     h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; }
 
-    /* --- NAVBAR --- */
-    .navbar {
+    /* --- TOP NAVIGATION --- */
+    .app-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
       background: white;
-      height: 70px;
-      width: 100%;
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
+      justify-content: space-between;
       padding: 0 2rem;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      z-index: 1000;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     }
+    
     .logo {
       font-family: 'Poppins', sans-serif;
       font-weight: 800;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       color: var(--primary);
-      text-decoration: none;
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
-    .logo i { color: #F59E0B; }
-    .demo-badge {
-      background: var(--primary-light);
-      color: var(--primary);
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      margin-left: 1rem;
-      text-transform: uppercase;
+    
+    .view-switcher {
+      display: flex;
+      background: var(--bg);
+      padding: 4px;
+      border-radius: 12px;
     }
-    .nav-actions { margin-left: auto; display: flex; gap: 1rem; align-items: center; }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.6rem 1.2rem;
-      border-radius: var(--radius);
+    
+    .view-btn {
+      padding: 0.5rem 1.2rem;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
       font-weight: 600;
       font-size: 0.9rem;
-      text-decoration: none;
       cursor: pointer;
-      border: none;
+      border-radius: 8px;
       transition: all 0.2s;
     }
-    .btn-primary { background: var(--primary); color: white; box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2); }
-    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
-    .btn-primary:disabled { background: #93C5FD; cursor: not-allowed; transform: none; }
-    .btn-outline { background: white; color: var(--text-main); border: 1px solid var(--border); }
-    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
-
-    /* --- LAYOUT --- */
-    .app-container {
-      display: grid;
-      grid-template-columns: 420px 1fr;
-      flex: 1;
-      height: calc(100vh - 70px);
+    
+    .view-btn.active {
+      background: white;
+      color: var(--primary);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
 
-    /* --- SIDEBAR --- */
-    .sidebar {
-      background: white;
-      border-right: 1px solid var(--border);
-      padding: 2rem;
-      overflow-y: auto;
+    /* --- VIEW CONTAINER --- */
+    .view-container {
+      margin-top: 60px;
+      height: calc(100vh - 60px);
+      position: relative;
+    }
+
+    .view {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: none;
+      overflow: hidden;
+    }
+    
+    .view.active { display: block; }
+
+    /* --- JOB SEEKER VIEW (SWIPE) --- */
+    .swipe-view {
       display: flex;
       flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+      position: relative;
+      height: 100%;
     }
-    .sidebar-header { margin-bottom: 2rem; }
-    .sidebar-header h2 { font-size: 1.2rem; margin-bottom: 0.5rem; }
-    .sidebar-header p { font-size: 0.9rem; color: var(--text-muted); }
 
-    .form-group { margin-bottom: 1.5rem; }
-    .form-group label { display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--text-main); }
-    
-    .input-style {
-      width: 100%;
-      padding: 0.75rem 1rem;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      font-family: 'Inter', sans-serif;
-      font-size: 0.95rem;
-      transition: border-color 0.2s;
-      background: white;
-      color: var(--text-main);
-    }
-    .input-style:focus { outline: none; border-color: var(--primary); }
-    
-    .toggle-group {
-      display: flex;
-      background: var(--bg-alt);
-      border-radius: var(--radius);
-      padding: 4px;
-      border: 1px solid var(--border);
-    }
-    .toggle-option {
-      flex: 1;
+    .swipe-header {
       text-align: center;
-      padding: 0.6rem;
-      cursor: pointer;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: all 0.2s;
-      color: var(--text-muted);
+      margin-bottom: 1rem;
+      z-index: 10;
     }
-    .toggle-option.active {
+    .swipe-header h2 { font-size: 1.5rem; margin-bottom: 0.2rem; }
+    .swipe-header p { color: var(--text-muted); font-size: 0.9rem; }
+
+    .card-stack {
+      position: relative;
+      width: 100%;
+      max-width: 360px;
+      height: 480px;
+      perspective: 1000px;
+    }
+
+    .job-card {
+      position: absolute;
+      width: 100%;
+      height: 100%;
       background: white;
-      color: var(--primary);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      user-select: none;
+      touch-action: none;
+      border: 1px solid rgba(0,0,0,0.05);
+      overflow: hidden;
+    }
+
+    .job-card.go-left {
+      transform: translateX(-150%) rotate(-30deg) !important;
+      opacity: 0;
+    }
+    .job-card.go-right {
+      transform: translateX(150%) rotate(30deg) !important;
+      opacity: 0;
+    }
+
+    .job-logo {
+      width: 60px;
+      height: 60px;
+      background: var(--primary);
+      color: white;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+    }
+
+    .job-title { font-size: 1.4rem; margin-bottom: 0.3rem; line-height: 1.2; }
+    .job-company { color: var(--text-muted); font-weight: 500; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; }
+    .job-tags { display: flex; gap: 0.5rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
+    .tag { 
+      background: #F1F5F9; 
+      color: var(--text-muted); 
+      padding: 0.3rem 0.8rem; 
+      border-radius: 20px; 
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    
+    .job-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .job-meta {
+      margin-top: 1.2rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
       font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    /* Swipe Buttons */
+    .swipe-actions {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1.5rem;
+      z-index: 10;
+    }
+
+    .action-btn {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: none;
+      background: white;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .action-btn:hover { transform: scale(1.1); }
+    .action-btn.reject { color: var(--danger); }
+    .action-btn.like { color: var(--success); background: #ECFDF5; }
+
+    .empty-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 100%;
+      color: var(--text-muted);
+      background: white;
+      border-radius: var(--radius);
       box-shadow: var(--shadow);
     }
-    
-    .hidden-field {
-      max-height: 0;
-      overflow: hidden;
-      opacity: 0;
-      transition: max-height 0.3s ease, opacity 0.3s ease;
-    }
-    .hidden-field.show {
-      max-height: 500px;
-      opacity: 1;
-    }
-    
-    .dropdown-row { display: flex; gap: 1rem; margin-bottom: 1rem; }
-    .dropdown-row .form-group { margin-bottom: 0; flex: 1; }
+    .empty-stack i { font-size: 3rem; margin-bottom: 1rem; color: var(--border); }
 
-    .skills-container {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1rem;
-      background: var(--bg-alt);
-      max-height: 400px;
+    /* --- EMPLOYER VIEW (DASHBOARD) --- */
+    .employer-view {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      height: 100%;
+    }
+
+    .emp-sidebar {
+      background: white;
+      border-right: 1px solid var(--border);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
       overflow-y: auto;
     }
     
-    .skill-category { margin-bottom: 1.2rem; }
-    .skill-category:last-child { margin-bottom: 0; }
+    .emp-header { margin-bottom: 1.5rem; }
+    .emp-header h2 { font-size: 1.2rem; margin-bottom: 0.3rem; }
+    .emp-header p { font-size: 0.85rem; color: var(--text-muted); }
     
-    .skill-cat-title {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
-      font-weight: 600;
-      margin-bottom: 0.7rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .skill-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
-
-    .skill-item {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 0.6rem;
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 6px;
+    .job-list { display: flex; flex-direction: column; gap: 0.6rem; }
+    
+    .job-list-item {
+      padding: 1rem;
+      background: #F8FAFC;
+      border-radius: 8px;
       cursor: pointer;
       transition: all 0.2s;
-      font-size: 0.85rem;
-      user-select: none;
+      border: 1px solid transparent;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    
-    .skill-item:hover { border-color: var(--primary); background: #F8FAFC; }
-    .skill-item.active { background: var(--primary); color: white; border-color: var(--primary); }
-    .skill-item.active .skill-icon { color: white; }
-    .skill-icon { width: 18px; text-align: center; color: var(--text-muted); font-size: 0.85rem; }
-
-    /* UPDATED: Removed auto margin to keep button right under skills */
-    .search-btn { 
-      width: 100%; 
-      padding: 1rem; 
-      font-size: 1rem; 
-      margin-top: 1.5rem; /* Standard spacing */
+    .job-list-item:hover {
+      background: white; 
+      border-color: var(--border);
+    }
+    .job-list-item.active {
+      background: white;
+      border-color: var(--primary);
+      box-shadow: 0 2px 8px rgba(99, 102, 241, 0.1);
+    }
+    .job-info h4 { font-size: 0.95rem; margin-bottom: 0.2rem; }
+    .job-info span { font-size: 0.8rem; color: var(--text-muted); }
+    .applicant-count {
+      background: var(--primary);
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
     }
 
-    /* --- MAIN CONTENT --- */
-    .main-content { padding: 2rem; overflow-y: auto; position: relative; }
+    .emp-main {
+      padding: 2rem;
+      overflow-y: auto;
+      background: var(--bg);
+    }
 
-    .empty-state {
+    .emp-welcome {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -231,562 +313,482 @@
       height: 100%;
       text-align: center;
       color: var(--text-muted);
-      padding: 2rem;
     }
-    .empty-state i { font-size: 4rem; margin-bottom: 1.5rem; color: var(--border); }
-    .empty-state h3 { color: var(--text-main); margin-bottom: 0.5rem; }
 
-    .results-header {
-      display: none;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.5rem;
-    }
-    .results-header.active { display: flex; }
-    
     .candidate-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.2rem;
     }
 
     .candidate-card {
       background: white;
-      border: 1px solid var(--border);
       border-radius: 12px;
       padding: 1.5rem;
-      transition: all 0.3s ease;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
       position: relative;
-      overflow: hidden;
     }
-    .candidate-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
-      border-color: rgba(37, 99, 235, 0.3);
-    }
-
-    .card-top { display: flex; gap: 1rem; margin-bottom: 1rem; }
+    .candidate-card:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    
+    .card-top { display: flex; gap: 1rem; margin-bottom: 1rem; align-items: center; }
     .avatar {
-      width: 60px; height: 60px;
+      width: 50px; height: 50px;
       border-radius: 50%;
-      background: var(--primary-light);
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 700;
-      color: var(--primary);
-      font-size: 1.2rem;
+      color: white;
       flex-shrink: 0;
+      font-size: 1.1rem;
     }
-    .info h3 { font-size: 1.1rem; margin-bottom: 0.2rem; }
-    .info p { color: var(--text-muted); font-size: 0.9rem; }
+    .info h3 { font-size: 1rem; margin-bottom: 0.2rem; }
+    .info p { color: var(--text-muted); font-size: 0.85rem; }
     
     .match-badge {
-      position: absolute; top: 1rem; right: 1rem;
-      background: #ECFDF5; color: #065F46;
-      font-weight: 700; font-size: 0.85rem;
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: #ECFDF5;
+      color: #059669;
       padding: 0.3rem 0.6rem;
-      border-radius: 4px;
-      text-align: right;
-    }
-    .match-badge.transferable { background: #FFFBEB; color: #92400E; }
-    .match-badge.weak { background: #FEF2F2; color: #991B1B; }
-
-    .verified-skills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
-    .v-skill {
-      background: var(--bg-alt);
-      padding: 0.3rem 0.6rem;
-      border-radius: 4px;
+      border-radius: 20px;
       font-size: 0.8rem;
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-      color: var(--text-main);
+      font-weight: 700;
     }
-    .v-skill i { color: var(--success); font-size: 0.7rem; }
-    
-    .meta-info {
-      display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.85rem; color: var(--text-muted);
-    }
-    .meta-item { display: flex; align-items: center; gap: 0.3rem; }
 
-    .card-actions { display: flex; gap: 0.5rem; border-top: 1px solid var(--border); padding-top: 1rem; }
-    .card-actions .btn { flex: 1; justify-content: center; padding: 0.5rem; font-size: 0.85rem; }
-
-    /* Modal */
-    .modal-overlay {
-      position: fixed; inset: 0;
-      background: rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(4px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 200;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
-    }
-    .modal-overlay.active { opacity: 1; pointer-events: all; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.8rem 0; }
+    .skill-tags .tag { background: #F1F5F9; color: var(--text-main); font-size: 0.75rem; }
     
-    .modal-content {
-      background: white;
-      width: 500px;
-      max-width: 90%;
-      border-radius: 12px;
-      padding: 2rem;
-      position: relative;
-      transform: scale(0.9);
-      transition: transform 0.3s;
-      max-height: 90vh;
-      overflow-y: auto;
+    .card-actions {
+      margin-top: 1rem;
+      display: flex;
+      gap: 0.5rem;
     }
-    .modal-overlay.active .modal-content { transform: scale(1); }
-    .close-btn {
-      position: absolute; top: 1rem; right: 1rem;
-      background: none; border: none;
-      font-size: 1.2rem;
-      color: var(--text-muted);
+    .btn {
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.85rem;
       cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      flex: 1;
+      text-align: center;
+      text-decoration: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
     }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-outline { background: white; border: 1px solid var(--border); color: var(--text-main); }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
 
-    .modal-profile { text-align: center; margin-bottom: 1.5rem; }
-    .modal-profile .avatar { width: 80px; height: 80px; font-size: 1.5rem; margin: 0 auto 1rem; }
-    .skill-score-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
-    .score-item { background: var(--bg-alt); padding: 0.8rem; border-radius: 6px; text-align: center; }
-    .score-item h5 { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.3rem; font-weight: 500; }
-    .score-item .val { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.2rem; color: var(--text-main); }
-    .score-item .val.high { color: var(--success); }
-    
-    /* Responsive */
-    @media (max-width: 900px) {
-      .app-container { grid-template-columns: 1fr; height: auto; }
-      .sidebar { border-right: none; border-bottom: 1px solid var(--border); }
-      .search-btn { margin-top: 1rem; margin-bottom: 1rem; }
-      .dropdown-row { flex-direction: column; }
-      .skill-grid { grid-template-columns: 1fr; }
+    @media (max-width: 768px) {
+      .employer-view { grid-template-columns: 1fr; }
+      .emp-sidebar { display: none; } 
+      .swipe-view { padding: 1rem; }
+      .card-stack { height: 450px; max-width: 100%; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <a href="index.html" class="logo">
+  <!-- NAV BAR -->
+  <nav class="app-nav">
+    <div class="logo">
       <i class="fas fa-bridge"></i> SkillBridge
-    </a>
-    <span class="demo-badge">Employer Demo</span>
-    <div class="nav-actions">
-      <span style="color: var(--text-muted); font-size: 0.9rem;"><i class="fas fa-database"></i> <span id="dbCount">0</span> Candidates Loaded</span>
     </div>
+    <div class="view-switcher">
+      <button class="view-btn active" onclick="switchView('seeker')">Job Seeker</button>
+      <button class="view-btn" onclick="switchView('employer')">Employer</button>
+    </div>
+    <div style="width: 100px;"></div>
   </nav>
 
-  <div class="app-container">
+  <!-- MAIN APP -->
+  <div class="view-container">
     
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-      <div class="sidebar-header">
-        <h2>Find Talent</h2>
-        <p>Filter by location and skills.</p>
-      </div>
+    <!-- JOB SEEKER VIEW -->
+    <div id="seekerView" class="view active">
+      <div class="swipe-view">
+        <div class="swipe-header">
+          <h2>Discover Opportunities</h2>
+          <p id="jobsRemaining">200+ roles matching your profile</p>
+        </div>
+        
+        <div class="card-stack" id="cardStack">
+          <!-- Cards injected here -->
+        </div>
 
-      <div class="form-group">
-        <label>Work Arrangement</label>
-        <div class="toggle-group">
-          <div class="toggle-option" data-val="online" onclick="setWorkMode('online')">Remote / Online</div>
-          <div class="toggle-option active" data-val="in-person" onclick="setWorkMode('in-person')">In-Person</div>
+        <div class="swipe-actions">
+          <button class="action-btn reject" onclick="handleSwipe('left')">
+            <i class="fas fa-times"></i>
+          </button>
+          <button class="action-btn like" onclick="handleSwipe('right')">
+            <i class="fas fa-heart"></i>
+          </button>
         </div>
       </div>
-
-      <div class="hidden-field show" id="locationField">
-        <div class="dropdown-row">
-          <div class="form-group">
-            <label>Country</label>
-            <select class="input-style" id="countrySelect" onchange="updateCities()"></select>
-          </div>
-          <div class="form-group">
-            <label>City</label>
-            <select class="input-style" id="citySelect"></select>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>Minimum Experience</label>
-        <select class="input-style" id="expLevel">
-          <option value="entry">Entry Level (0-2 yrs)</option>
-          <option value="mid" selected>Mid Level (3-5 yrs)</option>
-          <option value="senior">Senior Level (5+ yrs)</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label>Required Verified Skills</label>
-        <div class="skills-container" id="skillSelector"></div>
-      </div>
-
-      <button class="btn btn-primary search-btn" id="searchBtn">
-        <i class="fas fa-search"></i> Find Candidates
-      </button>
-    </aside>
-
-    <!-- MAIN CONTENT -->
-    <main class="main-content">
-      <div class="empty-state" id="emptyState">
-        <i class="fas fa-database"></i>
-        <h3>Database Ready</h3>
-        <p>Search to find matches from 10,000 records.</p>
-      </div>
-
-      <div class="results-header" id="resultsHeader">
-        <div>
-          <h2 style="font-size: 1.5rem;">Top Candidates</h2>
-          <p style="font-size: 0.9rem; color: var(--text-muted);">Results in <span id="locationText">Location</span></p>
-        </div>
-        <div style="font-size: 0.9rem; color: var(--text-muted);">
-          Showing <strong id="candidateCount">0</strong> matches
-        </div>
-      </div>
-
-      <div class="candidate-grid" id="candidateGrid"></div>
-    </main>
-  </div>
-
-  <!-- MODAL -->
-  <div class="modal-overlay" id="modalOverlay">
-    <div class="modal-content">
-      <button class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
-      <div class="modal-profile">
-        <div class="avatar" id="modalAvatar">JP</div>
-        <h2 id="modalName">Jane Park</h2>
-        <p style="color: var(--text-muted);" id="modalRole">Operations Manager</p>
-        <p style="font-size: 0.85rem; margin-top: 0.3rem;"><i class="fas fa-map-marker-alt"></i> <span id="modalLocation">New York, USA</span></p>
-      </div>
-      <div style="background: var(--bg-alt); padding: 1rem; border-radius: 8px; text-align: center; margin-bottom: 1rem;">
-        <span style="font-weight: 600; color: var(--primary);">Match Score</span>
-        <div style="font-size: 2rem; font-weight: 800; color: var(--text-main);" id="modalMatch">95%</div>
-      </div>
-      <h4 style="margin-bottom: 0.5rem;">Verified Skill Scores</h4>
-      <div class="skill-score-grid" id="modalSkillsGrid"></div>
-      <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
-        <i class="fas fa-paper-plane"></i> Invite to Interview
-      </button>
     </div>
+
+    <!-- EMPLOYER VIEW -->
+    <div id="employerView" class="view">
+      <div class="employer-view">
+        <aside class="emp-sidebar">
+          <div class="emp-header">
+            <h2>Active Job Postings</h2>
+            <p>Click a job to view interested candidates.</p>
+          </div>
+          <div class="job-list" id="employerJobList">
+            <!-- Jobs injected here -->
+          </div>
+        </aside>
+        <main class="emp-main" id="employerMain">
+          <!-- Candidates injected here -->
+        </main>
+      </div>
+    </div>
+
   </div>
 
   <script>
-    // --- 1. DATABASE GENERATION ---
+    // --- 1. DATA GENERATION ---
 
-    const locationData = {
-      "United States": ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego", "Dallas", "San Jose", "Austin", "Seattle", "Denver", "Boston"],
-      "United Kingdom": ["London", "Birmingham", "Liverpool", "Glasgow", "Sheffield", "Manchester", "Edinburgh", "Leeds", "Bristol"],
-      "Canada": ["Toronto", "Montreal", "Vancouver", "Calgary", "Ottawa", "Edmonton"],
-      "Germany": ["Berlin", "Hamburg", "Munich", "Cologne", "Frankfurt", "Stuttgart"],
-      "France": ["Paris", "Marseille", "Lyon", "Toulouse", "Nice"],
-      "Australia": ["Sydney", "Melbourne", "Brisbane", "Perth", "Adelaide"],
-      "India": ["Mumbai", "Delhi", "Bangalore", "Hyderabad", "Chennai", "Kolkata"],
-      "Japan": ["Tokyo", "Yokohama", "Osaka", "Nagoya", "Sapporo", "Kyoto"],
-      "Singapore": ["Singapore"],
-      "China": ["Shanghai", "Beijing", "Guangzhou", "Shenzhen"]
-    };
+    const skillPool = ["Python", "React", "Project Management", "Sales", "Java", "SQL", "Design", "Marketing", "Leadership", "AWS", "Communication", "Finance", "Excel", "DevOps", "UI/UX", "Strategy", "Negotiation", "Copywriting"];
+    const companies = ["Google", "Microsoft", "Amazon", "StartupX", "FinCorp", "HealthInc", "DataDrives", "TechNova", "GreenEnergy", "RoboLogix"];
+    const jobTitles = ["Software Engineer", "Product Manager", "Sales Director", "UX Designer", "Data Scientist", "Marketing Lead", "Operations Manager", "Frontend Dev", "Backend Engineer", "Scrum Master", "HR Lead"];
+    const locations = ["New York, NY", "San Francisco, CA", "Austin, TX", "Remote", "London, UK", "Berlin, DE", "Singapore"];
 
-    const skillCategories = [
-      { name: "Management & Leadership", icon: "fa-briefcase", skills: ["Leadership", "Problem Solving", "Project Management", "Negotiation", "Strategic Planning", "Conflict Resolution", "Agile", "Scrum", "Change Management", "Risk Management"] },
-      { name: "Technology & Data", icon: "fa-laptop-code", skills: ["Python", "SQL", "React", "Excel", "Data Analysis", "Cloud (AWS/Azure)", "Java", "Cyber Security", "Machine Learning", "AI", "JavaScript", "DevOps", "Docker", "Kubernetes", "C++", "Rust", "Go"] },
-      { name: "Communication & Sales", icon: "fa-comments", skills: ["Communication", "Sales", "Marketing", "Public Speaking", "Technical Writing", "Customer Service", "Social Media", "SEO/SEM", "Negotiation", "Account Management"] },
-      { name: "Design & Creative", icon: "fa-palette", skills: ["Figma", "UI/UX Design", "Video Editing", "Photography", "Photoshop", "Illustrator", "Animation", "3D Modeling", "Motion Graphics"] },
-      { name: "Finance & Legal", icon: "fa-balance-scale", skills: ["Financial Analysis", "Accounting", "Tax Law", "Corporate Law", "Bookkeeping", "Auditing", "Budgeting", "Investment Strategy"] },
-      { name: "Engineering & Science", icon: "fa-cogs", skills: ["AutoCAD", "Civil Engineering", "Electrical Systems", "Mechanical Design", "Research & Development", "Lab Equipment", "Data Science", "Simulation"] }
-    ];
-
-    const firstNames = ["James", "Mary", "John", "Patricia", "Robert", "Jennifer", "Michael", "Linda", "William", "Elizabeth", "David", "Barbara", "Richard", "Susan", "Joseph", "Jessica", "Thomas", "Sarah", "Charles", "Karen", "Christopher", "Nancy", "Daniel", "Lisa", "Matthew", "Betty", "Anthony", "Margaret", "Mark", "Sandra", "Donald", "Ashley", "Steven", "Kimberly", "Paul", "Emily", "Andrew", "Donna", "Joshua", "Michelle", "Zhang", "Wei", "Li", "Wang", "Singh", "Patel", "Kim", "Lee", "Park", "Tanaka", "Sato"];
-    const lastNames = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez", "Hernandez", "Lopez", "Gonzalez", "Wilson", "Anderson", "Thomas", "Taylor", "Moore", "Jackson", "Martin", "Lee", "Perez", "Thompson", "White", "Harris", "Sanchez", "Clark", "Ramirez", "Lewis", "Robinson", "Walker", "Young", "Allen", "King", "Wright", "Scott", "Torres", "Nguyen", "Hill", "Flores", "Green", "Adams", "Nelson", "Baker", "Hall", "Rivera", "Campbell", "Mitchell", "Carter", "Roberts"];
-    const jobTitles = ["Software Engineer", "Project Manager", "Data Analyst", "Marketing Manager", "Sales Representative", "Graphic Designer", "HR Specialist", "Financial Analyst", "Operations Manager", "Customer Service Rep", "Registered Nurse", "Civil Engineer", "Mechanical Engineer", "Electrician", "Plumber", "Chef", "Teacher", "Accountant", "Lawyer", "Administrative Assistant", "CEO", "CFO", "CTO", "Product Manager", "Scrum Master", "UX Designer", "UI Developer", "DevOps Engineer", "Data Scientist", "Cyber Security Analyst", "Store Manager", "Barista", "Bartender", "Driver", "Logistics Coordinator", "Real Estate Agent", "Insurance Broker", "Bank Teller", "Personal Trainer", "Yoga Instructor", "Architect", "Interior Designer", "Veterinarian", "Pharmacist", "Pilot"];
-
-    const skillPool = skillCategories.flatMap(cat => cat.skills);
-    const locationKeys = Object.keys(locationData);
-
-    function generateCandidates(count) {
-      const generatedList = [];
-      for (let i = 1; i <= count; i++) {
-        const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
-        const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
-        const country = locationKeys[Math.floor(Math.random() * locationKeys.length)];
-        const cities = locationData[country];
-        const yearsExperience = Math.floor(Math.random() * 16);
+    // Generate Fake Jobs (200+)
+    const jobsDatabase = [];
+    for (let i = 1; i <= 250; i++) {
+        const title = jobTitles[Math.floor(Math.random() * jobTitles.length)];
+        const reqSkills = [];
+        for(let k=0; k<4; k++) reqSkills.push(skillPool[Math.floor(Math.random() * skillPool.length)]);
         
-        const numSkills = Math.floor(Math.random() * 4) + 3;
-        const skills = [];
-        const usedIndices = new Set();
+        const comp = companies[Math.floor(Math.random() * companies.length)];
+        const salStart = Math.floor(Math.random() * 60) + 60;
         
-        for (let k = 0; k < numSkills; k++) {
-          let idx = Math.floor(Math.random() * skillPool.length);
-          while (usedIndices.has(idx)) { idx = Math.floor(Math.random() * skillPool.length); }
-          usedIndices.add(idx);
-          skills.push({ name: skillPool[idx], score: Math.floor(Math.random() * 40) + 60 });
-        }
-
-        generatedList.push({
-          id: i,
-          name: `${firstName} ${lastName}`,
-          initials: firstName[0] + lastName[0],
-          role: jobTitles[Math.floor(Math.random() * jobTitles.length)],
-          city: cities[Math.floor(Math.random() * cities.length)],
-          country: country,
-          yearsExperience: yearsExperience,
-          skills: skills,
-          verified: skills.map(s => s.name)
+        jobsDatabase.push({
+            id: i,
+            title: title,
+            company: comp,
+            location: Math.random() > 0.4 ? locations[Math.floor(Math.random() * locations.length)] : "Remote",
+            salary: "$" + salStart + "k - $" + (salStart + 40 + Math.floor(Math.random() * 40)) + "k",
+            skills: [...new Set(reqSkills)],
+            desc: "We are looking for a talented " + title + " to join our dynamic team at " + comp + ". You will be responsible for driving key initiatives and working with cross-functional teams to deliver outstanding results."
         });
-      }
-      return generatedList;
     }
 
-    const candidatesDatabase = generateCandidates(10000);
-    console.log("Database loaded:", candidatesDatabase.length);
+    // Generate Fake Candidates
+    const candidatesDatabase = [];
+    const firstNames = ["Alex", "Jordan", "Taylor", "Morgan", "Casey", "Riley", "Jamie", "Jessie", "Drew", "Quinn", "Avery", "Parker"];
+    const lastNames = ["Smith", "Johnson", "Lee", "Patel", "Garcia", "Kim", "Jones", "Brown", "Miller", "Davis"];
 
-    // --- 2. UI LOGIC ---
+    for (let i = 1; i <= 500; i++) {
+        const cSkills = [];
+        for(let k=0; k<5; k++) cSkills.push(skillPool[Math.floor(Math.random() * skillPool.length)]);
+        
+        candidatesDatabase.push({
+            id: i,
+            name: firstNames[Math.floor(Math.random() * firstNames.length)] + " " + lastNames[Math.floor(Math.random() * lastNames.length)],
+            role: jobTitles[Math.floor(Math.random() * jobTitles.length)],
+            skills: [...new Set(cSkills)],
+            exp: Math.floor(Math.random() * 10) + 1
+        });
+    }
 
-    const countrySelect = document.getElementById('countrySelect');
-    const citySelect = document.getElementById('citySelect');
-    const skillSelector = document.getElementById('skillSelector');
-    const searchBtn = document.getElementById('searchBtn');
-    const emptyState = document.getElementById('emptyState');
-    const resultsHeader = document.getElementById('resultsHeader');
-    const candidateGrid = document.getElementById('candidateGrid');
-    const modalOverlay = document.getElementById('modalOverlay');
-    const locationField = document.getElementById('locationField');
-    const candidateCount = document.getElementById('candidateCount');
-    const expLevelSelect = document.getElementById('expLevel');
-
-    document.getElementById('dbCount').innerText = candidatesDatabase.length.toLocaleString();
+    // Storage for "Matches" (Applications)
+    // Structure: Map<JobID, Array<CandidateObjects>>
+    const matchesMap = new Map();
     
-    populateCountries();
-    populateSkillFilters();
+    // --- SIMULATE REAL DATA ---
+    // Pre-fill the employer dashboard with existing applicants so it looks busy
+    jobsDatabase.forEach(job => {
+        const numApplicants = Math.floor(Math.random() * 25) + 8; // 8 to 33 applicants per job
+        const applicants = [];
+        const usedCandidateIds = new Set();
 
-    function populateSkillFilters() {
-      skillSelector.innerHTML = '';
-      skillCategories.forEach(cat => {
-        const catDiv = document.createElement('div');
-        catDiv.className = 'skill-category';
-        catDiv.innerHTML = `<div class="skill-cat-title"><i class="fas ${cat.icon}"></i> ${cat.name}</div>`;
-        const gridDiv = document.createElement('div');
-        gridDiv.className = 'skill-grid';
-        cat.skills.forEach(skillName => {
-          const item = document.createElement('div');
-          item.className = 'skill-item';
-          item.setAttribute('data-skill', skillName);
-          let iconClass = 'fa-check';
-          if (skillName.includes('Python')) iconClass = 'fa-python fab';
-          else if (skillName.includes('React')) iconClass = 'fa-react fab';
-          else if (skillName.includes('AWS')) iconClass = 'fa-aws fab';
-          else if (skillName.includes('Docker')) iconClass = 'fa-docker fab';
-          else if (['SQL', 'Data Analysis', 'Data Science'].includes(skillName)) iconClass = 'fa-database';
-          else if (['Leadership', 'Project Management'].includes(skillName)) iconClass = 'fa-users-cog';
-          
-          item.innerHTML = `<i class="skill-icon ${iconClass}"></i> ${skillName}`;
-          gridDiv.appendChild(item);
-        });
-        catDiv.appendChild(gridDiv);
-        skillSelector.appendChild(catDiv);
-      });
-    }
+        for(let i=0; i<numApplicants; i++) {
+            const randomIndex = Math.floor(Math.random() * candidatesDatabase.length);
+            // Avoid duplicates for the same job
+            if(usedCandidateIds.has(randomIndex)) continue;
+            usedCandidateIds.add(randomIndex);
 
-    function populateCountries() {
-      countrySelect.innerHTML = '';
-      Object.keys(locationData).sort().forEach(country => {
-        const opt = document.createElement('option');
-        opt.value = country; opt.textContent = country;
-        countrySelect.appendChild(opt);
-      });
-      countrySelect.value = "United States";
-      updateCities();
-    }
+            const candidate = candidatesDatabase[randomIndex];
+            
+            // Calculate Match Score
+            const intersection = job.skills.filter(s => candidate.skills.includes(s));
+            const score = 50 + (intersection.length * 10) + Math.floor(Math.random() * 10);
 
-    function updateCities() {
-      const cities = locationData[countrySelect.value] || [];
-      citySelect.innerHTML = '';
-      const anyOpt = document.createElement('option'); anyOpt.value = "Any"; anyOpt.textContent = "Any City"; citySelect.appendChild(anyOpt);
-      cities.forEach(city => {
-        const opt = document.createElement('option'); opt.value = city; opt.textContent = city;
-        citySelect.appendChild(opt);
-      });
-    }
-
-    skillSelector.addEventListener('click', (e) => {
-      const item = e.target.closest('.skill-item');
-      if (item) item.classList.toggle('active');
+            applicants.push({
+                ...candidate,
+                score: Math.min(99, score),
+                isNew: false // Flag to distinguish from live swipes
+            });
+        }
+        matchesMap.set(job.id, applicants);
     });
 
-    function setWorkMode(mode) {
-      document.querySelectorAll('.toggle-option').forEach(opt => {
-        opt.classList.toggle('active', opt.dataset.val === mode);
-      });
-      locationField.classList.toggle('show', mode === 'in-person');
+    // --- 2. JOB SEEKER LOGIC ---
+
+    let currentJobIndex = 0;
+    const cardStack = document.getElementById('cardStack');
+
+    function renderCards() {
+        cardStack.innerHTML = '';
+        
+        // Only render top 3 cards for performance
+        const slice = jobsDatabase.slice(currentJobIndex, currentJobIndex + 3).reverse();
+        
+        if (slice.length === 0) {
+            cardStack.innerHTML = `<div class="empty-stack"><i class="fas fa-check-circle"></i><h3>All Caught Up!</h3><p>You've reviewed all available positions.</p></div>`;
+            document.getElementById('jobsRemaining').innerText = "No more jobs";
+            return;
+        }
+
+        slice.forEach((job, idx) => {
+            const card = document.createElement('div');
+            card.className = 'job-card';
+            card.dataset.jobId = job.id;
+            
+            // The last element in the reversed slice is actually the top card visually
+            if (idx === slice.length - 1) {
+                attachDragListeners(card);
+            }
+
+            card.innerHTML = `
+                <div class="job-logo" style="background-color: ${getColorFromString(job.company)}">${job.company.substring(0,2)}</div>
+                <h3 class="job-title">${job.title}</h3>
+                <div class="job-company"><i class="fas fa-building"></i> ${job.company}</div>
+                <div class="job-tags">
+                    ${job.skills.slice(0,3).map(s => `<span class="tag">${s}</span>`).join('')}
+                    ${job.skills.length > 3 ? `<span class="tag">+${job.skills.length-3}</span>` : ''}
+                </div>
+                <div class="job-desc">${job.desc}</div>
+                <div class="job-meta">
+                    <span>${job.location}</span>
+                    <span style="color:var(--text-main)">${job.salary}</span>
+                </div>
+            `;
+            cardStack.appendChild(card);
+        });
+
+        updateRemainingCount();
     }
 
-    searchBtn.addEventListener('click', () => {
-      searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
-      searchBtn.disabled = true;
-      
-      setTimeout(() => {
-        try {
-            renderResults();
-        } catch (error) {
-            console.error("Search failed:", error);
-        } finally {
-            searchBtn.innerHTML = '<i class="fas fa-search"></i> Find Candidates';
-            searchBtn.disabled = false;
+    function getColorFromString(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = str.charCodeAt(i) + ((hash << 5) - hash);
         }
-      }, 100);
-    });
+        const colors = ["#6366F1", "#10B981", "#F59E0B", "#EF4444", "#3B82F6", "#8B5CF6", "#EC4899"];
+        return colors[Math.abs(hash) % colors.length];
+    }
 
-    // --- 3. SCORING ENGINE ---
-    
-    function calculateScore(candidate, selectedCountry, selectedCity, reqSkills, reqExp, workMode) {
-      let score = 0;
-      
-      // 1. Location Score (Max 20)
-      if (workMode === 'online') {
-        score += 20; 
-      } else {
-        if (selectedCity === "Any") {
-          if (candidate.country === selectedCountry) score += 20;
+    function updateRemainingCount() {
+        const remaining = jobsDatabase.length - currentJobIndex;
+        document.getElementById('jobsRemaining').innerText = `${remaining} roles remaining`;
+    }
+
+    function handleSwipe(direction) {
+        const topCard = cardStack.lastElementChild;
+        if (!topCard || !topCard.classList.contains('job-card')) return;
+
+        const jobId = parseInt(topCard.dataset.jobId);
+        
+        if (direction === 'right') {
+            topCard.classList.add('go-right');
+            
+            // Add candidate to Employer Dashboard
+            const randomCandidate = candidatesDatabase[Math.floor(Math.random() * candidatesDatabase.length)];
+            const job = jobsDatabase.find(j => j.id === jobId);
+            const intersection = job.skills.filter(s => randomCandidate.skills.includes(s));
+            const score = 50 + (intersection.length * 10) + Math.floor(Math.random() * 20);
+
+            const currentApplicants = matchesMap.get(jobId) || [];
+            
+            // Add to the beginning of the array
+            currentApplicants.unshift({
+                ...randomCandidate,
+                score: Math.min(99, score),
+                isNew: true // It's a live match
+            });
+            
+            matchesMap.set(jobId, currentApplicants);
+            
         } else {
-          if (candidate.city === selectedCity) score += 20;
-          else if (candidate.country === selectedCountry) score += 10;
+            topCard.classList.add('go-left');
         }
-      }
 
-      // 2. Experience Score (Max 20)
-      const years = candidate.yearsExperience;
-      let expMatch = false;
-
-      // Mid/Senior are treated as minimum requirements
-      if (reqExp === 'entry') {
-        if (years <= 2) expMatch = true;
-      } else if (reqExp === 'mid') {
-        if (years >= 3) expMatch = true; 
-      } else if (reqExp === 'senior') {
-        if (years >= 5) expMatch = true;
-      }
-      
-      if (expMatch) score += 20;
-      else score += 5; 
-
-      // 3. Skill Score (Max 60)
-      if (reqSkills.length === 0) {
-        score += 30; 
-      } else {
-        const candidateSkillsLower = candidate.verified.map(s => s.toLowerCase());
-        let earnedPoints = 0;
-        
-        reqSkills.forEach(reqSk => {
-          const reqSkLower = reqSk.toLowerCase();
-          if (candidateSkillsLower.includes(reqSkLower)) {
-            earnedPoints += 10;
-          }
-        });
-
-        const maxPossiblePoints = reqSkills.length * 10;
-        let skillScore = (earnedPoints / maxPossiblePoints) * 60;
-        score += Math.min(60, skillScore);
-      }
-
-      return Math.min(100, Math.floor(score));
+        setTimeout(() => {
+            currentJobIndex++;
+            renderCards();
+            // Update employer view if it's open
+            if (document.getElementById('employerView').classList.contains('active')) {
+                updateEmployerSidebar();
+                // If the currently viewed job changed, refresh the grid
+                const activeJobItem = document.querySelector('.job-list-item.active');
+                if(activeJobItem) {
+                    const activeId = parseInt(activeJobItem.dataset.jobId);
+                    if(activeId === jobId) renderCandidateGrid(jobId);
+                }
+            }
+        }, 300);
     }
 
-    function renderResults() {
-      emptyState.style.display = 'none';
-      resultsHeader.classList.add('active');
-      
-      const activeToggle = document.querySelector('.toggle-option.active');
-      const workMode = activeToggle ? activeToggle.dataset.val : 'in-person';
-      
-      const selectedCountry = countrySelect.value;
-      const selectedCity = citySelect.value;
-      const reqExp = expLevelSelect.value;
-      const activeSkillNodes = document.querySelectorAll('.skill-item.active');
-      const reqSkills = Array.from(activeSkillNodes).map(n => n.dataset.skill);
-      
-      let locationLabel = "Remote / Global";
-      if (workMode === 'in-person') {
-        locationLabel = `${selectedCity === 'Any' ? 'All Cities' : selectedCity}, ${selectedCountry}`;
-      }
-      document.getElementById('locationText').innerText = locationLabel;
+    // Drag Logic
+    function attachDragListeners(card) {
+        let startX, currentX, isDragging = false;
+        
+        const touchStart = (e) => {
+            isDragging = true;
+            startX = e.touches ? e.touches[0].clientX : e.clientX;
+            card.style.transition = 'none';
+        };
+        
+        const touchMove = (e) => {
+            if (!isDragging) return;
+            currentX = e.touches ? e.touches[0].clientX : e.clientX;
+            const deltaX = currentX - startX;
+            const rotation = deltaX * 0.1;
+            card.style.transform = `translateX(${deltaX}px) rotate(${rotation}deg)`;
+            // Visual feedback for swipe
+            if (deltaX > 50) card.style.border = "2px solid var(--success)";
+            else if (deltaX < -50) card.style.border = "2px solid var(--danger)";
+            else card.style.border = "1px solid rgba(0,0,0,0.05)";
+        };
+        
+        const touchEnd = () => {
+            if (!isDragging) return;
+            isDragging = false;
+            card.style.transition = 'transform 0.2s ease, border 0.2s ease';
+            card.style.border = "1px solid rgba(0,0,0,0.05)";
+            
+            const deltaX = currentX - startX;
+            if (Math.abs(deltaX) > 80) {
+                handleSwipe(deltaX > 0 ? 'right' : 'left');
+            } else {
+                card.style.transform = 'translateX(0) rotate(0)';
+            }
+            startX = null;
+            currentX = null;
+        };
 
-      let filtered = [];
-      
-      if (workMode === 'online') {
-        filtered = [...candidatesDatabase]; 
-      } else {
-        filtered = candidatesDatabase.filter(c => {
-          if (selectedCity !== "Any") return c.city === selectedCity && c.country === selectedCountry;
-          return c.country === selectedCountry;
+        card.addEventListener('mousedown', touchStart);
+        card.addEventListener('mousemove', touchMove);
+        card.addEventListener('mouseup', touchEnd);
+        card.addEventListener('mouseleave', touchEnd);
+        
+        card.addEventListener('touchstart', touchStart);
+        card.addEventListener('touchmove', touchMove);
+        card.addEventListener('touchend', touchEnd);
+    }
+
+    // --- 3. EMPLOYER LOGIC ---
+
+    const employerJobList = document.getElementById('employerJobList');
+    const employerMain = document.getElementById('employerMain');
+    let selectedJobId = null;
+
+    function updateEmployerSidebar() {
+        employerJobList.innerHTML = '';
+        jobsDatabase.forEach(job => {
+            const count = matchesMap.has(job.id) ? matchesMap.get(job.id).length : 0;
+            const item = document.createElement('div');
+            item.className = 'job-list-item';
+            item.dataset.jobId = job.id;
+            if(selectedJobId === job.id) item.classList.add('active');
+            
+            item.innerHTML = `
+                <div class="job-info">
+                    <h4>${job.title}</h4>
+                    <span>${job.company}</span>
+                </div>
+                <div class="applicant-count">${count}</div>
+            `;
+            
+            item.onclick = () => {
+                selectedJobId = job.id;
+                renderCandidateGrid(job.id);
+                // Update active class
+                document.querySelectorAll('.job-list-item').forEach(el => el.classList.remove('active'));
+                item.classList.add('active');
+            };
+
+            employerJobList.appendChild(item);
         });
-      }
+    }
 
-      filtered.forEach(c => {
-        c.match = calculateScore(c, selectedCountry, selectedCity, reqSkills, reqExp, workMode);
-        if (c.match >= 80) c.matchType = "perfect";
-        else if (c.match >= 60) c.matchType = "transferable";
-        else c.matchType = "weak";
-      });
-
-      filtered.sort((a, b) => b.match - a.match);
-      
-      const display = filtered.slice(0, 12);
-      candidateCount.innerText = filtered.length;
-      candidateGrid.innerHTML = '';
-
-      if (display.length === 0) {
-        candidateGrid.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;"><i class="fas fa-search"></i><h3>No Matches</h3><p>Try broadening your location or skill requirements.</p></div>`; return;
-      }
-
-      display.forEach(c => {
-        const card = document.createElement('div');
-        card.className = 'candidate-card';
+    function renderCandidateGrid(jobId) {
+        const job = jobsDatabase.find(j => j.id === jobId);
+        const interested = matchesMap.get(jobId) || [];
         
-        let badgeClass = 'match-badge';
-        if (c.matchType === 'transferable') badgeClass = 'match-badge transferable';
-        if (c.matchType === 'weak') badgeClass = 'match-badge weak';
-        
-        const badgeText = c.matchType === 'perfect' ? 'Best Match' : (c.matchType === 'transferable' ? 'Good Fit' : 'Partial Match');
-
-        card.innerHTML = `
-          <div class="${badgeClass}">${c.match}% <span style="font-size:0.7rem; font-weight:400; display:block;">${badgeText}</span></div>
-          <div class="card-top">
-            <div class="avatar">${c.initials}</div>
-            <div class="info">
-              <h3>${c.name}</h3>
-              <p>${c.role}</p>
+        let html = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div>
+                    <h2 style="margin-bottom: 0.3rem;">${job.title}</h2>
+                    <p style="color:var(--text-muted);">${interested.length} candidates interested</p>
+                </div>
+                <button class="btn btn-outline" style="flex: 0 0 auto; width: auto;">
+                    <i class="fas fa-filter"></i> Filter
+                </button>
             </div>
-          </div>
-          <div class="meta-info">
-             <div class="meta-item"><i class="fas fa-map-marker-alt"></i> ${c.city}</div>
-             <div class="meta-item"><i class="fas fa-clock"></i> ${c.yearsExperience} yrs exp</div>
-          </div>
-          <div class="verified-skills">${c.verified.slice(0, 4).map(skill => `<div class="v-skill"><i class="fas fa-check-circle"></i> ${skill}</div>`).join('')}</div>
-          <div class="card-actions">
-            <button class="btn btn-outline" onclick="openModal(${c.id})">View Profile</button>
-            <button class="btn btn-primary">Invite</button>
-          </div>`;
-        candidateGrid.appendChild(card);
-      });
+            <div class="candidate-grid">
+        `;
+
+        if (interested.length === 0) {
+            html += `<div class="emp-welcome" style="grid-column: 1/-1;"><i class="fas fa-user-clock"></i><p>No interested candidates yet.</p></div>`;
+        } else {
+            interested.forEach(m => {
+                html += `
+                    <div class="candidate-card" style="${m.isNew ? 'border-left: 4px solid var(--success);' : ''}">
+                        <div class="match-badge">${m.score}% Match</div>
+                        <div class="card-top">
+                            <div class="avatar">${m.name.split(' ').map(n=>n[0]).join('')}</div>
+                            <div class="info">
+                                <h3>${m.name}</h3>
+                                <p>${m.role} • ${m.exp} yrs exp</p>
+                            </div>
+                        </div>
+                        <div class="skill-tags">
+                            ${m.skills.map(s => `<span class="tag">${s}</span>`).join('')}
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn btn-outline">View Profile</button>
+                            <button class="btn btn-primary">Contact</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        html += '</div>';
+        employerMain.innerHTML = html;
     }
 
-    function openModal(id) {
-      const c = candidatesDatabase.find(x => x.id === id);
-      if(!c) return;
-      document.getElementById('modalAvatar').innerText = c.initials;
-      document.getElementById('modalName').innerText = c.name;
-      document.getElementById('modalRole').innerText = c.role;
-      document.getElementById('modalLocation').innerText = `${c.city}, ${c.country}`;
-      document.getElementById('modalMatch').innerText = c.match + '%';
-      document.getElementById('modalSkillsGrid').innerHTML = c.skills.map(s => `<div class="score-item"><h5>${s.name}</h5><div class="val ${s.score > 90 ? 'high' : ''}">${s.score}%</div></div>`).join('');
-      modalOverlay.classList.add('active');
+    // --- 4. NAVIGATION LOGIC ---
+
+    function switchView(viewName) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+        
+        if (viewName === 'seeker') {
+            document.getElementById('seekerView').classList.add('active');
+            document.querySelector('.view-btn:nth-child(1)').classList.add('active');
+        } else {
+            document.getElementById('employerView').classList.add('active');
+            document.querySelector('.view-btn:nth-child(2)').classList.add('active');
+            updateEmployerSidebar();
+        }
     }
 
-    function closeModal() { modalOverlay.classList.remove('active'); }
-    modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+    // Initialize
+    renderCards();
+
   </script>
 </body>
 </html>

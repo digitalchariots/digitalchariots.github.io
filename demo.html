@@ -109,14 +109,15 @@
       flex-direction: column;
       align-items: center;
       height: 100%;
-      padding: 2rem 1rem 1rem 1rem; /* Added top padding */
+      /* Added 50px to top padding */
+      padding: calc(2rem + 50px) 1rem 1rem 1rem; 
       background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
       position: relative;
     }
 
     .swipe-header {
       text-align: center;
-      margin-bottom: 1rem; /* Spacing between header and cards */
+      margin-bottom: 1rem;
       z-index: 10;
       width: 100%;
       max-width: 360px;
@@ -128,10 +129,10 @@
       position: relative;
       width: 100%;
       max-width: 360px;
-      flex: 1; /* Takes available space */
+      flex: 1; 
       margin-bottom: 1rem;
       perspective: 1000px;
-      min-height: 0; /* Fix for flexbox overflow */
+      min-height: 0; 
     }
 
     .job-card {
@@ -276,7 +277,7 @@
       display: flex;
       gap: 2rem;
       z-index: 10;
-      height: 60px; /* Ensure buttons don't jump */
+      height: 60px; 
       align-items: center;
     }
 
@@ -412,7 +413,8 @@
     }
     
     .emp-header { 
-      padding: 2rem 1.5rem 1.5rem 1.5rem; /* Increased top padding */
+      /* Added 50px to top padding */
+      padding: calc(2rem + 50px) 1.5rem 1.5rem 1.5rem;
       border-bottom: 1px solid var(--border);
     }
     .emp-header h2 { font-size: 1.1rem; margin-bottom: 0.3rem; }
@@ -459,7 +461,8 @@
     }
 
     .emp-main {
-      padding: 2.5rem; /* Increased padding */
+      /* Added 50px to top padding */
+      padding: calc(2.5rem + 50px) 2.5rem 2.5rem 2.5rem;
       overflow-y: auto;
       background: var(--bg);
     }

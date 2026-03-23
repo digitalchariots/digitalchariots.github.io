@@ -108,27 +108,30 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 1rem;
+      height: 100%;
+      padding: 2rem 1rem 1rem 1rem; /* Added top padding */
       background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
       position: relative;
-      height: 100%;
     }
 
     .swipe-header {
       text-align: center;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1rem; /* Spacing between header and cards */
       z-index: 10;
+      width: 100%;
+      max-width: 360px;
     }
-    .swipe-header h2 { font-size: 1.3rem; margin-bottom: 0.2rem; }
-    .swipe-header p { color: var(--text-muted); font-size: 0.85rem; }
+    .swipe-header h2 { font-size: 1.4rem; margin-bottom: 0.3rem; color: #1E293B; }
+    .swipe-header p { color: var(--text-muted); font-size: 0.9rem; }
 
     .card-stack {
       position: relative;
       width: 100%;
       max-width: 360px;
-      height: 520px; /* Slightly taller for text */
+      flex: 1; /* Takes available space */
+      margin-bottom: 1rem;
       perspective: 1000px;
+      min-height: 0; /* Fix for flexbox overflow */
     }
 
     .job-card {
@@ -143,7 +146,7 @@
       flex-direction: column;
       transition: transform 0.3s ease, opacity 0.3s ease;
       user-select: none;
-      touch-action: pan-y; /* Allow vertical scroll, handle horizontal swipe */
+      touch-action: pan-y; 
       border: 1px solid rgba(0,0,0,0.05);
       overflow: hidden;
     }
@@ -162,11 +165,12 @@
       display: flex;
       gap: 1rem;
       margin-bottom: 1rem;
+      flex-shrink: 0;
     }
 
     .job-logo {
-      width: 50px;
-      height: 50px;
+      width: 52px;
+      height: 52px;
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -179,7 +183,7 @@
 
     .header-text {
       flex: 1;
-      min-width: 0; /* Prevents text overflow */
+      min-width: 0; 
     }
 
     .job-title { 
@@ -205,6 +209,7 @@
       gap: 0.4rem; 
       margin-bottom: 1rem; 
       flex-wrap: wrap; 
+      flex-shrink: 0;
     }
     .tag { 
       background: #F1F5F9; 
@@ -219,8 +224,9 @@
     .job-scroll-area {
       flex: 1;
       overflow-y: auto;
-      padding-right: 4px; /* Scrollbar space */
+      padding-right: 4px; 
       margin-bottom: 1rem;
+      min-height: 0;
     }
 
     .job-desc {
@@ -245,6 +251,7 @@
       width: 100%;
       justify-content: center;
       transition: background 0.2s;
+      flex-shrink: 0;
     }
     .attachment-btn:hover {
       background: #DBEAFE;
@@ -260,15 +267,17 @@
       font-weight: 600;
       font-size: 0.85rem;
       background: white;
-      margin-top: auto; /* Stick to bottom */
+      margin-top: auto; 
+      flex-shrink: 0;
     }
 
     /* Swipe Buttons */
     .swipe-actions {
       display: flex;
       gap: 2rem;
-      margin-top: 1rem;
       z-index: 10;
+      height: 60px; /* Ensure buttons don't jump */
+      align-items: center;
     }
 
     .action-btn {
@@ -325,8 +334,8 @@
       background: white;
       width: 100%;
       max-width: 500px;
-      height: 80vh;
-      border-radius: 12px;
+      height: 85vh;
+      border-radius: 16px;
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -336,13 +345,14 @@
     .pdf-modal.active .pdf-content { transform: translateY(0); }
 
     .pdf-header {
-      padding: 1rem 1.5rem;
+      padding: 1.2rem 1.5rem;
       border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      background: #FAFAFA;
     }
-    .pdf-header h3 { font-size: 1rem; }
+    .pdf-header h3 { font-size: 1.1rem; }
     .pdf-close {
       background: none;
       border: none;
@@ -355,15 +365,38 @@
       flex: 1;
       padding: 2rem;
       overflow-y: auto;
-      font-size: 0.9rem;
       line-height: 1.7;
       color: #374151;
     }
-    .pdf-body h4 { margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--text-main); }
-    .pdf-body ul { padding-left: 1.5rem; margin-bottom: 1rem; }
-    .pdf-body li { margin-bottom: 0.5rem; }
+    
+    /* PDF Formatting Styles */
+    .pdf-body h4 { 
+      font-size: 1.1rem; 
+      color: var(--text-main); 
+      margin-top: 2rem; 
+      margin-bottom: 1rem;
+      border-bottom: 2px solid var(--primary-light);
+      padding-bottom: 0.5rem;
+    }
+    .pdf-body p { margin-bottom: 1rem; font-size: 0.95rem; }
+    .pdf-body ul { list-style: none; padding: 0; margin-bottom: 1rem; }
+    .pdf-body li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.95rem;
+    }
+    .pdf-body li::before {
+      content: "•";
+      color: var(--primary);
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+      font-size: 1.2rem;
+      line-height: 1;
+    }
 
-    /* --- EMPLOYER VIEW (DASHBOARD) --- */
+    /* --- EMPLOYER VIEW --- */
     .employer-view {
       display: grid;
       grid-template-columns: 300px 1fr;
@@ -373,17 +406,24 @@
     .emp-sidebar {
       background: white;
       border-right: 1px solid var(--border);
-      padding: 1.5rem;
       display: flex;
       flex-direction: column;
       overflow-y: auto;
     }
     
-    .emp-header { margin-bottom: 1.5rem; }
+    .emp-header { 
+      padding: 2rem 1.5rem 1.5rem 1.5rem; /* Increased top padding */
+      border-bottom: 1px solid var(--border);
+    }
     .emp-header h2 { font-size: 1.1rem; margin-bottom: 0.3rem; }
     .emp-header p { font-size: 0.8rem; color: var(--text-muted); }
     
-    .job-list { display: flex; flex-direction: column; gap: 0.5rem; }
+    .job-list { 
+      display: flex; 
+      flex-direction: column; 
+      gap: 0.5rem; 
+      padding: 1rem 1rem; 
+    }
     
     .job-list-item {
       padding: 0.8rem 1rem;
@@ -419,7 +459,7 @@
     }
 
     .emp-main {
-      padding: 2rem;
+      padding: 2.5rem; /* Increased padding */
       overflow-y: auto;
       background: var(--bg);
     }
@@ -593,6 +633,54 @@
     const jobTitles = ["Software Engineer", "Product Manager", "Sales Director", "UX Designer", "Data Scientist", "Marketing Lead", "Operations Manager", "Frontend Dev", "Backend Engineer", "Scrum Master"];
     const locations = ["New York, NY", "San Francisco, CA", "Austin, TX", "Remote", "London, UK", "Berlin, DE", "Singapore"];
 
+    // Helper to create structured HTML description
+    function createJobDescription(title, company) {
+      const respCount = Math.floor(Math.random() * 3) + 2;
+      const reqCount = Math.floor(Math.random() * 3) + 2;
+      const benCount = Math.floor(Math.random() * 2) + 2;
+
+      let responsibilities = [];
+      for(let i=0; i<respCount; i++) {
+        responsibilities.push(`Lead and execute key projects related to ${title} initiatives.`);
+        responsibilities.push(`Collaborate with cross-functional teams at ${company}.`);
+      }
+
+      let requirements = [];
+      for(let i=0; i<reqCount; i++) {
+        requirements.push(`${Math.floor(Math.random() * 5) + 2}+ years of experience in a similar role.`);
+        requirements.push(`Strong proficiency in required skillset.`);
+      }
+
+      let benefits = [
+        "Competitive salary and equity package.",
+        "Comprehensive health, dental, and vision insurance.",
+        "Flexible work hours and remote options.",
+        "Unlimited PTO policy."
+      ];
+
+      return {
+        preview: `We are looking for a talented ${title} to join our dynamic team at ${company}. You will be responsible for driving key initiatives and working with cross-functional teams...`,
+        full: `
+          <p>We are looking for a talented <strong>${title}</strong> to join our dynamic team at ${company}. You will be responsible for driving key initiatives and working with cross-functional teams to deliver outstanding results.</p>
+          
+          <h4>Key Responsibilities</h4>
+          <ul>
+            ${responsibilities.map(r => `<li>${r}</li>`).join('')}
+          </ul>
+
+          <h4>Requirements</h4>
+          <ul>
+            ${requirements.map(r => `<li>${r}</li>`).join('')}
+          </ul>
+
+          <h4>Benefits</h4>
+          <ul>
+            ${benefits.slice(0, benCount).map(b => `<li>${b}</li>`).join('')}
+          </ul>
+        `
+      };
+    }
+
     const jobsDatabase = [];
     for (let i = 1; i <= 250; i++) {
         const title = jobTitles[Math.floor(Math.random() * jobTitles.length)];
@@ -601,10 +689,8 @@
         
         const comp = companies[Math.floor(Math.random() * companies.length)];
         const salStart = Math.floor(Math.random() * 60) + 60;
+        const descriptionData = createJobDescription(title, comp);
         
-        // Generate random long description
-        const longDesc = `We are looking for a talented ${title} to join our dynamic team at ${comp}. You will be responsible for driving key initiatives and working with cross-functional teams to deliver outstanding results.\n\nKey Responsibilities:\n- Lead cross-functional teams to develop new products.\n- Analyze market trends and competitor data.\n- Present findings to senior leadership quarterly.\n\nRequirements:\n- 3+ years of experience in a similar role.\n- Strong analytical skills.\n- Excellent communication abilities.`;
-
         jobsDatabase.push({
             id: i,
             title: title,
@@ -612,8 +698,9 @@
             location: Math.random() > 0.4 ? locations[Math.floor(Math.random() * locations.length)] : "Remote",
             salary: "$" + salStart + "k - $" + (salStart + 40 + Math.floor(Math.random() * 40)) + "k",
             skills: [...new Set(reqSkills)],
-            desc: longDesc,
-            hasPdf: Math.random() > 0.3 // 70% chance to have a PDF
+            desc: descriptionData.preview,
+            descFull: descriptionData.full,
+            hasPdf: Math.random() > 0.2 // 80% chance to have a PDF
         });
     }
 
@@ -683,7 +770,7 @@
             // Top card gets listeners
             if (idx === slice.length - 1) {
                 card.addEventListener('mousedown', startDrag);
-                card.addEventListener('touchstart', startDrag, {passive: true}); // passive for scroll
+                card.addEventListener('touchstart', startDrag, {passive: true});
             }
             
             const color = getColorFromString(job.company);
@@ -704,7 +791,7 @@
                     <div class="job-desc">${job.desc}</div>
                     ${job.hasPdf ? `
                         <button class="attachment-btn" onclick="openPdfModal(${job.id})">
-                            <i class="fas fa-file-pdf"></i> View Full Description (PDF)
+                            <i class="fas fa-file-pdf"></i> View Full Description
                         </button>
                     ` : ''}
                 </div>
@@ -731,9 +818,8 @@
         document.getElementById('jobsRemaining').innerText = `${remaining} roles remaining`;
     }
 
-    // Drag Logic (Improved for scrolling)
+    // Drag Logic
     function startDrag(e) {
-        // If the touch is inside the scrollable area or on a button, don't drag card
         if (e.target.closest('.job-scroll-area') || e.target.closest('button')) {
             isDragging = false;
             return;
@@ -753,7 +839,7 @@
 
     function moveDrag(e) {
         if (!isDragging) return;
-        e.preventDefault(); // Prevent screen scroll only if we are dragging card
+        e.preventDefault();
         const topCard = cardStack.lastElementChild;
         
         currentX = e.touches ? e.touches[0].clientX : e.clientX;
@@ -812,7 +898,6 @@
         setTimeout(() => {
             currentJobIndex++;
             renderCards();
-            // Update employer view instantly if active
             if (document.getElementById('employerView').classList.contains('active')) {
                 updateEmployerSidebar();
                 const activeItem = document.querySelector('.job-list-item.active');
@@ -830,21 +915,8 @@
         const job = jobsDatabase.find(j => j.id === jobId);
         if(!job) return;
         
-        document.getElementById('pdfTitle').innerText = job.title + " - Job Description";
-        // Convert plain text newlines to HTML breaks for the modal
-        const formattedDesc = job.desc.replace(/\n/g, '<br>'); 
-        document.getElementById('pdfBody').innerHTML = `
-            <h4>Company</h4>
-            <p>${job.company}</p>
-            <h4>Location</h4>
-            <p>${job.location}</p>
-            <h4>Description</h4>
-            <p>${formattedDesc}</p>
-            <h4>Required Skills</h4>
-            <ul>
-                ${job.skills.map(s => `<li>${s}</li>`).join('')}
-            </ul>
-        `;
+        document.getElementById('pdfTitle').innerText = job.title + " @ " + job.company;
+        document.getElementById('pdfBody').innerHTML = job.descFull;
         
         document.getElementById('pdfModal').classList.add('active');
     }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SkrillBridge Demo | Employer View</title>
+  <title>SkillBridge Demo | Employer View</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
@@ -87,6 +87,7 @@
     }
     .btn-primary { background: var(--primary); color: white; box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2); }
     .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    .btn-primary:disabled { background: #93C5FD; cursor: not-allowed; transform: none; }
     .btn-outline { background: white; color: var(--text-main); border: 1px solid var(--border); }
     .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
 
@@ -211,7 +212,13 @@
     .skill-item.active .skill-icon { color: white; }
     .skill-icon { width: 18px; text-align: center; color: var(--text-muted); font-size: 0.85rem; }
 
-    .search-btn { width: 100%; padding: 1rem; font-size: 1rem; margin-top: auto; }
+    /* UPDATED: Removed auto margin to keep button right under skills */
+    .search-btn { 
+      width: 100%; 
+      padding: 1rem; 
+      font-size: 1rem; 
+      margin-top: 1.5rem; /* Standard spacing */
+    }
 
     /* --- MAIN CONTENT --- */
     .main-content { padding: 2rem; overflow-y: auto; position: relative; }
@@ -619,11 +626,17 @@
     searchBtn.addEventListener('click', () => {
       searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
       searchBtn.disabled = true;
+      
       setTimeout(() => {
-        renderResults();
-        searchBtn.innerHTML = '<i class="fas fa-search"></i> Find Candidates';
-        searchBtn.disabled = false;
-      }, 400);
+        try {
+            renderResults();
+        } catch (error) {
+            console.error("Search failed:", error);
+        } finally {
+            searchBtn.innerHTML = '<i class="fas fa-search"></i> Find Candidates';
+            searchBtn.disabled = false;
+        }
+      }, 100);
     });
 
     // --- 3. SCORING ENGINE ---
@@ -633,9 +646,8 @@
       
       // 1. Location Score (Max 20)
       if (workMode === 'online') {
-        score += 20; // If remote, location is irrelevant, award full points
+        score += 20; 
       } else {
-        // In-person logic
         if (selectedCity === "Any") {
           if (candidate.country === selectedCountry) score += 20;
         } else {
@@ -648,15 +660,12 @@
       const years = candidate.yearsExperience;
       let expMatch = false;
 
+      // Mid/Senior are treated as minimum requirements
       if (reqExp === 'entry') {
-        // Entry level: strict 0-2 years. Usually employers don't want overqualified seniors for entry roles.
         if (years <= 2) expMatch = true;
       } else if (reqExp === 'mid') {
-        // Mid level (3-5 yrs): Minimum 3 years required.
-        // Candidates with MORE experience (e.g., 9 years) should NOT be penalized.
-        if (years >= 3) expMatch = true;
+        if (years >= 3) expMatch = true; 
       } else if (reqExp === 'senior') {
-        // Senior level (5+ yrs): Minimum 5 years required.
         if (years >= 5) expMatch = true;
       }
       
@@ -665,7 +674,7 @@
 
       // 3. Skill Score (Max 60)
       if (reqSkills.length === 0) {
-        score += 30; // Neutral if no skills required
+        score += 30; 
       } else {
         const candidateSkillsLower = candidate.verified.map(s => s.toLowerCase());
         let earnedPoints = 0;
@@ -673,7 +682,7 @@
         reqSkills.forEach(reqSk => {
           const reqSkLower = reqSk.toLowerCase();
           if (candidateSkillsLower.includes(reqSkLower)) {
-            earnedPoints += 10; // Direct match
+            earnedPoints += 10;
           }
         });
 
@@ -689,7 +698,6 @@
       emptyState.style.display = 'none';
       resultsHeader.classList.add('active');
       
-      // Get current UI state
       const activeToggle = document.querySelector('.toggle-option.active');
       const workMode = activeToggle ? activeToggle.dataset.val : 'in-person';
       
@@ -699,37 +707,32 @@
       const activeSkillNodes = document.querySelectorAll('.skill-item.active');
       const reqSkills = Array.from(activeSkillNodes).map(n => n.dataset.skill);
       
-      // Update Header Text
       let locationLabel = "Remote / Global";
       if (workMode === 'in-person') {
         locationLabel = `${selectedCity === 'Any' ? 'All Cities' : selectedCity}, ${selectedCountry}`;
       }
       document.getElementById('locationText').innerText = locationLabel;
 
-      // Filter Data
       let filtered = [];
       
       if (workMode === 'online') {
-        // Remote: Search everyone
-        filtered = candidatesDatabase; 
+        filtered = [...candidatesDatabase]; 
       } else {
-        // In-Person: Filter by location
         filtered = candidatesDatabase.filter(c => {
           if (selectedCity !== "Any") return c.city === selectedCity && c.country === selectedCountry;
           return c.country === selectedCountry;
         });
       }
 
-      // Calculate Scores
       filtered.forEach(c => {
         c.match = calculateScore(c, selectedCountry, selectedCity, reqSkills, reqExp, workMode);
-        // Determine badge type
         if (c.match >= 80) c.matchType = "perfect";
         else if (c.match >= 60) c.matchType = "transferable";
         else c.matchType = "weak";
       });
 
       filtered.sort((a, b) => b.match - a.match);
+      
       const display = filtered.slice(0, 12);
       candidateCount.innerText = filtered.length;
       candidateGrid.innerHTML = '';

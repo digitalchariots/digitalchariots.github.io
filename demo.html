@@ -628,30 +628,37 @@
 
     // --- 3. SCORING ENGINE ---
     
-    function calculateScore(candidate, selectedCountry, selectedCity, reqSkills, reqExp) {
+    function calculateScore(candidate, selectedCountry, selectedCity, reqSkills, reqExp, workMode) {
       let score = 0;
       
       // 1. Location Score (Max 20)
-      // If "Any" city is selected, we only care about the country
-      if (selectedCity === "Any") {
-        if (candidate.country === selectedCountry) {
-            score += 20; // Full points for country match if city is ignored
-        }
+      if (workMode === 'online') {
+        score += 20; // If remote, location is irrelevant, award full points
       } else {
-        // Specific city selected
-        if (candidate.city === selectedCity) {
-          score += 20; // Exact city match
-        } else if (candidate.country === selectedCountry) {
-          score += 10; // Country match, but wrong city
+        // In-person logic
+        if (selectedCity === "Any") {
+          if (candidate.country === selectedCountry) score += 20;
+        } else {
+          if (candidate.city === selectedCity) score += 20;
+          else if (candidate.country === selectedCountry) score += 10;
         }
       }
 
       // 2. Experience Score (Max 20)
       const years = candidate.yearsExperience;
       let expMatch = false;
-      if (reqExp === 'entry' && years <= 2) expMatch = true;
-      else if (reqExp === 'mid' && years >= 2 && years <= 6) expMatch = true;
-      else if (reqExp === 'senior' && years >= 5) expMatch = true;
+
+      if (reqExp === 'entry') {
+        // Entry level: strict 0-2 years. Usually employers don't want overqualified seniors for entry roles.
+        if (years <= 2) expMatch = true;
+      } else if (reqExp === 'mid') {
+        // Mid level (3-5 yrs): Minimum 3 years required.
+        // Candidates with MORE experience (e.g., 9 years) should NOT be penalized.
+        if (years >= 3) expMatch = true;
+      } else if (reqExp === 'senior') {
+        // Senior level (5+ yrs): Minimum 5 years required.
+        if (years >= 5) expMatch = true;
+      }
       
       if (expMatch) score += 20;
       else score += 5; 
@@ -670,16 +677,8 @@
           }
         });
 
-        // Calculate the maximum possible points based on selected skills
-        // Example: If 1 skill selected, maxPoints = 10. 
-        // If 5 skills selected, maxPoints = 50.
         const maxPossiblePoints = reqSkills.length * 10;
-        
-        // Scale to the 60-point portion of the total score
-        // If I select 1 skill and they have it: (10 / 10) * 60 = 60 points.
-        // If I select 5 skills and they have 3: (30 / 50) * 60 = 36 points.
         let skillScore = (earnedPoints / maxPossiblePoints) * 60;
-        
         score += Math.min(60, skillScore);
       }
 
@@ -690,23 +689,40 @@
       emptyState.style.display = 'none';
       resultsHeader.classList.add('active');
       
+      // Get current UI state
+      const activeToggle = document.querySelector('.toggle-option.active');
+      const workMode = activeToggle ? activeToggle.dataset.val : 'in-person';
+      
       const selectedCountry = countrySelect.value;
       const selectedCity = citySelect.value;
       const reqExp = expLevelSelect.value;
       const activeSkillNodes = document.querySelectorAll('.skill-item.active');
       const reqSkills = Array.from(activeSkillNodes).map(n => n.dataset.skill);
       
-      document.getElementById('locationText').innerText = `${selectedCity === 'Any' ? 'All' : selectedCity}, ${selectedCountry}`;
+      // Update Header Text
+      let locationLabel = "Remote / Global";
+      if (workMode === 'in-person') {
+        locationLabel = `${selectedCity === 'Any' ? 'All Cities' : selectedCity}, ${selectedCountry}`;
+      }
+      document.getElementById('locationText').innerText = locationLabel;
 
-      // Filter basic location/country first for performance
-      let filtered = candidatesDatabase.filter(c => {
-        if (selectedCity !== "Any") return c.city === selectedCity && c.country === selectedCountry;
-        return c.country === selectedCountry;
-      });
+      // Filter Data
+      let filtered = [];
+      
+      if (workMode === 'online') {
+        // Remote: Search everyone
+        filtered = candidatesDatabase; 
+      } else {
+        // In-Person: Filter by location
+        filtered = candidatesDatabase.filter(c => {
+          if (selectedCity !== "Any") return c.city === selectedCity && c.country === selectedCountry;
+          return c.country === selectedCountry;
+        });
+      }
 
       // Calculate Scores
       filtered.forEach(c => {
-        c.match = calculateScore(c, selectedCountry, selectedCity, reqSkills, reqExp);
+        c.match = calculateScore(c, selectedCountry, selectedCity, reqSkills, reqExp, workMode);
         // Determine badge type
         if (c.match >= 80) c.matchType = "perfect";
         else if (c.match >= 60) c.matchType = "transferable";

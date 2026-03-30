@@ -86,26 +86,6 @@
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
 
-    .nav-actions {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .btn-icon {
-      background: transparent;
-      border: 1px solid var(--border);
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      color: var(--text-muted);
-      transition: all 0.2s;
-    }
-    .btn-icon:hover { border-color: var(--primary); color: var(--primary); }
-
     .view-container {
       margin-top: 60px;
       height: calc(100vh - 60px);
@@ -338,57 +318,6 @@
     }
     .empty-state i { font-size: 3rem; margin-bottom: 1rem; color: var(--border); }
 
-    .filter-modal {
-      position: fixed;
-      top: 70px;
-      right: 20px;
-      width: 320px;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
-      border: 1px solid var(--border);
-      z-index: 2000;
-      display: none;
-      overflow: hidden;
-    }
-    .filter-modal.active { display: block; }
-    .modal-header { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-    .modal-content { padding: 1.5rem; }
-    
-    .form-group { margin-bottom: 1.2rem; }
-    .form-group label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--text-main); }
-    
-    .input-style {
-      width: 100%;
-      padding: 0.75rem 1rem;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.9rem;
-      transition: border-color 0.2s;
-      background: #F8FAFC;
-    }
-    .input-style:focus { outline: none; border-color: var(--primary); background: white; }
-
-    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
-
-    .skill-checkbox {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 0.7rem;
-      background: #F8FAFC;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.8rem;
-      transition: all 0.2s;
-    }
-    .skill-checkbox:hover { border-color: var(--primary); }
-    .skill-checkbox.active { background: var(--primary); color: white; border-color: var(--primary); }
-    .skill-checkbox input { display: none; }
-
-    /* --- EMPLOYER VIEW: FULL SCREEN GRID --- */
     .employer-view {
       display: grid;
       grid-template-columns: 300px 1fr;
@@ -516,45 +445,7 @@
       <button class="view-btn active" onclick="switchView('seeker')">Job Seeker</button>
       <button class="view-btn" onclick="switchView('employer')">Employer</button>
     </div>
-    <div class="nav-actions">
-      <button class="btn-icon" id="filterBtn" onclick="toggleFilterModal()">
-        <i class="fas fa-sliders-h"></i>
-      </button>
-    </div>
   </nav>
-
-  <div class="filter-modal" id="filterModal">
-    <div class="modal-header">
-      <h3 style="font-size: 1rem;">Preferences</h3>
-      <button class="btn-icon" style="width:30px; height:30px;" onclick="toggleFilterModal()"><i class="fas fa-times"></i></button>
-    </div>
-    <div class="modal-content">
-      <div class="form-group">
-        <label>Location</label>
-        <select class="input-style" id="userLocation">
-          <option>Remote</option>
-          <option>New York, NY</option>
-          <option>San Francisco, CA</option>
-          <option>London, UK</option>
-          <option>Berlin, DE</option>
-          <option>Singapore</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Experience Level</label>
-        <select class="input-style" id="userExp">
-          <option>Entry Level (0-2 yrs)</option>
-          <option>Mid Level (3-5 yrs)</option>
-          <option>Senior Level (5+ yrs)</option>
-          <option>Director / Executive</option>
-        </select>
-      </div>
-      <div class="form-group" style="margin-bottom: 0;">
-        <label>Key Skills</label>
-        <div class="skills-grid" id="userSkillsGrid"></div>
-      </div>
-    </div>
-  </div>
 
   <div class="view-container">
     
@@ -645,16 +536,6 @@
             applicants.push({ ...candidate, score: Math.min(99, score) });
         }
         matchesMap.set(job.id, applicants);
-    });
-
-    const userSkillsGrid = document.getElementById('userSkillsGrid');
-    skillPool.slice(0, 10).forEach(skill => {
-        const item = document.createElement('label');
-        item.className = 'skill-checkbox';
-        if (userSkillsSet.has(skill)) item.classList.add('active');
-        item.innerHTML = `<input type="checkbox" value="${skill}" ${userSkillsSet.has(skill) ? 'checked' : ''}><span>${skill}</span>`;
-        item.onclick = () => item.classList.toggle('active');
-        userSkillsGrid.appendChild(item);
     });
 
     let currentJobIndex = 0;
@@ -904,18 +785,6 @@
             updateEmployerSidebar();
         }
     }
-
-    function toggleFilterModal() {
-        document.getElementById('filterModal').classList.toggle('active');
-    }
-
-    document.addEventListener('click', (e) => {
-        const modal = document.getElementById('filterModal');
-        const btn = document.getElementById('filterBtn');
-        if (!modal.contains(e.target) && !btn.contains(e.target) && modal.classList.contains('active')) {
-            modal.classList.remove('active');
-        }
-    });
 
     renderCards();
   </script>

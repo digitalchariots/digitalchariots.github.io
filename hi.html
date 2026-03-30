@@ -35,7 +35,6 @@
 
     h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; }
 
-    /* --- TOP NAVIGATION --- */
     .app-nav {
       position: fixed;
       top: 0;
@@ -107,7 +106,6 @@
     }
     .btn-icon:hover { border-color: var(--primary); color: var(--primary); }
 
-    /* --- VIEW CONTAINER --- */
     .view-container {
       margin-top: 60px;
       height: calc(100vh - 60px);
@@ -123,15 +121,13 @@
     
     .view.active { display: flex; }
 
-    /* --- JOB SEEKER SPLIT VIEW (NEW LAYOUT) --- */
     .seeker-split {
       display: grid;
-      grid-template-columns: 1fr 1fr; /* EXACT SPLIT */
+      grid-template-columns: 1fr 1fr;
       height: 100%;
       width: 100%;
     }
 
-    /* LEFT SIDE: SWIPING & BIG POSTING */
     .seeker-card-area {
       background: var(--bg);
       border-right: 1px solid var(--border);
@@ -176,7 +172,6 @@
       opacity: 0;
     }
 
-    /* Card Internal Layout */
     .card-hero {
       height: 160px;
       background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
@@ -269,7 +264,6 @@
     .swipe-btn.reject { color: var(--danger); background: #FEF2F2; }
     .swipe-btn.like { color: var(--success); background: #ECFDF5; }
 
-    /* RIGHT SIDE: DETAILED INFO */
     .seeker-details-area {
       background: white;
       height: 100%;
@@ -309,9 +303,7 @@
     }
     .apply-btn:hover { background: var(--primary-dark); }
 
-    .details-body {
-      flex: 1;
-    }
+    .details-body { flex: 1; }
 
     .section-title { font-size: 1.2rem; margin-bottom: 1rem; color: var(--text-main); display: flex; align-items: center; gap: 0.5rem; }
     .section-content { color: var(--text-muted); line-height: 1.8; margin-bottom: 2.5rem; font-size: 0.95rem; }
@@ -346,7 +338,6 @@
     }
     .empty-state i { font-size: 3rem; margin-bottom: 1rem; color: var(--border); }
 
-    /* --- FILTER MODAL --- */
     .filter-modal {
       position: fixed;
       top: 70px;
@@ -354,7 +345,7 @@
       width: 320px;
       background: white;
       border-radius: 12px;
-      box-shadow: var(--shadow-lg);
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
       border: 1px solid var(--border);
       z-index: 2000;
       display: none;
@@ -397,7 +388,6 @@
     .skill-checkbox.active { background: var(--primary); color: white; border-color: var(--primary); }
     .skill-checkbox input { display: none; }
 
-    /* --- EMPLOYER VIEW --- */
     .employer-view {
       display: grid;
       grid-template-columns: 300px 1fr;
@@ -442,8 +432,11 @@
     .emp-welcome { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; color: var(--text-muted); }
 
     .candidate-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
-    .candidate-card { background: white; border-radius: 10px; padding: 1.2rem; border: 1px solid var(--border); position: relative; }
+    .candidate-card { background: white; border-radius: 10px; padding: 1.2rem; border: 1px solid var(--border); position: relative; transition: all 0.2s; }
     .candidate-card:hover { border-color: var(--primary); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+    .candidate-card.rank-1 { border-color: #F59E0B; box-shadow: 0 0 0 1px #F59E0B, 0 4px 14px rgba(245, 158, 11, 0.15); }
+    .candidate-card.rank-2 { border-color: #94A3B8; box-shadow: 0 0 0 1px #94A3B8, 0 4px 14px rgba(148, 163, 184, 0.15); }
+    .candidate-card.rank-3 { border-color: #CD7F32; box-shadow: 0 0 0 1px #CD7F32, 0 4px 14px rgba(205, 127, 50, 0.15); }
     
     .card-top { display: flex; gap: 0.8rem; margin-bottom: 0.8rem; }
     .avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; flex-shrink: 0; font-size: 1rem; }
@@ -451,6 +444,26 @@
     .info p { color: var(--text-muted); font-size: 0.8rem; }
     
     .match-badge { position: absolute; top: 1rem; right: 1rem; background: #ECFDF5; color: #059669; padding: 0.2rem 0.5rem; border-radius: 20px; font-size: 0.7rem; font-weight: 700; }
+    
+    .rank-badge {
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      width: 28px;
+      height: 28px;
+      border-radius: 0 0 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: white;
+    }
+    .rank-1 .rank-badge { background: #F59E0B; }
+    .rank-2 .rank-badge { background: #94A3B8; }
+    .rank-3 .rank-badge { background: #CD7F32; }
+    .candidate-card:not(.rank-1):not(.rank-2):not(.rank-3) .rank-badge { background: #CBD5E1; }
+
     .skill-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin: 0.6rem 0; }
     .skill-tags .tag { background: #F1F5F9; color: var(--text-main); font-size: 0.7rem; }
     
@@ -460,6 +473,17 @@
     .btn-primary:hover { background: var(--primary-dark); }
     .btn-outline { background: white; border: 1px solid var(--border); color: var(--text-main); }
     .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+    .sort-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .sort-bar i { color: var(--primary); }
+    .sort-bar strong { color: var(--text-main); }
 
     @media (max-width: 900px) {
       .seeker-split { grid-template-columns: 1fr; }
@@ -471,7 +495,6 @@
 </head>
 <body>
 
-  <!-- NAV BAR -->
   <nav class="app-nav">
     <div class="logo">
       <i class="fas fa-bridge"></i> SkillBridge
@@ -487,7 +510,6 @@
     </div>
   </nav>
 
-  <!-- FILTER MODAL -->
   <div class="filter-modal" id="filterModal">
     <div class="modal-header">
       <h3 style="font-size: 1rem;">Preferences</h3>
@@ -516,41 +538,28 @@
       </div>
       <div class="form-group" style="margin-bottom: 0;">
         <label>Key Skills</label>
-        <div class="skills-grid" id="userSkillsGrid">
-          <!-- Populated by JS -->
-        </div>
+        <div class="skills-grid" id="userSkillsGrid"></div>
       </div>
     </div>
   </div>
 
-  <!-- MAIN APP -->
   <div class="view-container">
     
-    <!-- JOB SEEKER VIEW -->
     <div id="seekerView" class="view active">
       <div class="seeker-split">
-        
-        <!-- LEFT: SWIPING & BIG POSTING -->
         <div class="seeker-card-area">
-          <div class="swipe-container" id="cardContainer">
-            <!-- Cards injected here -->
+          <div class="swipe-container" id="cardContainer"></div>
+        </div>
+        <div class="seeker-details-area" id="seekerDetails">
+          <div class="empty-state">
+            <i class="fas fa-mouse-pointer"></i>
+            <h3>Select a Job</h3>
+            <p>Swipe or browse jobs to see details here.</p>
           </div>
         </div>
-
-        <!-- RIGHT: DETAILED INFO -->
-        <div class="seeker-details-area" id="seekerDetails">
-            <!-- Content injected by JS -->
-            <div class="empty-state">
-                <i class="fas fa-mouse-pointer"></i>
-                <h3>Select a Job</h3>
-                <p>Swipe or browse jobs to see details here.</p>
-            </div>
-        </div>
-
       </div>
     </div>
 
-    <!-- EMPLOYER VIEW -->
     <div id="employerView" class="view">
       <div class="employer-view">
         <aside class="emp-sidebar">
@@ -567,13 +576,12 @@
   </div>
 
   <script>
-    // --- 1. DATA GENERATION ---
     const skillPool = ["Python", "React", "Project Management", "Sales", "Java", "SQL", "Design", "Marketing", "Leadership", "AWS", "Communication", "Finance", "Excel", "DevOps", "UI/UX"];
     const companies = ["Google", "Microsoft", "Amazon", "StartupX", "FinCorp", "HealthInc", "DataDrives", "TechNova", "GreenEnergy", "RoboLogix"];
     const jobTitles = ["Software Engineer", "Product Manager", "Sales Director", "UX Designer", "Data Scientist", "Marketing Lead", "Operations Manager", "Frontend Dev", "Backend Engineer", "Scrum Master"];
     const locations = ["New York, NY", "San Francisco, CA", "Austin, TX", "Remote", "London, UK", "Berlin, DE", "Singapore"];
 
-    const userSkillsSet = new Set(["Python", "React", "SQL"]); // Simulate user having some skills
+    const userSkillsSet = new Set(["Python", "React", "SQL"]);
 
     const jobsDatabase = [];
     for (let i = 1; i <= 250; i++) {
@@ -626,7 +634,7 @@
         matchesMap.set(job.id, applicants);
     });
 
-    // --- 2. SEEKER PREFERENCES LOGIC ---
+    // --- SEEKER PREFERENCES ---
     const userSkillsGrid = document.getElementById('userSkillsGrid');
     skillPool.slice(0, 10).forEach(skill => {
         const item = document.createElement('label');
@@ -637,7 +645,7 @@
         userSkillsGrid.appendChild(item);
     });
 
-    // --- 3. JOB SEEKER CARD LOGIC ---
+    // --- SEEKER CARD LOGIC ---
     let currentJobIndex = 0;
     const cardContainer = document.getElementById('cardContainer');
     const seekerDetails = document.getElementById('seekerDetails');
@@ -659,7 +667,6 @@
             return;
         }
 
-        // Render stack (2 cards)
         const slice = jobsDatabase.slice(currentJobIndex, currentJobIndex + 2).reverse();
         
         slice.forEach((job, idx) => {
@@ -667,12 +674,11 @@
             card.className = 'job-card';
             card.dataset.jobId = job.id;
             
-            // Styling for stack effect
-            if (idx === 0) { // This is the back card
+            if (idx === 0) {
                 card.style.transform = "scale(0.95) translateY(-10px)";
                 card.style.opacity = "0.7";
                 card.style.zIndex = "1";
-            } else { // This is the front card
+            } else {
                 card.style.transform = "scale(1)";
                 card.style.zIndex = "2";
             }
@@ -710,14 +716,11 @@
             cardContainer.appendChild(card);
         });
 
-        // Update details panel with the active job
         updateDetailsPanel(jobsDatabase[currentJobIndex]);
     }
 
     function updateDetailsPanel(job) {
         if (!job) return;
-        
-        // Calculate match
         const matchedSkills = job.skills.filter(s => userSkillsSet.has(s));
         const matchPercent = Math.min(99, 50 + (matchedSkills.length * 10));
 
@@ -751,7 +754,6 @@
                 <div class="section-content">
                     ${job.fullDesc.split('\n').map(p => `<p>${p}</p>`).join('')}
                 </div>
-
                 <h3 class="section-title"><i class="fas fa-chart-bar"></i> Match Analysis</h3>
                 <div class="match-analysis">
                     <div class="match-score-large">${matchPercent}% Match</div>
@@ -786,7 +788,6 @@
         setTimeout(() => {
             currentJobIndex++;
             renderCards();
-            // Update employer sidebar if visible
             if (document.getElementById('employerView').classList.contains('active')) {
                 updateEmployerSidebar();
                 const activeItem = document.querySelector('.job-list-item.active');
@@ -798,7 +799,7 @@
         }, 300);
     }
 
-    // --- 4. EMPLOYER LOGIC ---
+    // --- EMPLOYER LOGIC ---
     const employerJobList = document.getElementById('employerJobList');
     const employerMain = document.getElementById('employerMain');
     let selectedJobId = null;
@@ -833,12 +834,17 @@
 
     function renderCandidateGrid(jobId) {
         const job = jobsDatabase.find(j => j.id === jobId);
-        const interested = matchesMap.get(jobId) || [];
+        // ★ SORT by score descending (highest match first)
+        const interested = (matchesMap.get(jobId) || []).sort((a, b) => b.score - a.score);
         
         let html = `
             <div style="margin-bottom: 2rem;">
                 <h2 style="margin-bottom: 0.3rem;">${job.title}</h2>
                 <p style="color:var(--text-muted);">${interested.length} candidates interested</p>
+            </div>
+            <div class="sort-bar">
+                <i class="fas fa-sort-amount-down"></i>
+                Sorted by <strong>match percentage</strong> — highest first
             </div>
             <div class="candidate-grid">
         `;
@@ -846,9 +852,13 @@
         if (interested.length === 0) {
             html += `<div class="emp-welcome" style="grid-column: 1/-1;"><i class="fas fa-user-clock"></i><p>No interested candidates yet.</p></div>`;
         } else {
-            interested.forEach(m => {
+            interested.forEach((m, index) => {
+                const rank = index + 1;
+                const rankClass = rank <= 3 ? `rank-${rank}` : '';
+
                 html += `
-                    <div class="candidate-card" style="${m.isNew ? 'border-left: 4px solid var(--success);' : ''}">
+                    <div class="candidate-card ${rankClass}" style="${m.isNew ? 'border-left: 4px solid var(--success);' : ''}">
+                        <div class="rank-badge">#${rank}</div>
                         <div class="match-badge">${m.score}% Match</div>
                         <div class="card-top">
                             <div class="avatar">${m.name.split(' ').map(n=>n[0]).join('')}</div>
@@ -872,7 +882,7 @@
         employerMain.innerHTML = html;
     }
 
-    // --- 5. NAVIGATION ---
+    // --- NAVIGATION ---
     function switchView(viewName) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
@@ -891,7 +901,6 @@
         document.getElementById('filterModal').classList.toggle('active');
     }
 
-    // Close modal when clicking outside
     document.addEventListener('click', (e) => {
         const modal = document.getElementById('filterModal');
         const btn = document.getElementById('filterBtn');
@@ -900,9 +909,7 @@
         }
     });
 
-    // Initialize
     renderCards();
-
   </script>
 </body>
 </html>

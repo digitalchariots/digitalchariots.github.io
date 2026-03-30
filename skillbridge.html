@@ -6,25 +6,20 @@
   <title>SkillBridge | The Skills-First Hiring Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Professional Fonts: Poppins for headings, Inter for body text -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     :root {
-      /* Professional Blue Palette */
-      --primary: #2563EB;       /* Bright Royal Blue */
-      --primary-dark: #1E40AF;  /* Darker Blue for hover */
-      --primary-light: #DBEAFE; /* Very light blue for backgrounds */
-      
+      --primary: #2563EB;
+      --primary-dark: #1E40AF;
+      --primary-light: #DBEAFE;
       --bg: #FFFFFF;
-      --bg-alt: #F8FAFC;        /* Light slate background */
-      --text-main: #0F172A;     /* Almost black */
-      --text-muted: #64748B;    /* Slate gray */
+      --bg-alt: #F8FAFC;
+      --text-main: #0F172A;
+      --text-muted: #64748B;
       --border: #E2E8F0;
-      
-      --accent: #F59E0B;        /* Amber for small highlights/CTA */
-      --success: #10B981;       /* Green for success states */
-      
+      --accent: #F59E0B;
+      --success: #10B981;
       --radius: 8px;
       --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
       --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
@@ -52,7 +47,6 @@
       padding: 0 1.5rem;
     }
 
-    /* --- BUTTONS --- */
     .btn {
       display: inline-block;
       padding: 0.75rem 1.5rem;
@@ -79,7 +73,6 @@
     }
     .btn-outline:hover { background: var(--primary-light); }
 
-    /* --- NAVBAR --- */
     .navbar {
       background: white;
       height: 80px;
@@ -134,9 +127,8 @@
       cursor: pointer;
     }
 
-    /* --- HERO SECTION --- */
     .hero {
-      padding-top: 160px; /* Space for fixed navbar */
+      padding-top: 160px;
       padding-bottom: 80px;
       background: linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
       overflow: hidden;
@@ -203,7 +195,6 @@
     }
     .trust-text strong { color: var(--text-main); }
 
-    /* Hero Image/Card Area */
     .hero-visual {
       position: relative;
     }
@@ -253,7 +244,7 @@
     .skill-tag i { font-size: 0.7rem; }
 
     .match-score {
-      background: #ECFDF5; /* Green tint */
+      background: #ECFDF5;
       border: 1px solid #D1FAE5;
       padding: 1rem;
       border-radius: var(--radius);
@@ -275,7 +266,6 @@
       background: var(--success);
     }
 
-    /* Floating graphic elements */
     .float-card {
       position: absolute;
       background: white;
@@ -308,7 +298,6 @@
       50% { transform: translateY(-10px); }
     }
 
-    /* --- FEATURES SECTION --- */
     .features {
       padding: 6rem 0;
     }
@@ -367,7 +356,6 @@
       font-size: 0.95rem;
     }
 
-    /* --- PROCESS SECTION --- */
     .process {
       background: var(--bg-alt);
       padding: 6rem 0;
@@ -379,7 +367,6 @@
       position: relative;
     }
     
-    /* Connecting line */
     .process-steps::before {
       content: '';
       position: absolute;
@@ -424,7 +411,6 @@
     .step h4 { margin-bottom: 0.5rem; }
     .step p { color: var(--text-muted); font-size: 0.9rem; max-width: 200px; margin: 0 auto; }
 
-    /* --- FOOTER --- */
     .footer {
       background: var(--text-main);
       color: white;
@@ -478,19 +464,15 @@
     }
     .social-icons a:hover { color: white; }
 
-    /* Responsive */
     @media (max-width: 1024px) {
       .hero-grid { grid-template-columns: 1fr; text-align: center; }
       .hero-content p { margin: 0 auto 2rem; }
       .hero-buttons { justify-content: center; }
       .trust-badges { justify-content: center; }
-      .hero-visual { display: none; } /* Hide visual on tablet/mobile for simplicity */
-      
+      .hero-visual { display: none; }
       .feature-grid { grid-template-columns: 1fr; }
-      
       .process-steps { flex-direction: column; gap: 2rem; }
       .process-steps::before { display: none; }
-      
       .footer-grid { grid-template-columns: 1fr; text-align: center; }
     }
 
@@ -502,7 +484,6 @@
 </head>
 <body>
 
-  <!-- NAVBAR -->
   <nav class="navbar">
     <div class="container">
       <a href="#" class="logo">
@@ -515,16 +496,14 @@
         <li><a href="#pricing" class="nav-link">Pricing</a></li>
       </ul>
 
-      <!-- Updated Button Section -->
       <div class="nav-auth">
-        <a href="#" class="btn btn-primary">Try a Demo</a>
+        <a href="https://digitalchariots.github.io/hi.html#" class="btn btn-primary">Try a Demo</a>
       </div>
 
       <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
     </div>
   </nav>
 
-  <!-- HERO SECTION -->
   <section class="hero">
     <div class="container">
       <div class="hero-grid">
@@ -532,9 +511,8 @@
           <h1>Hire with <span>Confidence</span>, Not Guesswork.</h1>
           <p>Stop sifting through endless resumes. SkillBridge connects you with candidates who have verified skills, proven through assessments, not just pretty CVs.</p>
           
-          <!-- Updated Buttons -->
           <div class="hero-buttons">
-            <a href="#" class="btn btn-primary">Try a Demo</a>
+            <a href="https://digitalchariots.github.io/hi.html#" class="btn btn-primary">Try a Demo</a>
           </div>
 
           <div class="trust-badges">
@@ -551,7 +529,6 @@
         </div>
 
         <div class="hero-visual">
-          <!-- Main Visual: Candidate Card -->
           <div class="visual-card">
             <div class="profile-header">
               <img src="https://placehold.co/100x100/E2E8F0/475569?text=JP" alt="Candidate" class="profile-img">
@@ -561,7 +538,6 @@
               </div>
             </div>
 
-            <!-- Updated Skills to Tangible/Soft Skills -->
             <div class="skill-tags">
               <div class="skill-tag"><i class="fas fa-check-circle"></i> Public Speaking</div>
               <div class="skill-tag"><i class="fas fa-check-circle"></i> Leadership</div>
@@ -575,7 +551,6 @@
             </div>
           </div>
 
-          <!-- Floating Elements -->
           <div class="float-card fc-1">
             <i class="fas fa-check-circle" style="color: var(--success);"></i>
             Skills Verified
@@ -589,7 +564,6 @@
     </div>
   </section>
 
-  <!-- FEATURES SECTION -->
   <section id="features" class="features">
     <div class="container">
       <div class="section-header">
@@ -599,49 +573,37 @@
 
       <div class="feature-grid">
         <div class="feature-card">
-          <div class="icon-box">
-            <i class="fas fa-shield-alt"></i>
-          </div>
+          <div class="icon-box"><i class="fas fa-shield-alt"></i></div>
           <h3>Verified Proficiency</h3>
           <p>Candidates take rigorous skill assessments. You see verified badges, ensuring they actually possess the skills they claim.</p>
         </div>
 
         <div class="feature-card">
-          <div class="icon-box">
-            <i class="fas fa-bullseye"></i>
-          </div>
+          <div class="icon-box"><i class="fas fa-bullseye"></i></div>
           <h3>Precision Matching</h3>
           <p>Our algorithm matches job requirements with verified skill sets, finding perfect fits that keyword searches often miss.</p>
         </div>
 
         <div class="feature-card">
-          <div class="icon-box">
-            <i class="fas fa-clock"></i>
-          </div>
+          <div class="icon-box"><i class="fas fa-clock"></i></div>
           <h3>Faster Hiring</h3>
           <p>Reduce time-to-hire by weeks. Skip the initial phone screens and technical trivia—start with candidates you know can do the job.</p>
         </div>
 
         <div class="feature-card">
-          <div class="icon-box">
-            <i class="fas fa-user-check"></i>
-          </div>
+          <div class="icon-box"><i class="fas fa-user-check"></i></div>
           <h3>Better Retention</h3>
           <p>Hires made through skills-based matching stay longer because the role fits their actual abilities and interests.</p>
         </div>
 
         <div class="feature-card">
-          <div class="icon-box">
-            <i class="fas fa-chart-line"></i>
-          </div>
+          <div class="icon-box"><i class="fas fa-chart-line"></i></div>
           <h3>Data-Driven Insights</h3>
           <p>Get detailed analytics on your hiring pipeline and the talent pool to make smarter business decisions.</p>
         </div>
 
         <div class="feature-card">
-          <div class="icon-box">
-            <i class="fas fa-universal-access"></i>
-          </div>
+          <div class="icon-box"><i class="fas fa-universal-access"></i></div>
           <h3>Unbiased Recruiting</h3>
           <p>Focus on skills first. Our blind-matching options help reduce unconscious bias in the hiring process.</p>
         </div>
@@ -649,7 +611,6 @@
     </div>
   </section>
 
-  <!-- PROCESS SECTION -->
   <section id="process" class="process">
     <div class="container">
       <div class="section-header">
@@ -682,7 +643,6 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
@@ -736,7 +696,6 @@
   </footer>
 
   <script>
-    // Basic Navbar scroll effect (optional shadow addition)
     window.addEventListener('scroll', () => {
       const nav = document.querySelector('.navbar');
       if(window.scrollY > 50) {

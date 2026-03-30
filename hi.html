@@ -388,10 +388,12 @@
     .skill-checkbox.active { background: var(--primary); color: white; border-color: var(--primary); }
     .skill-checkbox input { display: none; }
 
+    /* --- EMPLOYER VIEW: FULL SCREEN GRID --- */
     .employer-view {
       display: grid;
       grid-template-columns: 300px 1fr;
       height: 100%;
+      width: 100%;
     }
 
     .emp-sidebar {
@@ -400,6 +402,7 @@
       display: flex;
       flex-direction: column;
       overflow-y: auto;
+      flex-shrink: 0;
     }
     
     .emp-header { 
@@ -429,18 +432,17 @@
     .applicant-count { background: var(--primary); color: white; min-width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; padding: 0 6px; }
 
     .emp-main {
-      padding: 2rem 2.5rem;
+      padding: 2rem;
       overflow-y: auto;
       background: var(--bg);
-      width: 100%;
+      min-width: 0;
     }
     .emp-welcome { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; color: var(--text-muted); }
 
     .candidate-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, 1fr);
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 1rem;
-      width: 100%;
     }
     .candidate-card { background: white; border-radius: 10px; padding: 1.2rem; border: 1px solid var(--border); position: relative; transition: all 0.2s; }
     .candidate-card:hover { border-color: var(--primary); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
@@ -495,9 +497,6 @@
     .sort-bar i { color: var(--primary); }
     .sort-bar strong { color: var(--text-main); }
 
-    @media (max-width: 1200px) {
-      .candidate-grid { grid-template-columns: repeat(2, 1fr); }
-    }
     @media (max-width: 900px) {
       .seeker-split { grid-template-columns: 1fr; }
       .seeker-details-area { display: none; }
@@ -848,7 +847,7 @@
         const interested = (matchesMap.get(jobId) || []).sort((a, b) => b.score - a.score);
         
         let html = `
-            <div style="margin-bottom: 2rem;">
+            <div style="margin-bottom: 1.5rem;">
                 <h2 style="margin-bottom: 0.3rem;">${job.title}</h2>
                 <p style="color:var(--text-muted);">${interested.length} candidates interested</p>
             </div>

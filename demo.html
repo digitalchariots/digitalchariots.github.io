@@ -126,6 +126,7 @@
       max-width: 440px;
       height: 640px;
       perspective: 1000px;
+      touch-action: pan-y;
     }
 
     .job-card {
@@ -141,15 +142,50 @@
       overflow: hidden;
       border: 1px solid var(--border);
       top: 0;
+      will-change: transform;
+    }
+
+    .job-card.dragging {
+      transition: none;
     }
 
     .job-card.go-left {
       transform: translateX(-150%) rotate(-30deg) !important;
       opacity: 0;
+      transition: transform 0.4s ease, opacity 0.4s ease;
     }
     .job-card.go-right {
       transform: translateX(150%) rotate(30deg) !important;
       opacity: 0;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+
+    /* Swipe overlay indicators */
+    .swipe-label {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%) rotate(-30deg);
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 2.5rem;
+      padding: 0.5rem 1.5rem;
+      border-radius: 12px;
+      border: 4px solid;
+      opacity: 0;
+      z-index: 10;
+      pointer-events: none;
+      transition: opacity 0.1s;
+    }
+    .swipe-label.like-label {
+      right: 30px;
+      color: var(--success);
+      border-color: var(--success);
+    }
+    .swipe-label.reject-label {
+      left: 30px;
+      transform: translateY(-50%) rotate(30deg);
+      color: var(--danger);
+      border-color: var(--danger);
     }
 
     .card-hero {
@@ -160,6 +196,7 @@
       justify-content: center;
       border-bottom: 1px solid var(--border);
       position: relative;
+      flex-shrink: 0;
     }
     .hero-logo {
       width: 90px;
@@ -224,6 +261,7 @@
       justify-content: center;
       gap: 2rem;
       background: white;
+      flex-shrink: 0;
     }
 
     .swipe-btn {
@@ -429,9 +467,26 @@
     @media (max-width: 900px) {
       .seeker-split { grid-template-columns: 1fr; }
       .seeker-details-area { display: none; }
+      .swipe-container {
+        max-width: 380px;
+        height: 560px;
+      }
       .employer-view { grid-template-columns: 1fr; }
       .emp-sidebar { display: none; }
       .candidate-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 400px) {
+      .swipe-container {
+        max-width: 320px;
+        height: 500px;
+      }
+      .card-hero { height: 120px; }
+      .hero-logo { width: 70px; height: 70px; font-size: 1.8rem; }
+      .card-content { padding: 1.2rem; }
+      .card-title { font-size: 1.2rem; }
+      .swipe-btn { width: 56px; height: 56px; font-size: 1.3rem; }
+      .card-actions { gap: 1.5rem; padding: 1rem; }
     }
   </style>
 </head>
@@ -542,11 +597,22 @@
     const cardContainer = document.getElementById('cardContainer');
     const seekerDetails = document.getElementById('seekerDetails');
 
+    // --- TOUCH SWIPE STATE ---
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchCurrentX = 0;
+    let isDragging = false;
+    const SWIPE_THRESHOLD = 80;
+
     function getColorFromString(str) {
       let hash = 0;
       for (let i = 0; i < str.length; i++) hash = str.charCodeAt(i) + ((hash << 5) - hash);
       const colors = ["#6366F1", "#10B981", "#F59E0B", "#EF4444", "#3B82F6", "#8B5CF6", "#EC4899"];
       return colors[Math.abs(hash) % colors.length];
+    }
+
+    function getTopCard() {
+      return cardContainer.querySelector('.job-card:last-child');
     }
 
     function renderCards() {
@@ -578,6 +644,8 @@
             const color = getColorFromString(job.company);
 
             card.innerHTML = `
+                <div class="swipe-label like-label">ACCEPT</div>
+                <div class="swipe-label reject-label">REJECT</div>
                 <div class="card-hero">
                     <div class="hero-logo" style="background-color: ${color}">${job.company.substring(0,2)}</div>
                 </div>
@@ -610,6 +678,70 @@
 
         updateDetailsPanel(jobsDatabase[currentJobIndex]);
     }
+
+    // --- TOUCH EVENT HANDLERS ---
+    cardContainer.addEventListener('touchstart', (e) => {
+      const topCard = getTopCard();
+      if (!topCard) return;
+      
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      isDragging = true;
+      topCard.classList.add('dragging');
+    }, { passive: true });
+
+    cardContainer.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      const topCard = getTopCard();
+      if (!topCard) return;
+
+      touchCurrentX = e.touches[0].clientX;
+      const deltaX = touchCurrentX - touchStartX;
+      const deltaY = e.touches[0].clientY - touchStartY;
+
+      // If scrolling vertically more than horizontally, don't drag the card
+      if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaX) < 15) return;
+
+      const rotate = deltaX * 0.08;
+      topCard.style.transform = `translateX(${deltaX}px) rotate(${rotate}deg)`;
+
+      // Show/hide labels based on drag direction and distance
+      const likeLabel = topCard.querySelector('.like-label');
+      const rejectLabel = topCard.querySelector('.reject-label');
+      const progress = Math.min(Math.abs(deltaX) / SWIPE_THRESHOLD, 1);
+
+      if (deltaX > 0) {
+        likeLabel.style.opacity = progress;
+        rejectLabel.style.opacity = 0;
+      } else {
+        rejectLabel.style.opacity = progress;
+        likeLabel.style.opacity = 0;
+      }
+    }, { passive: true });
+
+    cardContainer.addEventListener('touchend', () => {
+      if (!isDragging) return;
+      const topCard = getTopCard();
+      if (!topCard) return;
+
+      isDragging = false;
+      topCard.classList.remove('dragging');
+
+      const deltaX = touchCurrentX - touchStartX;
+
+      if (deltaX > SWIPE_THRESHOLD) {
+        handleSwipe('right');
+      } else if (deltaX < -SWIPE_THRESHOLD) {
+        handleSwipe('left');
+      } else {
+        // Snap back
+        topCard.style.transform = 'scale(1)';
+        const likeLabel = topCard.querySelector('.like-label');
+        const rejectLabel = topCard.querySelector('.reject-label');
+        if (likeLabel) likeLabel.style.opacity = 0;
+        if (rejectLabel) rejectLabel.style.opacity = 0;
+      }
+    });
 
     function updateDetailsPanel(job) {
         if (!job) return;
@@ -659,7 +791,7 @@
     }
 
     function handleSwipe(direction) {
-        const topCard = cardContainer.querySelector('.job-card:last-child');
+        const topCard = getTopCard();
         if (!topCard) return;
 
         const jobId = parseInt(topCard.dataset.jobId);

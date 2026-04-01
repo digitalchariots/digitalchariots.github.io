@@ -13,6 +13,7 @@
     :root {
       --primary: #6366F1;
       --primary-dark: #4F46E5;
+      --primary-light: #DBEAFE;
       --bg: #F1F5F9;
       --bg-card: #FFFFFF;
       --text-main: #0F172A;
@@ -188,7 +189,6 @@
     }
 
     .job-card.dragging { transition: none; }
-
     .job-card.go-left {
       transform: translateX(-150%) rotate(-30deg) !important;
       opacity: 0;
@@ -213,19 +213,9 @@
       opacity: 0;
       z-index: 10;
       pointer-events: none;
-      transition: opacity 0.1s;
     }
-    .swipe-label.like-label {
-      right: 30px;
-      color: var(--success);
-      border-color: var(--success);
-    }
-    .swipe-label.reject-label {
-      left: 30px;
-      transform: translateY(-50%) rotate(30deg);
-      color: var(--danger);
-      border-color: var(--danger);
-    }
+    .swipe-label.like-label { right: 30px; color: var(--success); border-color: var(--success); }
+    .swipe-label.reject-label { left: 30px; transform: translateY(-50%) rotate(30deg); color: var(--danger); border-color: var(--danger); }
 
     .card-hero {
       height: 160px;
@@ -234,12 +224,10 @@
       align-items: center;
       justify-content: center;
       border-bottom: 1px solid var(--border);
-      position: relative;
       flex-shrink: 0;
     }
     .hero-logo {
-      width: 90px;
-      height: 90px;
+      width: 90px; height: 90px;
       border-radius: 24px;
       background: var(--primary);
       color: white;
@@ -263,11 +251,7 @@
     .card-title { font-size: 1.5rem; margin-bottom: 0.3rem; }
     .card-company { color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem; font-size: 1rem; }
     
-    .card-meta-row {
-      display: flex;
-      gap: 0.8rem;
-      margin-bottom: 1.5rem;
-    }
+    .card-meta-row { display: flex; gap: 0.8rem; margin-bottom: 1.5rem; }
     .meta-badge {
       background: #F1F5F9;
       padding: 0.5rem 1rem;
@@ -281,14 +265,7 @@
     }
 
     .job-tags { margin-bottom: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .tag { 
-      background: #DBEAFE; 
-      color: #1E40AF; 
-      padding: 0.4rem 0.8rem; 
-      border-radius: 8px; 
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
+    .tag { background: #DBEAFE; color: #1E40AF; padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; }
 
     .desc-title { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main); }
     .desc-text { font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; }
@@ -304,8 +281,7 @@
     }
 
     .swipe-btn {
-      width: 64px;
-      height: 64px;
+      width: 64px; height: 64px;
       border-radius: 50%;
       border: none;
       background: white;
@@ -330,51 +306,28 @@
       padding: 3rem;
     }
 
-    .details-header {
-      margin-bottom: 2rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .details-header h1 { font-size: 2rem; margin-bottom: 0.5rem; color: var(--text-main); }
+    .details-header { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+    .details-header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
     .details-company { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; }
-    
     .details-tags { display: flex; gap: 0.8rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
-    .d-tag { 
-      background: #F1F5F9; padding: 0.6rem 1.2rem; border-radius: 8px; font-size: 0.9rem; font-weight: 500;
-      display: flex; align-items: center; gap: 0.5rem; color: var(--text-main); border: 1px solid var(--border);
-    }
+    .d-tag { background: #F1F5F9; padding: 0.6rem 1.2rem; border-radius: 8px; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; color: var(--text-main); border: 1px solid var(--border); }
 
     .apply-btn {
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 1rem 2rem;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
+      background: var(--primary); color: white; border: none;
+      padding: 1rem 2rem; border-radius: 8px;
+      font-weight: 600; font-size: 1rem; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 0.5rem;
       transition: background 0.2s;
     }
     .apply-btn:hover { background: var(--primary-dark); }
 
     .details-body { flex: 1; }
-
     .section-title { font-size: 1.2rem; margin-bottom: 1rem; color: var(--text-main); display: flex; align-items: center; gap: 0.5rem; }
     .section-content { color: var(--text-muted); line-height: 1.8; margin-bottom: 2.5rem; font-size: 0.95rem; }
     .section-content p { margin-bottom: 1rem; }
     
-    .match-analysis {
-      background: #F8FAFC;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-top: 1rem;
-    }
+    .match-analysis { background: #F8FAFC; border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-top: 1rem; }
     .match-score-large { font-size: 2.5rem; font-weight: 800; color: var(--success); margin-bottom: 0.5rem; }
-    
     .skill-check-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1rem; }
     .skill-check { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; }
     .skill-check i { font-size: 0.8rem; }
@@ -383,172 +336,71 @@
     .skill-check.missing { color: var(--text-muted); }
 
     .empty-state {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      width: 100%;
-      color: var(--text-muted);
-      padding: 2rem;
-      text-align: center;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      height: 100%; width: 100%; color: var(--text-muted); padding: 2rem; text-align: center;
     }
     .empty-state i { font-size: 3rem; margin-bottom: 1rem; color: var(--border); }
 
+    /* --- POPUP --- */
     .popup-overlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(4px);
-      z-index: 5000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.4); backdrop-filter: blur(4px);
+      z-index: 5000; display: none; align-items: center; justify-content: center; padding: 1rem;
     }
     .popup-overlay.active { display: flex; }
-
     .popup {
-      background: white;
-      border-radius: 16px;
-      width: 100%;
-      max-width: 560px;
-      max-height: 80vh;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.25);
-      animation: popIn 0.25s ease;
+      background: white; border-radius: 16px; width: 100%; max-width: 560px;
+      max-height: 80vh; display: flex; flex-direction: column;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.25); animation: popIn 0.25s ease;
     }
-
     @keyframes popIn {
       from { opacity: 0; transform: scale(0.95) translateY(10px); }
       to { opacity: 1; transform: scale(1) translateY(0); }
     }
-
     .popup-header {
-      padding: 1.5rem 1.5rem 1rem;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      flex-shrink: 0;
+      padding: 1.5rem 1.5rem 1rem; border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: flex-start; flex-shrink: 0;
     }
     .popup-header h2 { font-size: 1.2rem; margin-bottom: 0.15rem; }
     .popup-header p { font-size: 0.85rem; color: var(--text-muted); }
-    
     .popup-close {
-      background: #F1F5F9;
-      border: none;
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      color: var(--text-muted);
-      transition: all 0.2s;
-      flex-shrink: 0;
+      background: #F1F5F9; border: none; width: 32px; height: 32px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
+      color: var(--text-muted); transition: all 0.2s; flex-shrink: 0;
     }
     .popup-close:hover { background: #E2E8F0; color: var(--text-main); }
-
     .popup-tabs {
-      display: flex;
-      gap: 0;
-      padding: 0 1.5rem;
-      border-bottom: 1px solid var(--border);
-      flex-shrink: 0;
+      display: flex; padding: 0 1.5rem; border-bottom: 1px solid var(--border); flex-shrink: 0;
     }
     .popup-tab {
-      padding: 0.75rem 1rem;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      background: none;
-      border: none;
-      cursor: pointer;
-      position: relative;
-      transition: color 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
+      padding: 0.75rem 1rem; font-size: 0.85rem; font-weight: 600; color: var(--text-muted);
+      background: none; border: none; cursor: pointer; position: relative;
+      transition: color 0.2s; display: flex; align-items: center; gap: 0.4rem;
     }
     .popup-tab.active { color: var(--primary); }
     .popup-tab.active::after {
-      content: '';
-      position: absolute;
-      bottom: -1px;
-      left: 0; right: 0;
-      height: 2px;
-      background: var(--primary);
-      border-radius: 2px 2px 0 0;
+      content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
+      height: 2px; background: var(--primary); border-radius: 2px 2px 0 0;
     }
-    .popup-tab .tab-count {
-      background: var(--bg);
-      font-size: 0.7rem;
-      padding: 0.1rem 0.45rem;
-      border-radius: 10px;
-      font-weight: 700;
-    }
-    .popup-tab.active .tab-count {
-      background: var(--primary-light);
-      color: var(--primary);
-    }
-
-    .popup-body {
-      flex: 1;
-      overflow-y: auto;
-      padding: 1rem 1.5rem 1.5rem;
-    }
-
-    .app-item {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      padding: 0.85rem 0;
-      border-bottom: 1px solid var(--border);
-    }
+    .popup-tab .tab-count { background: var(--bg); font-size: 0.7rem; padding: 0.1rem 0.45rem; border-radius: 10px; font-weight: 700; }
+    .popup-tab.active .tab-count { background: var(--primary-light); color: var(--primary); }
+    .popup-body { flex: 1; overflow-y: auto; padding: 1rem 1.5rem 1.5rem; }
+    .app-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.85rem 0; border-bottom: 1px solid var(--border); }
     .app-item:last-child { border-bottom: none; }
-
-    .app-status-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.85rem;
-      flex-shrink: 0;
-    }
+    .app-status-icon { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; }
     .app-status-icon.accepted { background: #ECFDF5; color: var(--success); }
     .app-status-icon.rejected { background: #FEF2F2; color: var(--danger); }
-
     .app-info { flex: 1; min-width: 0; }
     .app-info h4 { font-size: 0.9rem; margin-bottom: 0.1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .app-info p { font-size: 0.78rem; color: var(--text-muted); }
-
-    .app-status-text {
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 0.25rem 0.6rem;
-      border-radius: 6px;
-      flex-shrink: 0;
-    }
+    .app-status-text { font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.6rem; border-radius: 6px; flex-shrink: 0; }
     .app-status-text.accepted { background: #ECFDF5; color: #065F46; }
     .app-status-text.rejected { background: #FEF2F2; color: #991B1B; }
-
-    .popup-empty {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 3rem 1rem;
-      color: var(--text-muted);
-      text-align: center;
-    }
+    .popup-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem 1rem; color: var(--text-muted); text-align: center; }
     .popup-empty i { font-size: 2.5rem; margin-bottom: 0.8rem; color: var(--border); }
     .popup-empty p { font-size: 0.9rem; }
 
+    /* --- EMPLOYER VIEW --- */
     .employer-view {
       display: grid;
       grid-template-columns: 300px 1fr;
@@ -564,29 +416,17 @@
       overflow-y: auto;
       flex-shrink: 0;
     }
-    
-    .emp-header { 
-      padding: 2rem 1.5rem 1.5rem 1.5rem;
-      border-bottom: 1px solid var(--border);
-    }
+    .emp-header { padding: 2rem 1.5rem 1.5rem; border-bottom: 1px solid var(--border); }
     .emp-header h2 { font-size: 1.1rem; margin-bottom: 0.3rem; }
     .emp-header p { font-size: 0.8rem; color: var(--text-muted); }
-    
     .job-list { display: flex; flex-direction: column; gap: 0.5rem; padding: 1rem; }
-    
     .job-list-item {
-      padding: 0.8rem 1rem;
-      background: #F8FAFC;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s;
-      border: 1px solid transparent;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      padding: 0.8rem 1rem; background: #F8FAFC; border-radius: 8px;
+      cursor: pointer; transition: all 0.2s; border: 1px solid transparent;
+      display: flex; justify-content: space-between; align-items: center;
     }
     .job-list-item:hover { background: white; border-color: var(--border); }
-    .job-list-item.active { background: white; border-color: var(--primary); box-shadow: 0 2px 8px rgba(99, 102, 241, 0.1); }
+    .job-list-item.active { background: white; border-color: var(--primary); box-shadow: 0 2px 8px rgba(99,102,241,0.1); }
     .job-info h4 { font-size: 0.9rem; margin-bottom: 0.2rem; }
     .job-info span { font-size: 0.75rem; color: var(--text-muted); }
     .applicant-count { background: var(--primary); color: white; min-width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; padding: 0 6px; }
@@ -606,39 +446,21 @@
     }
     .candidate-card { background: white; border-radius: 10px; padding: 1.2rem; border: 1px solid var(--border); position: relative; transition: all 0.2s; }
     .candidate-card:hover { border-color: var(--primary); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-    .candidate-card.rank-1 { border-color: #F59E0B; box-shadow: 0 0 0 1px #F59E0B, 0 4px 14px rgba(245, 158, 11, 0.15); }
-    .candidate-card.rank-2 { border-color: #94A3B8; box-shadow: 0 0 0 1px #94A3B8, 0 4px 14px rgba(148, 163, 184, 0.15); }
-    .candidate-card.rank-3 { border-color: #CD7F32; box-shadow: 0 0 0 1px #CD7F32, 0 4px 14px rgba(205, 127, 50, 0.15); }
-    
+    .candidate-card.rank-1 { border-color: #F59E0B; box-shadow: 0 0 0 1px #F59E0B, 0 4px 14px rgba(245,158,11,0.15); }
+    .candidate-card.rank-2 { border-color: #94A3B8; box-shadow: 0 0 0 1px #94A3B8, 0 4px 14px rgba(148,163,184,0.15); }
+    .candidate-card.rank-3 { border-color: #CD7F32; box-shadow: 0 0 0 1px #CD7F32, 0 4px 14px rgba(205,127,50,0.15); }
     .card-top { display: flex; gap: 0.8rem; margin-bottom: 0.8rem; }
     .avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; flex-shrink: 0; font-size: 1rem; }
     .info h3 { font-size: 0.95rem; margin-bottom: 0.1rem; }
     .info p { color: var(--text-muted); font-size: 0.8rem; }
-    
     .match-badge { position: absolute; top: 1rem; right: 1rem; background: #ECFDF5; color: #059669; padding: 0.2rem 0.5rem; border-radius: 20px; font-size: 0.7rem; font-weight: 700; }
-    
-    .rank-badge {
-      position: absolute;
-      top: -1px;
-      left: -1px;
-      width: 28px;
-      height: 28px;
-      border-radius: 0 0 10px 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.7rem;
-      font-weight: 800;
-      color: white;
-    }
+    .rank-badge { position: absolute; top: -1px; left: -1px; width: 28px; height: 28px; border-radius: 0 0 10px 0; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; color: white; }
     .rank-1 .rank-badge { background: #F59E0B; }
     .rank-2 .rank-badge { background: #94A3B8; }
     .rank-3 .rank-badge { background: #CD7F32; }
     .candidate-card:not(.rank-1):not(.rank-2):not(.rank-3) .rank-badge { background: #CBD5E1; }
-
     .skill-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin: 0.6rem 0; }
     .skill-tags .tag { background: #F1F5F9; color: var(--text-main); font-size: 0.7rem; }
-    
     .emp-actions { margin-top: 0.8rem; display: flex; gap: 0.5rem; }
     .btn { padding: 0.5rem 0.8rem; border-radius: 6px; font-weight: 600; font-size: 0.8rem; cursor: pointer; border: none; transition: all 0.2s; flex: 1; text-align: center; display: flex; justify-content: center; align-items: center; gap: 0.4rem; }
     .btn-primary { background: var(--primary); color: white; }
@@ -646,81 +468,101 @@
     .btn-outline { background: white; border: 1px solid var(--border); color: var(--text-main); }
     .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
 
-    .sort-bar {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
+    .sort-bar { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; font-size: 0.85rem; color: var(--text-muted); }
     .sort-bar i { color: var(--primary); }
     .sort-bar strong { color: var(--text-main); }
 
-    /* --- PHONE NAVBAR --- */
-    @media (max-width: 500px) {
-      .app-nav {
-        height: 50px;
-        padding: 0 0.75rem;
-        gap: 0.35rem;
-      }
-
-      .logo {
-        font-size: 0.95rem;
-        gap: 0.3rem;
-      }
-      .logo i { font-size: 0.85rem; }
-
-      .nav-center {
-        padding: 2px;
-        border-radius: 8px;
-      }
-
-      .view-btn {
-        padding: 0.35rem 0.6rem;
-        font-size: 0.7rem;
-        border-radius: 6px;
-      }
-
-      .nav-btn {
-        padding: 0.35rem 0.5rem;
-        font-size: 0.7rem;
-        gap: 0.25rem;
-        border-radius: 6px;
-      }
-      .nav-btn .nav-btn-text { display: none; }
-      .nav-btn i { font-size: 0.85rem; }
-
-      .app-count-badge {
-        min-width: 14px;
-        height: 14px;
-        font-size: 0.55rem;
-      }
-
-      .view-container {
-        margin-top: 50px;
-        height: calc(100vh - 50px);
-      }
+    /* --- MOBILE EMPLOYER JOB PICKER --- */
+    .mobile-job-picker {
+      display: none;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .mobile-picker-label {
+      padding: 0.6rem 1rem 0;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+    .mobile-job-scroll {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding: 0.5rem 1rem 0.75rem;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .mobile-job-scroll::-webkit-scrollbar { display: none; }
+    
+    .mobile-job-pill {
+      flex-shrink: 0;
+      padding: 0.45rem 0.85rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: #F8FAFC;
+      color: var(--text-muted);
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      white-space: nowrap;
+    }
+    .mobile-job-pill.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    .mobile-job-pill .pill-count {
+      font-size: 0.65rem;
+      background: rgba(255,255,255,0.25);
+      padding: 0.05rem 0.35rem;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+    .mobile-job-pill:not(.active) .pill-count {
+      background: var(--border);
     }
 
-    @media (max-width: 360px) {
-      .view-btn {
-        padding: 0.3rem 0.45rem;
-        font-size: 0.65rem;
-      }
-
-      .logo {
-        font-size: 0.85rem;
-      }
-    }
-
+    /* --- RESPONSIVE --- */
     @media (max-width: 900px) {
       .seeker-split { grid-template-columns: 1fr; }
       .seeker-details-area { display: none; }
       .swipe-container { max-width: 380px; height: 560px; }
+
       .employer-view { grid-template-columns: 1fr; }
       .emp-sidebar { display: none; }
+      
+      /* Show the mobile job picker */
+      .mobile-job-picker { display: block; }
+
+      .emp-main {
+        padding: 1.25rem;
+      }
       .candidate-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 500px) {
+      .app-nav { height: 50px; padding: 0 0.75rem; gap: 0.35rem; }
+      .logo { font-size: 0.95rem; gap: 0.3rem; }
+      .logo i { font-size: 0.85rem; }
+      .nav-center { padding: 2px; border-radius: 8px; }
+      .view-btn { padding: 0.35rem 0.6rem; font-size: 0.7rem; border-radius: 6px; }
+      .nav-btn { padding: 0.35rem 0.5rem; font-size: 0.7rem; gap: 0.25rem; border-radius: 6px; }
+      .nav-btn .nav-btn-text { display: none; }
+      .nav-btn i { font-size: 0.85rem; }
+      .app-count-badge { min-width: 14px; height: 14px; font-size: 0.55rem; }
+      .view-container { margin-top: 50px; height: calc(100vh - 50px); }
+    }
+
+    @media (max-width: 360px) {
+      .view-btn { padding: 0.3rem 0.45rem; font-size: 0.65rem; }
+      .logo { font-size: 0.85rem; }
     }
 
     @media (max-width: 400px) {
@@ -760,19 +602,15 @@
           <h2>My Applications</h2>
           <p>Track jobs you've swiped on</p>
         </div>
-        <button class="popup-close" onclick="closeAppsPopup()">
-          <i class="fas fa-times"></i>
-        </button>
+        <button class="popup-close" onclick="closeAppsPopup()"><i class="fas fa-times"></i></button>
       </div>
       <div class="popup-tabs">
         <button class="popup-tab active" data-tab="accepted" onclick="switchTab('accepted')">
-          <i class="fas fa-check-circle" style="color:var(--success)"></i>
-          Accepted
+          <i class="fas fa-check-circle" style="color:var(--success)"></i> Accepted
           <span class="tab-count" id="acceptedCount">0</span>
         </button>
         <button class="popup-tab" data-tab="rejected" onclick="switchTab('rejected')">
-          <i class="fas fa-times-circle" style="color:var(--danger)"></i>
-          Rejected
+          <i class="fas fa-times-circle" style="color:var(--danger)"></i> Rejected
           <span class="tab-count" id="rejectedCount">0</span>
         </button>
       </div>
@@ -806,7 +644,18 @@
           </div>
           <div class="job-list" id="employerJobList"></div>
         </aside>
-        <main class="emp-main" id="employerMain"></main>
+        <div style="display:flex; flex-direction:column; min-width:0;">
+          <div class="mobile-job-picker">
+            <div class="mobile-picker-label">Select a Posting</div>
+            <div class="mobile-job-scroll" id="mobileJobScroll"></div>
+          </div>
+          <main class="emp-main" id="employerMain">
+            <div class="emp-welcome">
+              <i class="fas fa-briefcase" style="font-size:2.5rem; margin-bottom:1rem; color:var(--border);"></i>
+              <p>Select a job from the list to see matched candidates.</p>
+            </div>
+          </main>
+        </div>
       </div>
     </div>
 
@@ -828,14 +677,12 @@
         const comp = companies[Math.floor(Math.random() * companies.length)];
         const salStart = Math.floor(Math.random() * 60) + 60;
         jobsDatabase.push({
-            id: i,
-            title: title,
-            company: comp,
+            id: i, title, company: comp,
             location: Math.random() > 0.4 ? locations[Math.floor(Math.random() * locations.length)] : "Remote",
             salary: "$" + salStart + "k - $" + (salStart + 40 + Math.floor(Math.random() * 40)) + "k",
             skills: [...new Set(reqSkills)],
-            desc: `We are looking for a talented ${title} to join our team at ${comp}. You will be responsible for driving key initiatives and working with cross-functional teams to deliver outstanding results. This role requires strong problem-solving skills and the ability to adapt to a fast-paced environment. We value creativity and proactive thinking.`,
-            fullDesc: `### The Role\nWe are seeking a ${title} to lead innovative projects. You will collaborate with engineering and design teams to build next-generation applications.\n\n### Requirements\n- 3+ years of experience in ${reqSkills[0]}\n- Strong understanding of ${reqSkills[1]}\n- Team management skills\n\n### Benefits\n- Competitive salary\n- Remote work options\n- Health insurance`
+            desc: `We are looking for a talented ${title} to join our team at ${comp}. You will be responsible for driving key initiatives and working with cross-functional teams to deliver outstanding results.`,
+            fullDesc: `### The Role\nWe are seeking a ${title} to lead innovative projects.\n\n### Requirements\n- 3+ years of experience in ${reqSkills[0]}\n- Strong understanding of ${reqSkills[1]}\n- Team management skills\n\n### Benefits\n- Competitive salary\n- Remote work options\n- Health insurance`
         });
     }
 
@@ -858,15 +705,15 @@
     jobsDatabase.forEach(job => {
         const numApplicants = Math.floor(Math.random() * 20) + 5;
         const applicants = [];
-        const usedCandidateIds = new Set();
+        const usedIds = new Set();
         for(let i=0; i<numApplicants; i++) {
-            const randomIndex = Math.floor(Math.random() * candidatesDatabase.length);
-            if(usedCandidateIds.has(randomIndex)) continue;
-            usedCandidateIds.add(randomIndex);
-            const candidate = candidatesDatabase[randomIndex];
-            const intersection = job.skills.filter(s => candidate.skills.includes(s));
+            const idx = Math.floor(Math.random() * candidatesDatabase.length);
+            if(usedIds.has(idx)) continue;
+            usedIds.add(idx);
+            const c = candidatesDatabase[idx];
+            const intersection = job.skills.filter(s => c.skills.includes(s));
             const score = 50 + (intersection.length * 10) + Math.floor(Math.random() * 10);
-            applicants.push({ ...candidate, score: Math.min(99, score) });
+            applicants.push({ ...c, score: Math.min(99, score) });
         }
         matchesMap.set(job.id, applicants);
     });
@@ -875,361 +722,228 @@
     let currentTab = 'accepted';
 
     function updateAppBadge() {
-      const accepted = myApplications.filter(a => a.status === 'accepted').length;
-      document.getElementById('appCountBadge').textContent = accepted;
-      document.getElementById('acceptedCount').textContent = accepted;
-      document.getElementById('rejectedCount').textContent = myApplications.filter(a => a.status === 'rejected').length;
+      const a = myApplications.filter(x => x.status === 'accepted').length;
+      document.getElementById('appCountBadge').textContent = a;
+      document.getElementById('acceptedCount').textContent = a;
+      document.getElementById('rejectedCount').textContent = myApplications.filter(x => x.status === 'rejected').length;
     }
 
     let currentJobIndex = 0;
     const cardContainer = document.getElementById('cardContainer');
     const seekerDetails = document.getElementById('seekerDetails');
 
-    let touchStartX = 0;
-    let touchStartY = 0;
-    let touchCurrentX = 0;
-    let isDragging = false;
+    let touchStartX = 0, touchStartY = 0, touchCurrentX = 0, isDragging = false;
     const SWIPE_THRESHOLD = 80;
 
     function getColorFromString(str) {
       let hash = 0;
       for (let i = 0; i < str.length; i++) hash = str.charCodeAt(i) + ((hash << 5) - hash);
-      const colors = ["#6366F1", "#10B981", "#F59E0B", "#EF4444", "#3B82F6", "#8B5CF6", "#EC4899"];
-      return colors[Math.abs(hash) % colors.length];
+      return ["#6366F1","#10B981","#F59E0B","#EF4444","#3B82F6","#8B5CF6","#EC4899"][Math.abs(hash) % 7];
     }
 
-    function getTopCard() {
-      return cardContainer.querySelector('.job-card:last-child');
-    }
+    function getTopCard() { return cardContainer.querySelector('.job-card:last-child'); }
 
     function renderCards() {
         cardContainer.innerHTML = '';
         const remaining = jobsDatabase.length - currentJobIndex;
-        
         if (remaining <= 0) {
             cardContainer.innerHTML = `<div class="empty-state"><i class="fas fa-check-circle"></i><h3>All Done!</h3><p>No more jobs match your criteria.</p></div>`;
             seekerDetails.innerHTML = `<div class="empty-state"><i class="fas fa-clipboard-check"></i><h3>Great work!</h3><p>You've reviewed all available positions.</p></div>`;
             return;
         }
-
         const slice = jobsDatabase.slice(currentJobIndex, currentJobIndex + 2).reverse();
-        
         slice.forEach((job, idx) => {
             const card = document.createElement('div');
             card.className = 'job-card';
             card.dataset.jobId = job.id;
-            
-            if (idx === 0) {
-                card.style.transform = "scale(0.95) translateY(-10px)";
-                card.style.opacity = "0.7";
-                card.style.zIndex = "1";
-            } else {
-                card.style.transform = "scale(1)";
-                card.style.zIndex = "2";
-            }
-
+            card.style.transform = idx === 0 ? "scale(0.95) translateY(-10px)" : "scale(1)";
+            card.style.opacity = idx === 0 ? "0.7" : "1";
+            card.style.zIndex = idx === 0 ? "1" : "2";
             const color = getColorFromString(job.company);
-
             card.innerHTML = `
                 <div class="swipe-label like-label">ACCEPT</div>
                 <div class="swipe-label reject-label">REJECT</div>
-                <div class="card-hero">
-                    <div class="hero-logo" style="background-color: ${color}">${job.company.substring(0,2)}</div>
-                </div>
+                <div class="card-hero"><div class="hero-logo" style="background-color:${color}">${job.company.substring(0,2)}</div></div>
                 <div class="card-content">
-                    <div class="card-header">
-                        <h3 class="card-title">${job.title}</h3>
-                        <div class="card-company"><i class="fas fa-building"></i> ${job.company}</div>
-                    </div>
-                    <div class="card-meta-row">
-                        <div class="meta-badge"><i class="fas fa-map-marker-alt"></i> ${job.location}</div>
-                        <div class="meta-badge"><i class="fas fa-dollar-sign"></i> ${job.salary}</div>
-                    </div>
-                    <div class="job-tags">
-                        ${job.skills.map(s => `<span class="tag">${s}</span>`).join('')}
-                    </div>
-                    <div class="desc-title">About the role</div>
-                    <div class="desc-text">${job.desc}</div>
+                    <div class="card-header"><h3 class="card-title">${job.title}</h3><div class="card-company"><i class="fas fa-building"></i> ${job.company}</div></div>
+                    <div class="card-meta-row"><div class="meta-badge"><i class="fas fa-map-marker-alt"></i> ${job.location}</div><div class="meta-badge"><i class="fas fa-dollar-sign"></i> ${job.salary}</div></div>
+                    <div class="job-tags">${job.skills.map(s => `<span class="tag">${s}</span>`).join('')}</div>
+                    <div class="desc-title">About the role</div><div class="desc-text">${job.desc}</div>
                 </div>
                 <div class="card-actions">
-                    <button class="swipe-btn reject" onclick="handleSwipe('left')">
-                        <i class="fas fa-times"></i>
-                    </button>
-                    <button class="swipe-btn like" onclick="handleSwipe('right')">
-                        <i class="fas fa-check"></i>
-                    </button>
-                </div>
-            `;
+                    <button class="swipe-btn reject" onclick="handleSwipe('left')"><i class="fas fa-times"></i></button>
+                    <button class="swipe-btn like" onclick="handleSwipe('right')"><i class="fas fa-check"></i></button>
+                </div>`;
             cardContainer.appendChild(card);
         });
-
         updateDetailsPanel(jobsDatabase[currentJobIndex]);
     }
 
     cardContainer.addEventListener('touchstart', (e) => {
-      const topCard = getTopCard();
-      if (!topCard) return;
-      touchStartX = e.touches[0].clientX;
-      touchStartY = e.touches[0].clientY;
-      isDragging = true;
-      topCard.classList.add('dragging');
+      const c = getTopCard(); if (!c) return;
+      touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY;
+      isDragging = true; c.classList.add('dragging');
     }, { passive: true });
 
     cardContainer.addEventListener('touchmove', (e) => {
-      if (!isDragging) return;
-      const topCard = getTopCard();
-      if (!topCard) return;
+      if (!isDragging) return; const c = getTopCard(); if (!c) return;
       touchCurrentX = e.touches[0].clientX;
-      const deltaX = touchCurrentX - touchStartX;
-      const deltaY = e.touches[0].clientY - touchStartY;
-      if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaX) < 15) return;
-      const rotate = deltaX * 0.08;
-      topCard.style.transform = `translateX(${deltaX}px) rotate(${rotate}deg)`;
-      const likeLabel = topCard.querySelector('.like-label');
-      const rejectLabel = topCard.querySelector('.reject-label');
-      const progress = Math.min(Math.abs(deltaX) / SWIPE_THRESHOLD, 1);
-      if (deltaX > 0) {
-        likeLabel.style.opacity = progress;
-        rejectLabel.style.opacity = 0;
-      } else {
-        rejectLabel.style.opacity = progress;
-        likeLabel.style.opacity = 0;
-      }
+      const dx = touchCurrentX - touchStartX, dy = e.touches[0].clientY - touchStartY;
+      if (Math.abs(dy) > Math.abs(dx) && Math.abs(dx) < 15) return;
+      c.style.transform = `translateX(${dx}px) rotate(${dx * 0.08}deg)`;
+      const p = Math.min(Math.abs(dx) / SWIPE_THRESHOLD, 1);
+      c.querySelector('.like-label').style.opacity = dx > 0 ? p : 0;
+      c.querySelector('.reject-label').style.opacity = dx < 0 ? p : 0;
     }, { passive: true });
 
     cardContainer.addEventListener('touchend', () => {
-      if (!isDragging) return;
-      const topCard = getTopCard();
-      if (!topCard) return;
-      isDragging = false;
-      topCard.classList.remove('dragging');
-      const deltaX = touchCurrentX - touchStartX;
-      if (deltaX > SWIPE_THRESHOLD) {
-        handleSwipe('right');
-      } else if (deltaX < -SWIPE_THRESHOLD) {
-        handleSwipe('left');
-      } else {
-        topCard.style.transform = 'scale(1)';
-        const likeLabel = topCard.querySelector('.like-label');
-        const rejectLabel = topCard.querySelector('.reject-label');
-        if (likeLabel) likeLabel.style.opacity = 0;
-        if (rejectLabel) rejectLabel.style.opacity = 0;
-      }
+      if (!isDragging) return; const c = getTopCard(); if (!c) return;
+      isDragging = false; c.classList.remove('dragging');
+      const dx = touchCurrentX - touchStartX;
+      if (dx > SWIPE_THRESHOLD) handleSwipe('right');
+      else if (dx < -SWIPE_THRESHOLD) handleSwipe('left');
+      else { c.style.transform = 'scale(1)'; c.querySelector('.like-label').style.opacity = 0; c.querySelector('.reject-label').style.opacity = 0; }
     });
 
     function updateDetailsPanel(job) {
         if (!job) return;
-        const matchedSkills = job.skills.filter(s => userSkillsSet.has(s));
-        const matchPercent = Math.min(99, 50 + (matchedSkills.length * 10));
-
-        let skillsHTML = '';
-        job.skills.forEach(skill => {
-            const hasIt = userSkillsSet.has(skill);
-            skillsHTML += `
-                <div class="skill-check ${hasIt ? 'has' : 'missing'}">
-                    <i class="fas ${hasIt ? 'fa-check-circle' : 'fa-circle'}"></i> ${skill}
-                </div>
-            `;
-        });
-
+        const matchPercent = Math.min(99, 50 + (job.skills.filter(s => userSkillsSet.has(s)).length * 10));
         seekerDetails.innerHTML = `
             <div class="details-header">
                 <h1>${job.title}</h1>
-                <div class="details-company">
-                    <i class="fas fa-building" style="color: var(--primary)"></i>
-                    ${job.company} &bull; ${job.location}
-                </div>
-                <div class="details-tags">
-                    <div class="d-tag"><i class="fas fa-money-bill-wave"></i> ${job.salary}</div>
-                    <div class="d-tag"><i class="fas fa-clock"></i> Full-time</div>
-                </div>
-                <button class="apply-btn">
-                    <i class="fas fa-paper-plane"></i> Apply Now
-                </button>
+                <div class="details-company"><i class="fas fa-building" style="color:var(--primary)"></i> ${job.company} &bull; ${job.location}</div>
+                <div class="details-tags"><div class="d-tag"><i class="fas fa-money-bill-wave"></i> ${job.salary}</div><div class="d-tag"><i class="fas fa-clock"></i> Full-time</div></div>
+                <button class="apply-btn"><i class="fas fa-paper-plane"></i> Apply Now</button>
             </div>
             <div class="details-body">
                 <h3 class="section-title"><i class="fas fa-align-left"></i> Job Description</h3>
-                <div class="section-content">
-                    ${job.fullDesc.split('\n').map(p => `<p>${p}</p>`).join('')}
-                </div>
+                <div class="section-content">${job.fullDesc.split('\n').map(p => `<p>${p}</p>`).join('')}</div>
                 <h3 class="section-title"><i class="fas fa-chart-bar"></i> Match Analysis</h3>
                 <div class="match-analysis">
                     <div class="match-score-large">${matchPercent}% Match</div>
-                    <p style="color:var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">Based on your skills and experience.</p>
-                    <div class="skill-check-list">
-                        ${skillsHTML}
-                    </div>
+                    <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1rem;">Based on your skills and experience.</p>
+                    <div class="skill-check-list">${job.skills.map(s => `<div class="skill-check ${userSkillsSet.has(s)?'has':'missing'}"><i class="fas ${userSkillsSet.has(s)?'fa-check-circle':'fa-circle'}"></i> ${s}</div>`).join('')}</div>
                 </div>
-            </div>
-        `;
+            </div>`;
     }
 
     function handleSwipe(direction) {
-        const topCard = getTopCard();
-        if (!topCard) return;
-
+        const topCard = getTopCard(); if (!topCard) return;
         const jobId = parseInt(topCard.dataset.jobId);
         const job = jobsDatabase.find(j => j.id === jobId);
-        
         if (direction === 'right') {
             topCard.classList.add('go-right');
-            const randomCandidate = candidatesDatabase[Math.floor(Math.random() * candidatesDatabase.length)];
-            const intersection = job.skills.filter(s => randomCandidate.skills.includes(s));
-            const score = 50 + (intersection.length * 10) + Math.floor(Math.random() * 20);
-            const currentApplicants = matchesMap.get(jobId) || [];
-            currentApplicants.unshift({ ...randomCandidate, score: Math.min(99, score), isNew: true });
-            matchesMap.set(jobId, currentApplicants);
+            const rc = candidatesDatabase[Math.floor(Math.random() * candidatesDatabase.length)];
+            const score = Math.min(99, 50 + (job.skills.filter(s => rc.skills.includes(s)).length * 10) + Math.floor(Math.random() * 20));
+            const arr = matchesMap.get(jobId) || [];
+            arr.unshift({ ...rc, score, isNew: true });
+            matchesMap.set(jobId, arr);
             myApplications.unshift({ job, status: 'accepted', time: new Date() });
         } else {
             topCard.classList.add('go-left');
             myApplications.unshift({ job, status: 'rejected', time: new Date() });
         }
-
         updateAppBadge();
-
         setTimeout(() => {
-            currentJobIndex++;
-            renderCards();
+            currentJobIndex++; renderCards();
             if (document.getElementById('employerView').classList.contains('active')) {
                 updateEmployerSidebar();
-                const activeItem = document.querySelector('.job-list-item.active');
-                if(activeItem) {
-                   const activeId = parseInt(activeItem.dataset.jobId);
-                   if(activeId === jobId) renderCandidateGrid(jobId);
-                }
+                if (selectedJobId === jobId) renderCandidateGrid(jobId);
             }
         }, 300);
     }
 
-    function openAppsPopup() {
-      document.getElementById('appsPopup').classList.add('active');
-      renderPopupTab();
-    }
-
-    function closeAppsPopup() {
-      document.getElementById('appsPopup').classList.remove('active');
-    }
-
-    document.getElementById('appsPopup').addEventListener('click', (e) => {
-      if (e.target === document.getElementById('appsPopup')) closeAppsPopup();
-    });
-
+    function openAppsPopup() { document.getElementById('appsPopup').classList.add('active'); renderPopupTab(); }
+    function closeAppsPopup() { document.getElementById('appsPopup').classList.remove('active'); }
+    document.getElementById('appsPopup').addEventListener('click', (e) => { if (e.target === document.getElementById('appsPopup')) closeAppsPopup(); });
     function switchTab(tab) {
       currentTab = tab;
-      document.querySelectorAll('.popup-tab').forEach(t => {
-        t.classList.toggle('active', t.dataset.tab === tab);
-      });
+      document.querySelectorAll('.popup-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
       renderPopupTab();
     }
-
     function renderPopupTab() {
       const body = document.getElementById('popupBody');
       const filtered = myApplications.filter(a => a.status === currentTab);
-      
-      if (filtered.length === 0) {
-        const icon = currentTab === 'accepted' ? 'fa-check-double' : 'fa-ban';
-        const msg = currentTab === 'accepted' 
-          ? 'You haven\'t accepted any jobs yet. Swipe right to apply!' 
-          : 'No rejected jobs. Keep swiping!';
-        body.innerHTML = `<div class="popup-empty"><i class="fas ${icon}"></i><p>${msg}</p></div>`;
+      if (!filtered.length) {
+        body.innerHTML = `<div class="popup-empty"><i class="fas ${currentTab==='accepted'?'fa-check-double':'fa-ban'}"></i><p>${currentTab==='accepted'?"You haven't accepted any jobs yet. Swipe right to apply!":"No rejected jobs. Keep swiping!"}</p></div>`;
         return;
       }
-
       body.innerHTML = filtered.map(app => {
-        const statusClass = app.status;
-        const icon = app.status === 'accepted' ? 'fa-check' : 'fa-times';
-        const label = app.status === 'accepted' ? 'Accepted' : 'Rejected';
-        const timeStr = app.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        return `
-          <div class="app-item">
-            <div class="app-status-icon ${statusClass}">
-              <i class="fas ${icon}"></i>
-            </div>
-            <div class="app-info">
-              <h4>${app.job.title}</h4>
-              <p>${app.job.company} &bull; ${app.job.location} &bull; ${timeStr}</p>
-            </div>
-            <span class="app-status-text ${statusClass}">${label}</span>
-          </div>
-        `;
+        const sc = app.status, ic = sc==='accepted'?'fa-check':'fa-times', lb = sc==='accepted'?'Accepted':'Rejected';
+        return `<div class="app-item"><div class="app-status-icon ${sc}"><i class="fas ${ic}"></i></div><div class="app-info"><h4>${app.job.title}</h4><p>${app.job.company} &bull; ${app.job.location} &bull; ${app.time.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</p></div><span class="app-status-text ${sc}">${lb}</span></div>`;
       }).join('');
     }
 
+    /* --- EMPLOYER --- */
     const employerJobList = document.getElementById('employerJobList');
+    const mobileJobScroll = document.getElementById('mobileJobScroll');
     const employerMain = document.getElementById('employerMain');
     let selectedJobId = null;
 
     function updateEmployerSidebar() {
         employerJobList.innerHTML = '';
+        mobileJobScroll.innerHTML = '';
+
         jobsDatabase.forEach(job => {
             const count = matchesMap.has(job.id) ? matchesMap.get(job.id).length : 0;
+
+            // Desktop sidebar item
             const item = document.createElement('div');
             item.className = 'job-list-item';
             item.dataset.jobId = job.id;
             if(selectedJobId === job.id) item.classList.add('active');
-            
-            item.innerHTML = `
-                <div class="job-info">
-                    <h4>${job.title}</h4>
-                    <span>${job.company}</span>
-                </div>
-                <div class="applicant-count">${count}</div>
-            `;
-            
-            item.onclick = () => {
-                selectedJobId = job.id;
-                renderCandidateGrid(job.id);
-                document.querySelectorAll('.job-list-item').forEach(el => el.classList.remove('active'));
-                item.classList.add('active');
-            };
-
+            item.innerHTML = `<div class="job-info"><h4>${job.title}</h4><span>${job.company}</span></div><div class="applicant-count">${count}</div>`;
+            item.onclick = () => selectJob(job.id);
             employerJobList.appendChild(item);
+
+            // Mobile pill
+            const pill = document.createElement('div');
+            pill.className = 'mobile-job-pill';
+            pill.dataset.jobId = job.id;
+            if(selectedJobId === job.id) pill.classList.add('active');
+            pill.innerHTML = `${job.title} <span class="pill-count">${count}</span>`;
+            pill.onclick = () => selectJob(job.id);
+            mobileJobScroll.appendChild(pill);
         });
+    }
+
+    function selectJob(jobId) {
+        selectedJobId = jobId;
+        // Highlight active in both sidebar and mobile
+        document.querySelectorAll('.job-list-item').forEach(el => el.classList.toggle('active', parseInt(el.dataset.jobId) === jobId));
+        document.querySelectorAll('.mobile-job-pill').forEach(el => el.classList.toggle('active', parseInt(el.dataset.jobId) === jobId));
+        // Scroll mobile pill into view
+        const activePill = mobileJobScroll.querySelector('.mobile-job-pill.active');
+        if (activePill) activePill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        renderCandidateGrid(jobId);
     }
 
     function renderCandidateGrid(jobId) {
         const job = jobsDatabase.find(j => j.id === jobId);
         const interested = (matchesMap.get(jobId) || []).sort((a, b) => b.score - a.score);
-        
         let html = `
-            <div style="margin-bottom: 1.5rem;">
-                <h2 style="margin-bottom: 0.3rem;">${job.title}</h2>
+            <div style="margin-bottom:1.5rem;">
+                <h2 style="margin-bottom:0.3rem;">${job.title}</h2>
                 <p style="color:var(--text-muted);">${interested.length} candidates interested</p>
             </div>
-            <div class="sort-bar">
-                <i class="fas fa-sort-amount-down"></i>
-                Sorted by <strong>match percentage</strong> — highest first
-            </div>
-            <div class="candidate-grid">
-        `;
-
-        if (interested.length === 0) {
-            html += `<div class="emp-welcome" style="grid-column: 1/-1;"><i class="fas fa-user-clock"></i><p>No interested candidates yet.</p></div>`;
+            <div class="sort-bar"><i class="fas fa-sort-amount-down"></i> Sorted by <strong>match percentage</strong> — highest first</div>
+            <div class="candidate-grid">`;
+        if (!interested.length) {
+            html += `<div class="emp-welcome" style="grid-column:1/-1;"><i class="fas fa-user-clock"></i><p>No interested candidates yet.</p></div>`;
         } else {
-            interested.forEach((m, index) => {
-                const rank = index + 1;
-                const rankClass = rank <= 3 ? `rank-${rank}` : '';
-
+            interested.forEach((m, i) => {
+                const r = i + 1, rc = r <= 3 ? `rank-${r}` : '';
                 html += `
-                    <div class="candidate-card ${rankClass}" style="${m.isNew ? 'border-left: 4px solid var(--success);' : ''}">
-                        <div class="rank-badge">#${rank}</div>
+                    <div class="candidate-card ${rc}" style="${m.isNew?'border-left:4px solid var(--success);':''}">
+                        <div class="rank-badge">#${r}</div>
                         <div class="match-badge">${m.score}% Match</div>
                         <div class="card-top">
                             <div class="avatar">${m.name.split(' ').map(n=>n[0]).join('')}</div>
-                            <div class="info">
-                                <h3>${m.name}</h3>
-                                <p>${m.role} • ${m.exp} yrs exp</p>
-                            </div>
+                            <div class="info"><h3>${m.name}</h3><p>${m.role} • ${m.exp} yrs exp</p></div>
                         </div>
-                        <div class="skill-tags">
-                            ${m.skills.map(s => `<span class="tag">${s}</span>`).join('')}
-                        </div>
-                        <div class="emp-actions">
-                            <button class="btn btn-outline">Profile</button>
-                            <button class="btn btn-primary">Contact</button>
-                        </div>
-                    </div>
-                `;
+                        <div class="skill-tags">${m.skills.map(s => `<span class="tag">${s}</span>`).join('')}</div>
+                        <div class="emp-actions"><button class="btn btn-outline">Profile</button><button class="btn btn-primary">Contact</button></div>
+                    </div>`;
             });
         }
         html += '</div>';
@@ -1239,7 +953,6 @@
     function switchView(viewName) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
-        
         if (viewName === 'seeker') {
             document.getElementById('seekerView').classList.add('active');
             document.querySelector('.view-btn:nth-child(1)').classList.add('active');

@@ -86,6 +86,43 @@
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
 
+    .nav-actions {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: white;
+      border: 1px solid var(--border);
+      padding: 0.5rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .nav-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+    .app-count-badge {
+      background: var(--primary);
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 700;
+      min-width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+    }
+
     .view-container {
       margin-top: 60px;
       height: calc(100vh - 60px);
@@ -145,9 +182,7 @@
       will-change: transform;
     }
 
-    .job-card.dragging {
-      transition: none;
-    }
+    .job-card.dragging { transition: none; }
 
     .job-card.go-left {
       transform: translateX(-150%) rotate(-30deg) !important;
@@ -160,7 +195,6 @@
       transition: transform 0.4s ease, opacity 0.4s ease;
     }
 
-    /* Swipe overlay indicators */
     .swipe-label {
       position: absolute;
       top: 50%;
@@ -356,6 +390,176 @@
     }
     .empty-state i { font-size: 3rem; margin-bottom: 1rem; color: var(--border); }
 
+    /* --- APPLICATIONS POPUP --- */
+    .popup-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(4px);
+      z-index: 5000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .popup-overlay.active { display: flex; }
+
+    .popup {
+      background: white;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 560px;
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+      animation: popIn 0.25s ease;
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.95) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .popup-header {
+      padding: 1.5rem 1.5rem 1rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-shrink: 0;
+    }
+    .popup-header h2 { font-size: 1.2rem; margin-bottom: 0.15rem; }
+    .popup-header p { font-size: 0.85rem; color: var(--text-muted); }
+    
+    .popup-close {
+      background: #F1F5F9;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .popup-close:hover { background: #E2E8F0; color: var(--text-main); }
+
+    .popup-tabs {
+      display: flex;
+      gap: 0;
+      padding: 0 1.5rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .popup-tab {
+      padding: 0.75rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .popup-tab.active {
+      color: var(--primary);
+    }
+    .popup-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0; right: 0;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 2px 2px 0 0;
+    }
+    .popup-tab .tab-count {
+      background: var(--bg);
+      font-size: 0.7rem;
+      padding: 0.1rem 0.45rem;
+      border-radius: 10px;
+      font-weight: 700;
+    }
+    .popup-tab.active .tab-count {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .popup-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem 1.5rem 1.5rem;
+    }
+
+    .app-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    .app-item:last-child { border-bottom: none; }
+
+    .app-status-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .app-status-icon.accepted {
+      background: #ECFDF5;
+      color: var(--success);
+    }
+    .app-status-icon.rejected {
+      background: #FEF2F2;
+      color: var(--danger);
+    }
+
+    .app-info { flex: 1; min-width: 0; }
+    .app-info h4 { font-size: 0.9rem; margin-bottom: 0.1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .app-info p { font-size: 0.78rem; color: var(--text-muted); }
+
+    .app-status-text {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .app-status-text.accepted {
+      background: #ECFDF5;
+      color: #065F46;
+    }
+    .app-status-text.rejected {
+      background: #FEF2F2;
+      color: #991B1B;
+    }
+
+    .popup-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+    .popup-empty i { font-size: 2.5rem; margin-bottom: 0.8rem; color: var(--border); }
+    .popup-empty p { font-size: 0.9rem; }
+
     .employer-view {
       display: grid;
       grid-template-columns: 300px 1fr;
@@ -467,26 +671,21 @@
     @media (max-width: 900px) {
       .seeker-split { grid-template-columns: 1fr; }
       .seeker-details-area { display: none; }
-      .swipe-container {
-        max-width: 380px;
-        height: 560px;
-      }
+      .swipe-container { max-width: 380px; height: 560px; }
       .employer-view { grid-template-columns: 1fr; }
       .emp-sidebar { display: none; }
       .candidate-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 400px) {
-      .swipe-container {
-        max-width: 320px;
-        height: 500px;
-      }
+      .swipe-container { max-width: 320px; height: 500px; }
       .card-hero { height: 120px; }
       .hero-logo { width: 70px; height: 70px; font-size: 1.8rem; }
       .card-content { padding: 1.2rem; }
       .card-title { font-size: 1.2rem; }
       .swipe-btn { width: 56px; height: 56px; font-size: 1.3rem; }
       .card-actions { gap: 1.5rem; padding: 1rem; }
+      .app-nav { padding: 0 1rem; }
     }
   </style>
 </head>
@@ -500,7 +699,42 @@
       <button class="view-btn active" onclick="switchView('seeker')">Job Seeker</button>
       <button class="view-btn" onclick="switchView('employer')">Employer</button>
     </div>
+    <div class="nav-actions">
+      <button class="nav-btn" id="myAppsBtn" onclick="openAppsPopup()">
+        <i class="fas fa-paper-plane"></i>
+        <span>Applied</span>
+        <span class="app-count-badge" id="appCountBadge">0</span>
+      </button>
+    </div>
   </nav>
+
+  <!-- APPLICATIONS POPUP -->
+  <div class="popup-overlay" id="appsPopup">
+    <div class="popup">
+      <div class="popup-header">
+        <div>
+          <h2>My Applications</h2>
+          <p>Track jobs you've swiped on</p>
+        </div>
+        <button class="popup-close" onclick="closeAppsPopup()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="popup-tabs">
+        <button class="popup-tab active" data-tab="accepted" onclick="switchTab('accepted')">
+          <i class="fas fa-check-circle" style="color:var(--success)"></i>
+          Accepted
+          <span class="tab-count" id="acceptedCount">0</span>
+        </button>
+        <button class="popup-tab" data-tab="rejected" onclick="switchTab('rejected')">
+          <i class="fas fa-times-circle" style="color:var(--danger)"></i>
+          Rejected
+          <span class="tab-count" id="rejectedCount">0</span>
+        </button>
+      </div>
+      <div class="popup-body" id="popupBody"></div>
+    </div>
+  </div>
 
   <div class="view-container">
     
@@ -593,11 +827,21 @@
         matchesMap.set(job.id, applicants);
     });
 
+    // --- APPLICATION TRACKING ---
+    const myApplications = []; // { job, status: 'accepted'|'rejected', time: Date }
+    let currentTab = 'accepted';
+
+    function updateAppBadge() {
+      const accepted = myApplications.filter(a => a.status === 'accepted').length;
+      document.getElementById('appCountBadge').textContent = accepted;
+      document.getElementById('acceptedCount').textContent = accepted;
+      document.getElementById('rejectedCount').textContent = myApplications.filter(a => a.status === 'rejected').length;
+    }
+
     let currentJobIndex = 0;
     const cardContainer = document.getElementById('cardContainer');
     const seekerDetails = document.getElementById('seekerDetails');
 
-    // --- TOUCH SWIPE STATE ---
     let touchStartX = 0;
     let touchStartY = 0;
     let touchCurrentX = 0;
@@ -679,11 +923,9 @@
         updateDetailsPanel(jobsDatabase[currentJobIndex]);
     }
 
-    // --- TOUCH EVENT HANDLERS ---
     cardContainer.addEventListener('touchstart', (e) => {
       const topCard = getTopCard();
       if (!topCard) return;
-      
       touchStartX = e.touches[0].clientX;
       touchStartY = e.touches[0].clientY;
       isDragging = true;
@@ -694,22 +936,15 @@
       if (!isDragging) return;
       const topCard = getTopCard();
       if (!topCard) return;
-
       touchCurrentX = e.touches[0].clientX;
       const deltaX = touchCurrentX - touchStartX;
       const deltaY = e.touches[0].clientY - touchStartY;
-
-      // If scrolling vertically more than horizontally, don't drag the card
       if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaX) < 15) return;
-
       const rotate = deltaX * 0.08;
       topCard.style.transform = `translateX(${deltaX}px) rotate(${rotate}deg)`;
-
-      // Show/hide labels based on drag direction and distance
       const likeLabel = topCard.querySelector('.like-label');
       const rejectLabel = topCard.querySelector('.reject-label');
       const progress = Math.min(Math.abs(deltaX) / SWIPE_THRESHOLD, 1);
-
       if (deltaX > 0) {
         likeLabel.style.opacity = progress;
         rejectLabel.style.opacity = 0;
@@ -723,18 +958,14 @@
       if (!isDragging) return;
       const topCard = getTopCard();
       if (!topCard) return;
-
       isDragging = false;
       topCard.classList.remove('dragging');
-
       const deltaX = touchCurrentX - touchStartX;
-
       if (deltaX > SWIPE_THRESHOLD) {
         handleSwipe('right');
       } else if (deltaX < -SWIPE_THRESHOLD) {
         handleSwipe('left');
       } else {
-        // Snap back
         topCard.style.transform = 'scale(1)';
         const likeLabel = topCard.querySelector('.like-label');
         const rejectLabel = topCard.querySelector('.reject-label');
@@ -795,19 +1026,24 @@
         if (!topCard) return;
 
         const jobId = parseInt(topCard.dataset.jobId);
+        const job = jobsDatabase.find(j => j.id === jobId);
         
         if (direction === 'right') {
             topCard.classList.add('go-right');
             const randomCandidate = candidatesDatabase[Math.floor(Math.random() * candidatesDatabase.length)];
-            const job = jobsDatabase.find(j => j.id === jobId);
             const intersection = job.skills.filter(s => randomCandidate.skills.includes(s));
             const score = 50 + (intersection.length * 10) + Math.floor(Math.random() * 20);
             const currentApplicants = matchesMap.get(jobId) || [];
             currentApplicants.unshift({ ...randomCandidate, score: Math.min(99, score), isNew: true });
             matchesMap.set(jobId, currentApplicants);
+            
+            myApplications.unshift({ job, status: 'accepted', time: new Date() });
         } else {
             topCard.classList.add('go-left');
+            myApplications.unshift({ job, status: 'rejected', time: new Date() });
         }
+
+        updateAppBadge();
 
         setTimeout(() => {
             currentJobIndex++;
@@ -823,6 +1059,62 @@
         }, 300);
     }
 
+    // --- POPUP LOGIC ---
+    function openAppsPopup() {
+      document.getElementById('appsPopup').classList.add('active');
+      renderPopupTab();
+    }
+
+    function closeAppsPopup() {
+      document.getElementById('appsPopup').classList.remove('active');
+    }
+
+    document.getElementById('appsPopup').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('appsPopup')) closeAppsPopup();
+    });
+
+    function switchTab(tab) {
+      currentTab = tab;
+      document.querySelectorAll('.popup-tab').forEach(t => {
+        t.classList.toggle('active', t.dataset.tab === tab);
+      });
+      renderPopupTab();
+    }
+
+    function renderPopupTab() {
+      const body = document.getElementById('popupBody');
+      const filtered = myApplications.filter(a => a.status === currentTab);
+      
+      if (filtered.length === 0) {
+        const icon = currentTab === 'accepted' ? 'fa-check-double' : 'fa-ban';
+        const msg = currentTab === 'accepted' 
+          ? 'You haven\'t accepted any jobs yet. Swipe right to apply!' 
+          : 'No rejected jobs. Keep swiping!';
+        body.innerHTML = `<div class="popup-empty"><i class="fas ${icon}"></i><p>${msg}</p></div>`;
+        return;
+      }
+
+      body.innerHTML = filtered.map(app => {
+        const statusClass = app.status;
+        const icon = app.status === 'accepted' ? 'fa-check' : 'fa-times';
+        const label = app.status === 'accepted' ? 'Accepted' : 'Rejected';
+        const timeStr = app.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        return `
+          <div class="app-item">
+            <div class="app-status-icon ${statusClass}">
+              <i class="fas ${icon}"></i>
+            </div>
+            <div class="app-info">
+              <h4>${app.job.title}</h4>
+              <p>${app.job.company} &bull; ${app.job.location} &bull; ${timeStr}</p>
+            </div>
+            <span class="app-status-text ${statusClass}">${label}</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // --- EMPLOYER LOGIC ---
     const employerJobList = document.getElementById('employerJobList');
     const employerMain = document.getElementById('employerMain');
     let selectedJobId = null;

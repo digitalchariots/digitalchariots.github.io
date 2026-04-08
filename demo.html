@@ -212,6 +212,8 @@
     .pill-company { font-size: 0.65rem; color: var(--text-muted); white-space: nowrap; line-height: 1.2; }
     .pill-count { font-size: 0.6rem; background: var(--border); padding: 0.1rem 0.4rem; border-radius: 8px; font-weight: 700; flex-shrink: 0; align-self: flex-start; margin-top: 2px; }
 
+    .emp-main-wrapper { display: flex; flex-direction: column; min-width: 0; min-height: 0; height: 100%; overflow: hidden; }
+
     @media (max-width: 900px) {
       .seeker-split { grid-template-columns: 1fr; }
       .seeker-details-area { display: none; }
@@ -219,7 +221,7 @@
       .employer-view { grid-template-columns: 1fr; }
       .emp-sidebar { display: none; }
       .mobile-job-picker { display: block; }
-      .emp-main { padding: 1.25rem; }
+      .emp-main { flex: 1; min-height: 0; padding: 1.25rem; -webkit-overflow-scrolling: touch; }
       .candidate-grid { grid-template-columns: 1fr; }
       .skills-grid { grid-template-columns: repeat(3, 1fr); }
     }
@@ -315,7 +317,7 @@
     <div id="employerView" class="view">
       <div class="employer-view">
         <aside class="emp-sidebar"><div class="emp-header"><h2>Active Postings</h2><p>Select a job to view candidates.</p></div><div class="job-list" id="employerJobList"></div></aside>
-        <div style="display:flex; flex-direction:column; min-width:0;">
+        <div class="emp-main-wrapper">
           <div class="mobile-job-picker"><div class="mobile-picker-label">Select a Posting</div><div class="mobile-job-scroll" id="mobileJobScroll"></div></div>
           <main class="emp-main" id="employerMain"><div class="emp-welcome"><i class="fas fa-briefcase" style="font-size:2.5rem; margin-bottom:1rem; color:var(--border);"></i><p>Select a job from the list to see matched candidates.</p></div></main>
         </div>
@@ -407,7 +409,7 @@
                     <option value="">Any Experience</option>
                     <option value="entry">Entry Level (0-2 yrs)</option>
                     <option value="mid">Mid Level (3-5 yrs)</option>
-                    <option value="senior">Senior Level (5+ yrs)</option>
+                  <option value="senior">Senior Level (5+ yrs)</option>
                     <option value="executive">Director / Executive</option>
                 </select>
             </div>

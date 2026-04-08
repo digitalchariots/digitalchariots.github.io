@@ -3,482 +3,139 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SkillBridge | The Skills-First Hiring Platform</title>
+  <title>SkillSwipe | Hackathon Project</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    :root {
-      --primary: #2563EB;
-      --primary-dark: #1E40AF;
-      --primary-light: #DBEAFE;
-      --bg: #FFFFFF;
-      --bg-alt: #F8FAFC;
-      --text-main: #0F172A;
-      --text-muted: #64748B;
-      --border: #E2E8F0;
-      --accent: #F59E0B;
-      --success: #10B981;
-      --radius: 8px;
-      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-
     body {
       font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text-main);
+      background: #FFFFFF;
+      color: #0F172A;
       line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
-
-    h1, h2, h3, h4 {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 700;
-      color: var(--text-main);
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 0.75rem 1.5rem;
-      border-radius: var(--radius);
-      font-weight: 600;
-      font-size: 0.95rem;
-      text-decoration: none;
-      transition: all 0.2s ease;
-      cursor: pointer;
-      border: none;
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
-    }
-    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--primary);
-      border: 2px solid var(--primary);
-    }
-    .btn-outline:hover { background: var(--primary-light); }
+    h1, h2, h3 { font-family: 'Poppins', sans-serif; }
 
     .navbar {
       background: white;
-      height: 80px;
+      height: 70px;
       width: 100%;
       position: fixed;
       top: 0;
       z-index: 1000;
-      box-shadow: 0 1px 0 var(--border);
+      box-shadow: 0 1px 0 #E2E8F0;
+      display: flex;
+      align-items: center;
     }
-
     .navbar .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      height: 100%;
     }
-
     .logo {
       font-family: 'Poppins', sans-serif;
       font-weight: 800;
-      font-size: 1.5rem;
-      color: var(--primary);
+      font-size: 1.35rem;
+      color: #2563EB;
       text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
     }
-    .logo i { color: var(--accent); }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-      list-style: none;
-    }
-
-    .nav-link {
-      text-decoration: none;
-      color: var(--text-muted);
-      font-weight: 500;
-      font-size: 0.95rem;
-      transition: color 0.2s;
-    }
-    .nav-link:hover { color: var(--primary); }
-
-    .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      color: var(--text-main);
-      cursor: pointer;
+    .badge {
+      background: #FEF3C7;
+      color: #92400E;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.3rem 0.7rem;
+      border-radius: 20px;
     }
 
     .hero {
-      padding-top: 160px;
-      padding-bottom: 80px;
-      background: linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
-      overflow: hidden;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-    }
-
-    .hero-content h1 {
-      font-size: 3.5rem;
-      line-height: 1.1;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero-content h1 span {
-      color: var(--primary);
-      position: relative;
-    }
-    
-    .hero-content p {
-      font-size: 1.2rem;
-      color: var(--text-muted);
-      margin-bottom: 2rem;
-      max-width: 500px;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 3rem;
-    }
-
-    .trust-badges {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    .trust-avatar-group {
-      display: flex;
-    }
-    .trust-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border: 2px solid white;
-      margin-left: -10px;
-      background: var(--primary-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-      color: var(--primary);
-      font-weight: 600;
-    }
-    .trust-avatar:first-child { margin-left: 0; }
-    
-    .trust-text {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-    .trust-text strong { color: var(--text-main); }
-
-    .hero-visual {
-      position: relative;
-    }
-
-    .visual-card {
-      background: white;
-      border-radius: 12px;
-      box-shadow: var(--shadow-lg);
-      padding: 2rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .profile-header {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    .profile-img {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: #ddd;
-      object-fit: cover;
-    }
-    .profile-info h4 { margin-bottom: 0.2rem; }
-    .profile-info span { color: var(--text-muted); font-size: 0.9rem; }
-
-    .skill-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-    }
-    .skill-tag {
-      background: var(--primary-light);
-      color: var(--primary);
-      padding: 0.4rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
-    .skill-tag i { font-size: 0.7rem; }
-
-    .match-score {
-      background: #ECFDF5;
-      border: 1px solid #D1FAE5;
-      padding: 1rem;
-      border-radius: var(--radius);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .match-score span { font-weight: 600; color: #065F46; }
-    .score-bar {
-      width: 60%;
-      height: 8px;
-      background: #D1FAE5;
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .score-fill {
-      width: 95%;
-      height: 100%;
-      background: var(--success);
-    }
-
-    .float-card {
-      position: absolute;
-      background: white;
-      padding: 1rem 1.5rem;
-      border-radius: 8px;
-      box-shadow: var(--shadow);
-      font-weight: 600;
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .fc-1 {
-      top: -20px;
-      right: -20px;
-      border-left: 4px solid var(--success);
-      z-index: 2;
-      animation: float 4s ease-in-out infinite;
-    }
-    .fc-2 {
-      bottom: 40px;
-      left: -30px;
-      border-left: 4px solid var(--accent);
-      z-index: 2;
-      animation: float 5s ease-in-out infinite reverse;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
-    .features {
-      padding: 6rem 0;
-    }
-
-    .section-header {
-      text-align: center;
-      max-width: 600px;
-      margin: 0 auto 4rem;
-    }
-    .section-header h2 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-    .section-header p {
-      color: var(--text-muted);
-    }
-
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-    }
-
-    .feature-card {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 2rem;
-      transition: all 0.3s ease;
-    }
-    .feature-card:hover {
-      border-color: var(--primary);
-      box-shadow: var(--shadow);
-      transform: translateY(-5px);
-    }
-
-    .icon-box {
-      width: 50px;
-      height: 50px;
-      border-radius: 10px;
-      background: var(--primary-light);
-      color: var(--primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .feature-card h3 {
-      font-size: 1.2rem;
-      margin-bottom: 0.8rem;
-    }
-    .feature-card p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
-    .process {
-      background: var(--bg-alt);
-      padding: 6rem 0;
-    }
-
-    .process-steps {
-      display: flex;
-      justify-content: space-between;
-      position: relative;
-    }
-    
-    .process-steps::before {
-      content: '';
-      position: absolute;
-      top: 30px;
-      left: 50px;
-      right: 50px;
-      height: 2px;
-      background: var(--border);
-      z-index: 0;
-    }
-
-    .step {
-      position: relative;
-      z-index: 1;
-      text-align: center;
       flex: 1;
-    }
-
-    .step-number {
-      width: 60px;
-      height: 60px;
-      background: white;
-      border: 2px solid var(--border);
-      border-radius: 50%;
+      padding: 140px 1.5rem 80px;
+      background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
       display: flex;
       align-items: center;
-      justify-content: center;
-      margin: 0 auto 1.5rem;
-      font-family: 'Poppins', sans-serif;
-      font-weight: 700;
-      font-size: 1.2rem;
-      color: var(--primary);
-      transition: all 0.3s ease;
     }
-
-    .step:hover .step-number {
-      background: var(--primary);
+    .hero .container {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 span { color: #2563EB; }
+    .hero p {
+      font-size: 1.15rem;
+      color: #64748B;
+      margin-bottom: 2rem;
+      max-width: 540px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-primary {
+      background: #2563EB;
       color: white;
-      border-color: var(--primary);
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
     }
+    .btn-primary:hover { background: #1E40AF; transform: translateY(-1px); }
 
-    .step h4 { margin-bottom: 0.5rem; }
-    .step p { color: var(--text-muted); font-size: 0.9rem; max-width: 200px; margin: 0 auto; }
+    .hackathon-note {
+      margin-top: 3rem;
+      padding: 1.5rem;
+      background: white;
+      border: 1px solid #E2E8F0;
+      border-radius: 12px;
+      text-align: left;
+    }
+    .hackathon-note h3 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .hackathon-note h3 i { color: #F59E0B; }
+    .hackathon-note p {
+      font-size: 0.95rem;
+      color: #64748B;
+      margin: 0;
+      max-width: 100%;
+    }
 
     .footer {
-      background: var(--text-main);
-      color: white;
-      padding: 4rem 0 2rem;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 3rem;
-      margin-bottom: 3rem;
-    }
-
-    .footer-brand p {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      font-size: 0.85rem;
       color: #94A3B8;
-      margin-top: 1rem;
-      font-size: 0.95rem;
+      border-top: 1px solid #E2E8F0;
     }
 
-    .footer-col h5 {
-      color: white;
-      margin-bottom: 1.5rem;
-      font-weight: 600;
-    }
-
-    .footer-links {
-      list-style: none;
-    }
-    .footer-links li { margin-bottom: 0.8rem; }
-    .footer-links a {
-      color: #94A3B8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .footer-links a:hover { color: white; }
-
-    .footer-bottom {
-      border-top: 1px solid #334155;
-      padding-top: 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.9rem;
-      color: #64748B;
-    }
-    .social-icons a {
-      color: #64748B;
-      margin-left: 1rem;
-      font-size: 1.1rem;
-      transition: color 0.2s;
-    }
-    .social-icons a:hover { color: white; }
-
-    @media (max-width: 1024px) {
-      .hero-grid { grid-template-columns: 1fr; text-align: center; }
-      .hero-content p { margin: 0 auto 2rem; }
-      .hero-buttons { justify-content: center; }
-      .trust-badges { justify-content: center; }
-      .hero-visual { display: none; }
-      .feature-grid { grid-template-columns: 1fr; }
-      .process-steps { flex-direction: column; gap: 2rem; }
-      .process-steps::before { display: none; }
-      .footer-grid { grid-template-columns: 1fr; text-align: center; }
-    }
-
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .mobile-menu-btn { display: block; }
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2.2rem; }
+      .hero p { font-size: 1rem; }
     }
   </style>
 </head>
@@ -486,224 +143,27 @@
 
   <nav class="navbar">
     <div class="container">
-      <a href="#" class="logo">
-        <i class="fas fa-bridge"></i> SkillBridge
-      </a>
-      
-      <ul class="nav-links">
-        <li><a href="#features" class="nav-link">Features</a></li>
-        <li><a href="#process" class="nav-link">How It Works</a></li>
-        <li><a href="#pricing" class="nav-link">Pricing</a></li>
-      </ul>
-
-      <div class="nav-auth">
-        <a href="https://digitalchariots.github.io/demo.html#" class="btn btn-primary">Try a Demo</a>
-      </div>
-
-      <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+      <a href="#" class="logo">SkillSwipe</a>
+      <span class="badge">Hackathon Project</span>
     </div>
   </nav>
 
   <section class="hero">
     <div class="container">
-      <div class="hero-grid">
-        <div class="hero-content">
-          <h1>Hire with <span>Confidence</span>, Not Guesswork.</h1>
-          <p>Stop sifting through endless resumes. SkillBridge connects you with candidates who have verified skills, proven through assessments, not just pretty CVs.</p>
-          
-          <div class="hero-buttons">
-            <a href="https://digitalchariots.github.io/demo.html#" class="btn btn-primary">Try a Demo</a>
-          </div>
+      <h1>Swipe Through <span>Skills</span><br>Not Resumes</h1>
+      <p>A skills-first hiring concept built for the Creator Colluseum hackathon. The main idea is to match candinates with employers based upon skills, not CVs full of buzzwords.</p>
+      <a href="https://digitalchariots.github.io/demo.html#" class="btn btn-primary">Try the Demo</a>
 
-          <div class="trust-badges">
-            <div class="trust-avatar-group">
-              <div class="trust-avatar">JD</div>
-              <div class="trust-avatar">MK</div>
-              <div class="trust-avatar">AS</div>
-              <div class="trust-avatar">+4k</div>
-            </div>
-            <div class="trust-text">
-              Trusted by <strong>4,000+</strong> companies<br>to find top talent.
-            </div>
-          </div>
-        </div>
-
-        <div class="hero-visual">
-          <div class="visual-card">
-            <div class="profile-header">
-              <img src="https://placehold.co/100x100/E2E8F0/475569?text=JP" alt="Candidate" class="profile-img">
-              <div class="profile-info">
-                <h4>Jane Park</h4>
-                <span>Operations Manager</span>
-              </div>
-            </div>
-
-            <div class="skill-tags">
-              <div class="skill-tag"><i class="fas fa-check-circle"></i> Public Speaking</div>
-              <div class="skill-tag"><i class="fas fa-check-circle"></i> Leadership</div>
-              <div class="skill-tag"><i class="fas fa-check-circle"></i> Problem Solving</div>
-            </div>
-
-            <div class="match-score">
-              <span>Match Score</span>
-              <div class="score-bar"><div class="score-fill"></div></div>
-              <span style="color: var(--primary); font-weight: 700;">95%</span>
-            </div>
-          </div>
-
-          <div class="float-card fc-1">
-            <i class="fas fa-check-circle" style="color: var(--success);"></i>
-            Skills Verified
-          </div>
-          <div class="float-card fc-2">
-            <i class="fas fa-bell" style="color: var(--accent);"></i>
-            New Match Found!
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="features" class="features">
-    <div class="container">
-      <div class="section-header">
-        <h2>Why Choose SkillBridge?</h2>
-        <p>We cut through the noise of traditional recruiting to deliver results that matter.</p>
-      </div>
-
-      <div class="feature-grid">
-        <div class="feature-card">
-          <div class="icon-box"><i class="fas fa-shield-alt"></i></div>
-          <h3>Verified Proficiency</h3>
-          <p>Candidates take rigorous skill assessments. You see verified badges, ensuring they actually possess the skills they claim.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="icon-box"><i class="fas fa-bullseye"></i></div>
-          <h3>Precision Matching</h3>
-          <p>Our algorithm matches job requirements with verified skill sets, finding perfect fits that keyword searches often miss.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="icon-box"><i class="fas fa-clock"></i></div>
-          <h3>Faster Hiring</h3>
-          <p>Reduce time-to-hire by weeks. Skip the initial phone screens and technical trivia—start with candidates you know can do the job.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="icon-box"><i class="fas fa-user-check"></i></div>
-          <h3>Better Retention</h3>
-          <p>Hires made through skills-based matching stay longer because the role fits their actual abilities and interests.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="icon-box"><i class="fas fa-chart-line"></i></div>
-          <h3>Data-Driven Insights</h3>
-          <p>Get detailed analytics on your hiring pipeline and the talent pool to make smarter business decisions.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="icon-box"><i class="fas fa-universal-access"></i></div>
-          <h3>Unbiased Recruiting</h3>
-          <p>Focus on skills first. Our blind-matching options help reduce unconscious bias in the hiring process.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="process" class="process">
-    <div class="container">
-      <div class="section-header">
-        <h2>How It Works</h2>
-        <p>Getting started is simple. Whether you are hiring or looking for work, we streamline the process.</p>
-      </div>
-
-      <div class="process-steps">
-        <div class="step">
-          <div class="step-number">1</div>
-          <h4>Create Profile</h4>
-          <p>Sign up as an Employer or a Job Seeker in minutes.</p>
-        </div>
-        <div class="step">
-          <div class="step-number">2</div>
-          <h4>Define & Verify</h4>
-          <p>Employers post needs; Candidates verify skills via tests.</p>
-        </div>
-        <div class="step">
-          <div class="step-number">3</div>
-          <h4>Get Matched</h4>
-          <p>Our system connects the right talent to the right role.</p>
-        </div>
-        <div class="step">
-          <div class="step-number">4</div>
-          <h4>Hire & Grow</h4>
-          <p>Connect with your match and start working together.</p>
-        </div>
+      <div class="hackathon-note">
+        <h3><i class="fas fa-info-circle"></i> About This Project</h3>
+        <p>This prototype was built to explore what skill-based hiring could look like, if the origin resume-based hiring system was phased out. The demo is a rough proof of concept with limited functionality.</p>
       </div>
     </div>
   </section>
 
   <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="#" class="logo" style="color: white;">
-            <i class="fas fa-bridge"></i> SkillBridge
-          </a>
-          <p>Making hiring efficient, fair, and skill-based. Join the future of recruitment today.</p>
-        </div>
-        
-        <div class="footer-col">
-          <h5>Product</h5>
-          <ul class="footer-links">
-            <li><a href="#">Features</a></li>
-            <li><a href="#">Pricing</a></li>
-            <li><a href="#">Assessments</a></li>
-            <li><a href="#">API</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h5>Company</h5>
-          <ul class="footer-links">
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Careers</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Press</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h5>Support</h5>
-          <ul class="footer-links">
-            <li><a href="#">Help Center</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Terms of Service</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <p>&copy; 2024 SkillBridge Inc. All rights reserved.</p>
-        <div class="social-icons">
-          <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-linkedin"></i></a>
-          <a href="#"><i class="fab fa-github"></i></a>
-        </div>
-      </div>
-    </div>
+    Not a real company &middot; Digital Chariots
   </footer>
 
-  <script>
-    window.addEventListener('scroll', () => {
-      const nav = document.querySelector('.navbar');
-      if(window.scrollY > 50) {
-        nav.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
-      } else {
-        nav.style.boxShadow = '0 1px 0 var(--border)';
-      }
-    });
-  </script>
 </body>
 </html>

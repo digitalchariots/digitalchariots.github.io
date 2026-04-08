@@ -550,11 +550,33 @@
 
     function renderCandidateGrid(jobId) {
         const job = jobsDatabase.find(j => j.id === jobId);
-        const interested = (matchesMap.get(jobId) || []).sort((a, b) => b.score - a.score);
+        const rawInterested = matchesMap.get(jobId) || [];
+        const interested = rawInterested.map(m => ({ ...m, displayScore: Math.min(96, Math.round(m.score * 1.2)) })).sort((a, b) => b.displayScore - a.displayScore);
         let html = `<div style="margin-bottom:1.5rem;"><h2 style="margin-bottom:0.3rem;">${job.title}</h2><p style="color:var(--text-muted);">${interested.length} candidates interested</p></div><div class="sort-bar"><i class="fas fa-sort-amount-down"></i> Sorted by <strong>match percentage</strong> — highest first</div><div class="candidate-grid">`;
         if (!interested.length) { html += `<div class="emp-welcome" style="grid-column:1/-1;"><i class="fas fa-user-clock"></i><p>No interested candidates yet.</p></div>`; }
-        else { interested.forEach((m, i) => { const r = i+1, rc = r<=3?`rank-${r}`:''; html += `<div class="candidate-card ${rc}" style="${m.isNew?'border-left:4px solid var(--success);':''}"><div class="rank-badge">#${r}</div><div class="match-badge">${m.score}% Match</div><div class="card-top"><div class="avatar">${m.name.split(' ').map(n=>n[0]).join('')}</div><div class="info"><h3>${m.name}</h3><p>${m.role} • ${m.exp} yrs exp</p></div></div><div class="skill-tags">${m.skills.map(s => `<span class="tag">${s}</span>`).join('')}</div><div class="emp-actions"><button class="btn btn-outline">Profile</button><button class="btn btn-primary">Contact</button></div></div>`; }); }
-        html += '</div>'; employerMain.innerHTML = html;
+        else {
+          interested.forEach((m, i) => {
+            const r = i + 1, rc = r <= 3 ? `rank-${r}` : '';
+            html += `<div class="candidate-card ${rc}" style="${m.isNew ? 'border-left:4px solid var(--success);' : ''}">
+              <div class="rank-badge">#${r}</div>
+              <div class="match-badge">${m.displayScore}% Match</div>
+              <div class="card-top">
+                <div class="avatar">${m.name.split(' ').map(n => n[0]).join('')}</div>
+                <div class="info">
+                  <h3>${m.name}</h3>
+                  <p>${m.role} &bull; ${m.exp} yrs exp</p>
+                </div>
+              </div>
+              <div class="skill-tags">${m.skills.map(s => `<span class="tag">${s}</span>`).join('')}</div>
+              <div class="emp-actions">
+                <button class="btn btn-outline">Profile</button>
+                <button class="btn btn-primary">Contact</button>
+              </div>
+            </div>`;
+          });
+        }
+        html += '</div>';
+        employerMain.innerHTML = html;
     }
 
     function switchView(viewName) {

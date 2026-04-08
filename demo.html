@@ -23,15 +23,11 @@
       --radius: 16px;
       --shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
     }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-main); min-height: 100vh; overflow: hidden; }
     h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; }
-
     .app-nav { position: fixed; top: 0; left: 0; right: 0; height: 56px; background: white; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; z-index: 1000; box-shadow: 0 1px 2px rgba(0,0,0,0.05); gap: 0.5rem; }
-    .logo { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 1.15rem; color: var(--primary); display: flex; align-items: center; gap: 0.4rem; flex-shrink: 0; }
-    .logo-icon { width: 28px; height: 28px; background: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.85rem; position: relative; overflow: hidden; }
-    .logo-icon::after { content: ''; position: absolute; top: -50%; left: -50%; width: 100%; height: 100%; background: rgba(255,255,255,0.15); border-radius: 50%; }
+    .logo { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 1.15rem; color: var(--primary); flex-shrink: 0; }
     .nav-center { display: flex; background: var(--bg); padding: 3px; border-radius: 10px; }
     .view-btn { padding: 0.45rem 1rem; border: none; background: transparent; color: var(--text-muted); font-weight: 600; font-size: 0.85rem; cursor: pointer; border-radius: 7px; transition: all 0.2s; white-space: nowrap; }
     .view-btn.active { background: white; color: var(--primary); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
@@ -40,49 +36,42 @@
     .nav-btn:hover { border-color: var(--primary); color: var(--primary); }
     .nav-btn.has-filters { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
     .app-count-badge { background: var(--primary); color: white; font-size: 0.6rem; font-weight: 700; min-width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0 3px; }
-
     .view-container { margin-top: 56px; height: calc(100vh - 56px); position: relative; }
     .view { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: none; overflow: hidden; }
     .view.active { display: flex; }
     .seeker-split { display: grid; grid-template-columns: 1fr 1fr; height: 100%; width: 100%; }
     .seeker-card-area { background: var(--bg); border-right: 1px solid var(--border); display: flex; flex-direction: column; position: relative; height: 100%; overflow: hidden; align-items: center; justify-content: center; }
     .swipe-container { position: relative; width: 100%; max-width: 440px; height: 640px; perspective: 1000px; touch-action: pan-y; }
-
     .job-card { position: absolute; width: 100%; height: 100%; background: white; border-radius: var(--radius); box-shadow: var(--shadow); display: flex; flex-direction: column; transition: transform 0.4s ease, opacity 0.4s ease; overflow: hidden; border: 1px solid var(--border); top: 0; will-change: transform; }
     .job-card.dragging { transition: none; }
     .job-card.go-left { transform: translateX(-150%) rotate(-30deg) !important; opacity: 0; transition: transform 0.4s ease, opacity 0.4s ease; }
     .job-card.go-right { transform: translateX(150%) rotate(30deg) !important; opacity: 0; transition: transform 0.4s ease, opacity 0.4s ease; }
-
     .swipe-label { position: absolute; top: 50%; transform: translateY(-50%) rotate(-30deg); font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 2.5rem; padding: 0.5rem 1.5rem; border-radius: 12px; border: 4px solid; opacity: 0; z-index: 10; pointer-events: none; }
     .swipe-label.like-label { right: 30px; color: var(--success); border-color: var(--success); }
     .swipe-label.reject-label { left: 30px; transform: translateY(-50%) rotate(30deg); color: var(--danger); border-color: var(--danger); }
-
     .card-hero { height: 160px; background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border); flex-shrink: 0; }
-    .hero-logo { width: 90px; height: 90px; border-radius: 24px; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: 700; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    .hero-logo { width: 90px; height: 90px; border-radius: 24px; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 700; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
     .card-content { flex: 1; padding: 1.8rem; display: flex; flex-direction: column; overflow-y: auto; }
     .card-header { margin-bottom: 1rem; }
     .card-title { font-size: 1.5rem; margin-bottom: 0.3rem; }
     .card-company { color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem; font-size: 1rem; }
-    .card-meta-row { display: flex; gap: 0.8rem; margin-bottom: 1.5rem; }
+    .card-meta-row { display: flex; gap: 0.8rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
     .meta-badge { background: #F1F5F9; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.9rem; font-weight: 600; color: var(--text-main); display: flex; align-items: center; gap: 0.5rem; }
-    .job-tags { margin-bottom: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .job-tags { margin-bottom: 0.6rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
     .tag { background: #DBEAFE; color: #1E40AF; padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; }
     .tag.matched { background: #D1FAE5; color: #065F46; }
     .tag.unmatched { background: #F1F5F9; color: #94A3B8; }
-    .desc-title { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main); }
+    .tag.preferred { background: #F1F5F9; color: #64748B; font-size: 0.78rem; border: 1px dashed var(--border); }
+    .tag.preferred.matched { background: #FEF3C7; color: #92400E; border-color: #F59E0B; }
+    .tag-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.4rem; }
+    .desc-title { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main); margin-top: 0.8rem; }
     .desc-text { font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; }
     .card-actions { padding: 1.2rem 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: center; gap: 2rem; background: white; flex-shrink: 0; }
     .swipe-btn { width: 64px; height: 64px; border-radius: 50%; border: none; background: white; box-shadow: 0 6px 12px rgba(0,0,0,0.1); font-size: 1.5rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
     .swipe-btn:hover { transform: scale(1.1); }
     .swipe-btn.reject { color: var(--danger); background: #FEF2F2; }
     .swipe-btn.like { color: var(--success); background: #ECFDF5; }
-
-    .card-match-bar { padding: 0 1.8rem 1rem; flex-shrink: 0; }
-    .match-bar-inner { display: flex; align-items: center; gap: 0.75rem; }
-    .match-bar-track { flex: 1; height: 6px; background: #E2E8F0; border-radius: 3px; overflow: hidden; }
-    .match-bar-fill { height: 100%; border-radius: 3px; transition: width 0.3s; }
-    .match-bar-label { font-size: 0.8rem; font-weight: 700; white-space: nowrap; }
-
+    .card-progress { padding: 0 1.8rem 0.6rem; flex-shrink: 0; font-size: 0.72rem; color: var(--text-muted); font-weight: 500; }
     .seeker-details-area { background: white; height: 100%; overflow-y: auto; display: flex; flex-direction: column; padding: 3rem; }
     .details-header { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
     .details-header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
@@ -95,18 +84,17 @@
     .section-title { font-size: 1.2rem; margin-bottom: 1rem; color: var(--text-main); display: flex; align-items: center; gap: 0.5rem; }
     .section-content { color: var(--text-muted); line-height: 1.8; margin-bottom: 2.5rem; font-size: 0.95rem; }
     .section-content p { margin-bottom: 1rem; }
-    .match-analysis { background: #F8FAFC; border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-top: 1rem; }
-    .match-score-large { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; }
-    .skill-check-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1rem; }
+    .skill-check-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 0.75rem; }
     .skill-check { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; }
     .skill-check i { font-size: 0.8rem; }
     .skill-check.has i { color: var(--success); }
     .skill-check.missing i { color: var(--border); }
     .skill-check.missing { color: var(--text-muted); }
-
+    .match-note { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 0.35rem; }
+    .match-note i { color: var(--primary); font-size: 0.7rem; }
     .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%; color: var(--text-muted); padding: 2rem; text-align: center; }
     .empty-state i { font-size: 3rem; margin-bottom: 1rem; color: var(--border); }
-
+    .empty-state h3 { margin-bottom: 0.3rem; }
     .popup-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); z-index: 5000; display: none; align-items: center; justify-content: center; padding: 1rem; }
     .popup-overlay.active { display: flex; }
     .popup { background: white; border-radius: 16px; width: 100%; max-width: 620px; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 25px 60px rgba(0,0,0,0.25); animation: popIn 0.25s ease; }
@@ -126,13 +114,11 @@
     .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
     .btn-ghost { background: transparent; color: var(--text-muted); }
     .btn-ghost:hover { color: var(--danger); background: #FEF2F2; }
-
     .form-group { margin-bottom: 1.25rem; }
     .form-group label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--text-main); }
     .form-group label i { margin-right: 0.35rem; color: var(--primary); }
     .input-style { width: 100%; padding: 0.7rem 1rem; border: 1px solid var(--border); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.9rem; transition: border-color 0.2s; background: #F8FAFC; color: var(--text-main); }
     .input-style:focus { outline: none; border-color: var(--primary); background: white; }
-
     .skills-section-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 0.5rem; margin-top: 0.25rem; display: flex; align-items: center; gap: 0.4rem; }
     .skills-section-label i { font-size: 0.6rem; }
     .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; margin-bottom: 1rem; }
@@ -141,7 +127,6 @@
     .skill-chip.active { background: var(--primary); color: white; border-color: var(--primary); }
     .skill-chip i { font-size: 0.6rem; opacity: 0; transition: opacity 0.15s; }
     .skill-chip.active i { opacity: 1; }
-
     .popup-tabs { display: flex; padding: 0 1.5rem; border-bottom: 1px solid var(--border); flex-shrink: 0; }
     .popup-tab { padding: 0.75rem 1rem; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); background: none; border: none; cursor: pointer; position: relative; transition: color 0.2s; display: flex; align-items: center; gap: 0.4rem; }
     .popup-tab.active { color: var(--primary); }
@@ -161,19 +146,24 @@
     .app-status-text.rejected { background: #FEF2F2; color: #991B1B; }
     .popup-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem 1rem; color: var(--text-muted); text-align: center; }
     .popup-empty i { font-size: 2.5rem; margin-bottom: 0.8rem; color: var(--border); }
-
     .employer-view { display: grid; grid-template-columns: 300px 1fr; height: 100%; width: 100%; }
     .emp-sidebar { background: white; border-right: 1px solid var(--border); display: flex; flex-direction: column; overflow-y: auto; flex-shrink: 0; }
-    .emp-header { padding: 2rem 1.5rem 1.5rem; border-bottom: 1px solid var(--border); }
+    .emp-header { padding: 1.5rem 1.5rem 1rem; border-bottom: 1px solid var(--border); }
     .emp-header h2 { font-size: 1.1rem; margin-bottom: 0.3rem; }
     .emp-header p { font-size: 0.8rem; color: var(--text-muted); }
-    .job-list { display: flex; flex-direction: column; gap: 0.5rem; padding: 1rem; }
-    .job-list-item { padding: 0.8rem 1rem; background: #F8FAFC; border-radius: 8px; cursor: pointer; transition: all 0.2s; border: 1px solid transparent; display: flex; justify-content: space-between; align-items: center; }
+    .emp-header .emp-count-note { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.4rem; font-weight: 500; }
+    .emp-search { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+    .emp-search-input { width: 100%; padding: 0.5rem 0.75rem 0.5rem 2rem; border: 1px solid var(--border); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.82rem; background: #F8FAFC; color: var(--text-main); outline: none; transition: border-color 0.2s; }
+    .emp-search-input:focus { border-color: var(--primary); background: white; }
+    .emp-search-wrap { position: relative; }
+    .emp-search-wrap i { position: absolute; left: 0.7rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.75rem; }
+    .job-list { display: flex; flex-direction: column; gap: 0.5rem; padding: 0.75rem; }
+    .job-list-item { padding: 0.75rem 0.85rem; background: #F8FAFC; border-radius: 8px; cursor: pointer; transition: all 0.2s; border: 1px solid transparent; display: flex; justify-content: space-between; align-items: center; }
     .job-list-item:hover { background: white; border-color: var(--border); }
     .job-list-item.active { background: white; border-color: var(--primary); box-shadow: 0 2px 8px rgba(99,102,241,0.1); }
-    .job-info h4 { font-size: 0.9rem; margin-bottom: 0.2rem; }
-    .job-info span { font-size: 0.75rem; color: var(--text-muted); }
-    .applicant-count { background: var(--primary); color: white; min-width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; padding: 0 6px; }
+    .job-info h4 { font-size: 0.85rem; margin-bottom: 0.15rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 175px; }
+    .job-info span { font-size: 0.7rem; color: var(--text-muted); }
+    .applicant-count { background: var(--primary); color: white; min-width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; padding: 0 5px; flex-shrink: 0; }
     .emp-main { padding: 2rem; overflow-y: auto; background: var(--bg); min-width: 0; }
     .emp-welcome { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; color: var(--text-muted); }
     .candidate-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
@@ -198,7 +188,6 @@
     .sort-bar { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; font-size: 0.85rem; color: var(--text-muted); }
     .sort-bar i { color: var(--primary); }
     .sort-bar strong { color: var(--text-main); }
-
     .mobile-job-picker { display: none; background: white; border-bottom: 1px solid var(--border); flex-shrink: 0; }
     .mobile-picker-label { padding: 0.6rem 1rem 0; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
     .mobile-job-scroll { display: flex; gap: 0.5rem; overflow-x: auto; padding: 0.5rem 1rem 0.75rem; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
@@ -211,9 +200,7 @@
     .pill-title { font-size: 0.8rem; font-weight: 600; white-space: nowrap; line-height: 1.2; }
     .pill-company { font-size: 0.65rem; color: var(--text-muted); white-space: nowrap; line-height: 1.2; }
     .pill-count { font-size: 0.6rem; background: var(--border); padding: 0.1rem 0.4rem; border-radius: 8px; font-weight: 700; flex-shrink: 0; align-self: flex-start; margin-top: 2px; }
-
     .emp-main-wrapper { display: flex; flex-direction: column; min-width: 0; min-height: 0; height: 100%; overflow: hidden; }
-
     @media (max-width: 900px) {
       .seeker-split { grid-template-columns: 1fr; }
       .seeker-details-area { display: none; }
@@ -221,14 +208,13 @@
       .employer-view { grid-template-columns: 1fr; }
       .emp-sidebar { display: none; }
       .mobile-job-picker { display: block; }
-      .emp-main { flex: 1; min-height: 0; padding: 1.25rem; -webkit-overflow-scrolling: touch; }
+      .emp-main { flex: 1; min-height: 0; padding: 1.25rem; }
       .candidate-grid { grid-template-columns: 1fr; }
       .skills-grid { grid-template-columns: repeat(3, 1fr); }
     }
     @media (max-width: 500px) {
       .app-nav { height: 50px; padding: 0 0.75rem; gap: 0.35rem; }
-      .logo { font-size: 0.95rem; gap: 0.3rem; }
-      .logo-icon { width: 24px; height: 24px; font-size: 0.7rem; border-radius: 6px; }
+      .logo { font-size: 0.95rem; }
       .nav-center { padding: 2px; border-radius: 8px; }
       .view-btn { padding: 0.35rem 0.6rem; font-size: 0.7rem; border-radius: 6px; }
       .nav-btn { padding: 0.35rem 0.5rem; font-size: 0.7rem; gap: 0.25rem; border-radius: 6px; }
@@ -258,10 +244,7 @@
 <body>
 
   <nav class="app-nav">
-    <div class="logo">
-      <div class="logo-icon"><i class="fas fa-hand-pointer"></i></div>
-      SkillSwipe
-    </div>
+    <div class="logo">SkillSwipe</div>
     <div class="nav-center">
       <button class="view-btn active" onclick="switchView('seeker')">Job Seeker</button>
       <button class="view-btn" onclick="switchView('employer')">Employer</button>
@@ -316,7 +299,11 @@
     </div>
     <div id="employerView" class="view">
       <div class="employer-view">
-        <aside class="emp-sidebar"><div class="emp-header"><h2>Active Postings</h2><p>Select a job to view candidates.</p></div><div class="job-list" id="employerJobList"></div></aside>
+        <aside class="emp-sidebar">
+          <div class="emp-header"><h2>Active Postings</h2><p>Jobs with interested candidates</p><div class="emp-count-note" id="empCountNote"></div></div>
+          <div class="emp-search"><div class="emp-search-wrap"><i class="fas fa-search"></i><input class="emp-search-input" id="empSearchInput" placeholder="Search jobs..." oninput="filterEmployerSidebar()"></div></div>
+          <div class="job-list" id="employerJobList"></div>
+        </aside>
         <div class="emp-main-wrapper">
           <div class="mobile-job-picker"><div class="mobile-picker-label">Select a Posting</div><div class="mobile-job-scroll" id="mobileJobScroll"></div></div>
           <main class="emp-main" id="employerMain"><div class="emp-welcome"><i class="fas fa-briefcase" style="font-size:2.5rem; margin-bottom:1rem; color:var(--border);"></i><p>Select a job from the list to see matched candidates.</p></div></main>
@@ -327,191 +314,364 @@
 
   <script>
     const skillCategories = {
-      'Programming Languages': ['Python', 'JavaScript', 'TypeScript', 'Java', 'C++', 'C#', 'Go', 'Ruby', 'PHP', 'Swift', 'Kotlin', 'Rust', 'SQL', 'R'],
-      'Frontend & UI': ['React', 'Vue.js', 'Angular', 'HTML/CSS', 'Next.js', 'Svelte', 'Tailwind CSS', 'UI/UX Design', 'Figma', 'Webflow'],
-      'Backend & Cloud': ['Node.js', 'Express', 'Django', 'Flask', 'Spring Boot', '.NET', 'AWS', 'Azure', 'GCP', 'Docker', 'Kubernetes', 'DevOps', 'REST APIs', 'GraphQL'],
-      'Data & AI': ['Machine Learning', 'Data Science', 'TensorFlow', 'PyTorch', 'Pandas', 'Spark', 'Power BI', 'Tableau', 'NLP', 'Statistics'],
-      'Project Management': ['Agile', 'Scrum', 'Jira', 'Kanban', 'Risk Management', 'Budgeting', 'Stakeholder Mgmt', 'Roadmapping', 'OKRs'],
-      'Sales & Marketing': ['B2B Sales', 'B2C Sales', 'Account Management', 'Business Development', 'Lead Generation', 'SEO', 'SEM', 'Content Marketing', 'Social Media', 'Email Marketing', 'Growth Hacking', 'Copywriting', 'Brand Strategy'],
-      'Leadership & Soft Skills': ['Leadership', 'Team Management', 'Communication', 'Negotiation', 'Public Speaking', 'Conflict Resolution', 'Mentoring', 'Decision Making', 'Strategic Thinking', 'Emotional Intelligence'],
-      'Finance & Operations': ['Financial Analysis', 'Accounting', 'Bookkeeping', 'Financial Modeling', 'Supply Chain', 'Logistics', 'Procurement', 'ERP Systems', 'Six Sigma', 'Process Improvement'],
-      'Design & Creative': ['Graphic Design', 'Motion Graphics', 'Video Editing', 'Photography', 'Illustration', '3D Modeling', 'Blender', 'Adobe Creative Suite']
+      'Programming Languages': ['Python','JavaScript','TypeScript','Java','C++','C#','Go','Ruby','PHP','Swift','Kotlin','Rust','SQL','R'],
+      'Frontend & UI': ['React','Vue.js','Angular','HTML/CSS','Next.js','Svelte','Tailwind CSS','UI/UX Design','Figma','Webflow'],
+      'Backend & Cloud': ['Node.js','Express','Django','Flask','Spring Boot','.NET','AWS','Azure','GCP','Docker','Kubernetes','DevOps','REST APIs','GraphQL'],
+      'Data & AI': ['Machine Learning','Data Science','TensorFlow','PyTorch','Pandas','Spark','Power BI','Tableau','NLP','Statistics'],
+      'Project Management': ['Agile','Scrum','Jira','Kanban','Risk Management','Budgeting','Stakeholder Mgmt','Roadmapping','OKRs'],
+      'Sales & Marketing': ['B2B Sales','B2C Sales','Account Management','Business Development','Lead Generation','SEO','SEM','Content Marketing','Social Media','Email Marketing','Growth Hacking','Copywriting','Brand Strategy'],
+      'Leadership & Soft Skills': ['Leadership','Team Management','Communication','Negotiation','Public Speaking','Conflict Resolution','Mentoring','Decision Making','Strategic Thinking','Emotional Intelligence'],
+      'Finance & Operations': ['Financial Analysis','Accounting','Bookkeeping','Financial Modeling','Supply Chain','Logistics','Procurement','ERP Systems','Six Sigma','Process Improvement'],
+      'Design & Creative': ['Graphic Design','Motion Graphics','Video Editing','Photography','Illustration','3D Modeling','Blender','Adobe Creative Suite'],
+      'Human Resources': ['Recruiting','Onboarding','Employee Relations','Compensation & Benefits','HRIS Systems','Performance Management','Labor Law','Training & Development','Diversity & Inclusion','Payroll'],
+      'Healthcare & Medical': ['Patient Care','Medical Billing','EHR Systems','HIPAA Compliance','Clinical Research','Phlebotomy','Medical Coding','Health & Safety','Telemedicine','Pharmacy'],
+      'Skilled Trades': ['Welding','Electrical','Plumbing','HVAC','Carpentry','Auto Repair','CNC Machining','Blueprint Reading','OSHA Safety','Heavy Equipment'],
+      'Food & Hospitality': ['Food Safety','POS Systems','Inventory Management','Customer Service','Bartending','Culinary Arts','Event Planning','Hospitality Mgmt','Menu Planning','Health Inspections'],
+      'Legal & Compliance': ['Contract Review','Regulatory Compliance','Legal Research','Paralegal','Litigation Support','IP Law','Corporate Governance','Due Diligence','Mediation','Privacy Law'],
+      'Education & Training': ['Curriculum Design','Classroom Mgmt','LMS Platforms','Tutoring','Special Education','EdTech','Assessment Design','Student Engagement','E-Learning','Academic Research'],
+      'Real Estate & Property': ['Property Valuation','Lease Negotiation','Market Analysis','Property Mgmt','Real Estate Law','Mortgage Processing','Commercial Leasing','Facilities Mgmt','Construction Mgmt','Tenant Relations'],
+      'Automotive': ['Automotive Sales','F&I Management','Service Advising','Parts Inventory','Collision Repair','Fleet Management','Dealership Ops','Vehicle Detailing','DMV Compliance','Customer Loyalty'],
+      'Retail & E-Commerce': ['Visual Merchandising','Store Operations','Loss Prevention','Buying & Planning','E-Commerce','POS Systems','Inventory Control','Customer Experience','Vendor Management','Supply Chain'],
+      'Logistics & Driving': ['CDL Driving','Route Planning','Warehouse Ops','Forklift Operation','Customs Brokerage','Freight Forwarding','Last-Mile Delivery','Fleet Dispatch','Load Optimization','DOT Compliance'],
+      'Bilingual & French': ['French Fluency','Bilingual Communication','French Writing','Quebec Regulations','French Customer Service','Translation','Francophone Markets','Bilingual Presentations']
     };
 
     const skillPool = Object.values(skillCategories).flat();
-    const companies = ["Google", "Microsoft", "Amazon", "StartupX", "FinCorp", "HealthInc", "DataDrives", "TechNova", "GreenEnergy", "RoboLogix", "SalesForce", "McKinsey", "Deloitte", "Shopify", "Stripe"];
-    const jobTitles = ["Software Engineer", "Product Manager", "Sales Director", "UX Designer", "Data Scientist", "Marketing Lead", "Operations Manager", "Frontend Dev", "Backend Engineer", "Scrum Master", "ML Engineer", "Financial Analyst", "Growth Manager", "DevOps Engineer", "Content Strategist", "Business Analyst"];
-    const locations = ["New York, NY", "San Francisco, CA", "Austin, TX", "Remote", "London, UK", "Berlin, DE", "Singapore", "Chicago, IL", "Toronto, CA", "Tokyo, JP"];
+    const companies = ["NovaTech","Meridian Corp","Apex Systems","Pinnacle Group","Vertex Solutions","Horizon Industries","Catalyst Inc","Sterling & Co","Vantage Point","OmniCorp","Elevate Group","Prism Technologies","Atlas Holdings","Summit Enterprises","Forge Industries","Concord Solutions","Zenith Corp","Lumina Group","Stratos Corp","Cascade Systems","Sterling Partners","Pacific Edge","Nordic Tech","Aurora Solutions","Titan Group","Cobalt Industries","CrestView Corp","Obsidian Labs","Silverline Holdings","Ember Tech","Redwood Corp","Onyx Group","CedarBridge Capital","MapleTech","Ironclad Solutions","TrueNorth Corp","ClearPath Systems","Boundary Bay Corp","RockyMountain Tech","SilverLake Partners","Coastline Industries","PrairieTech","NorthernLight Corp","Riverdale Systems","Highland Corp","Glacier Holdings","ThunderBay Systems","WillowCorp","Copperhead Ltd","Aspen Industries","GrandView Corp","NorthStar Solutions","IronBridge Group","Wildflower Corp","Summitcrest Holdings","BluePine Inc","Oakmont Partners","Ridgeline Tech","Stillwater Corp","Hearthstone Industries","Clearwater Holdings","Crimson Labs","Goldfinch Group","Meadowbrook Corp","Stonebridge Capital"];
+
+    const jobSkillMap = {
+      "Software Engineer":["Python","JavaScript","SQL","REST APIs","Docker","AWS","Node.js","TypeScript","DevOps","Kubernetes","Azure"],
+      "Product Manager":["Agile","Roadmapping","Stakeholder Mgmt","Communication","Data Science","Leadership","Jira","Scrum","Strategic Thinking","OKRs"],
+      "Sales Director":["B2B Sales","Leadership","Negotiation","Strategic Thinking","Account Management","Business Development","Public Speaking","Team Management","B2C Sales","Brand Strategy"],
+      "UX Designer":["UI/UX Design","Figma","HTML/CSS","React","Tailwind CSS","Communication","Next.js","Vue.js","Svelte","Webflow","Adobe Creative Suite"],
+      "Data Scientist":["Python","Machine Learning","Statistics","SQL","Pandas","Data Science","TensorFlow","NLP","Spark","Power BI","Tableau"],
+      "Marketing Lead":["SEO","Content Marketing","Social Media","Brand Strategy","Email Marketing","SEM","Growth Hacking","Copywriting","Lead Generation","B2C Sales","Content Strategy"],
+      "Operations Manager":["Supply Chain","Process Improvement","Budgeting","ERP Systems","Six Sigma","Logistics","Procurement","Risk Management","Leadership","Team Management","Inventory Management"],
+      "Frontend Dev":["JavaScript","React","HTML/CSS","Tailwind CSS","TypeScript","Next.js","Vue.js","Angular","Svelte","UI/UX Design","Figma"],
+      "Backend Engineer":["Python","Node.js","REST APIs","SQL","Docker","Express","Django","Flask","AWS","Kubernetes","DevOps","Azure"],
+      "Scrum Master":["Agile","Scrum","Jira","Stakeholder Mgmt","Communication","Team Management","Kanban","Roadmapping","Risk Management","OKRs","Budgeting"],
+      "ML Engineer":["Python","Machine Learning","TensorFlow","PyTorch","SQL","Statistics","Data Science","NLP","Pandas","Spark","Power BI","Tableau"],
+      "Financial Analyst":["Financial Analysis","Financial Modeling","Accounting","Power BI","Statistics","ERP Systems","Budgeting","Regulatory Compliance","Supply Chain","Procurement"],
+      "Growth Manager":["Growth Hacking","SEO","SEM","Content Marketing","Lead Generation","Data Science","Social Media","Email Marketing","B2C Sales","Copywriting","Brand Strategy"],
+      "DevOps Engineer":["Docker","Kubernetes","AWS","DevOps","REST APIs","Azure","GCP","Node.js","Python","Process Improvement","Linux...skipped","Linux"],
+      "DevOps Engineer":["Docker","Kubernetes","AWS","DevOps","REST APIs","Azure","GCP","Node.js","Python","Process Improvement","Budgeting"],
+      "Content Strategist":["Content Marketing","SEO","Copywriting","Social Media","Brand Strategy","Email Marketing","Growth Hacking","SEM","Adobe Creative Suite","Graphic Design","B2C Sales"],
+      "Business Analyst":["Process Improvement","StakeholderMgmt","Agile","Communication","Data Science","ERP Systems","Roadmapping","Jira","SQL","Financial Modeling"],
+      "HR Manager":["Recruiting","Employee Relations","Performance Management","Labor Law","HRIS Systems","Training & Development","Compensation & Benefits","Diversity & Inclusion","Onboarding","Payroll"],
+      "Recruiter":["Recruiting","Communication","HRIS Systems","Onboarding","Employee Relations","Labor Law","Performance Management","Diversity & Inclusion","Payroll","Training & Development"],
+      "HR Business Partner":["HRIS Systems","Performance Management","Employee Relations","Labor Law","Strategic Thinking","Communication","Leadership","Recruiting","Training & Development","Compensation & Benefits"],
+      "Payroll Specialist":["Payroll","Accounting","Bookkeeping","ERP Systems","Financial Analysis","Regulatory Compliance","Communication","HRIS Systems","Budgeting","Procurement"],
+      "Training Coordinator":["Training & Development","LMS Platforms","Communication","Classroom Mgmt","EdTech","E-Learning","Curriculum Design","Student Engagement","Assessment Design","Diversity & Inclusion"],
+      "Employee Relations Specialist":["Employee Relations","Labor Law","Conflict Resolution","Communication","Performance Management","HRIS Systems","Onboarding","Mentoring","Diversity & Inclusion","Recruiting"],
+      "Compensation Analyst":["Compensation & Benefits","Financial Analysis","Accounting","HRIS Systems","Budgeting","Data Science","Bookkeeping","Payroll","ERP Systems","Procurement"],
+      "Talent Acquisition Lead":["Recruiting","Leadership","Stakeholder Mgmt","Labor Law","Communication","HRIS Systems","Employee Relations","Onboarding","Performance Management","Diversity & Inclusion"],
+      "People Operations Manager":["HRIS Systems","Onboarding","Employee Relations","Process Improvement","Communication","Leadership","Performance Management","Training & Development","Payroll","Recruiting"],
+      "Registered Nurse":["Patient Care","HIPAA Compliance","EHR Systems","Health & Safety","Medical Billing","Phlebotomy","Clinical Research","Medical Coding","Telemedicine","Pharmacy"],
+      "Medical Assistant":["Patient Care","EHR Systems","Medical Billing","HIPAA Compliance","Health & Safety","Communication","Phlebotomy","Medical Coding","Clinical Research","Telemedicine"],
+      "Healthcare Administrator":["HIPAA Compliance","EHR Systems","Health & Safety","Budgeting","Leadership","Regulatory Compliance","Patient Care","Medical Billing","Process Improvement","ERP Systems"],
+      "Pharmacy Technician":["Pharmacy","HIPAA","Patient Care","EHR Systems","Medical Billing","Health & Safety","Communication","Medical Coding","Clinical Research","Telemedicine","Phlebotomy"],
+      "Physical Therapist":["Patient Care","Communication","Health & Safety","Clinical Research","HIPAA Compliance","EHR Systems","Medical Billing","Telemedicine","Team Management","Mentoring"],
+      "Medical Coder":["Medical Coding","EHR Systems","Medical Billing","HIPAA Compliance","Health & Safety","Regulatory Compliance","Communication","Patient Care","Clinical Research","Pharmacy"],
+      "Clinical Research Coordinator":["Clinical Research","HIPAA Compliance","EHR Systems","Regulatory Compliance","Communication","Health & Safety","Medical Billing","Medical Coding","Patient Care","Data Science"],
+      "Dental Hygienist":["Patient Care","Health & Safety","HIPAA Compliance","Communication","Medical Billing","Clinical Research","EHR Systems","Medical Coding","Pharmacy","Telemedicine"],
+      "Health Information Manager":["EHR Systems","HIPAA Compliance","Medical Coding","Medical Billing","Health & Safety","Regulatory Compliance","Privacy Law","Data Science","Communication","Process Improvement"],
+      "Patient Care Coordinator":["Patient Care","EHR Systems","Communication","Health & Safety","HIPAA Compliance","Medical Billing","Telemedicine","Clinical Research","Pharmacy","Leadership"],
+      "Auto Sales Consultant":["Automotive Sales","Customer Service","Negotiation","Communication","Dealership Ops","B2C Sales","F&I Management","DMV Compliance","Customer Loyalty","Business Development"],
+      "Finance & Insurance Manager":["F&I Management","Automotive Sales","Dealership Ops","Financial Analysis","Negotiation","DMV Compliance","Customer Service","Leadership","B2C Sales","Account Management"],
+      "Service Advisor":["Auto Repair","Customer Service","Communication","Parts Inventory","OSHA Safety","Dealership Ops","F&I Management","Vehicle Detailing","Fleet Management","Collision Repair"],
+      "Automotive Technician":["Auto Repair","Electrical","OSHA Safety","Blueprint Reading","CNC Machining","Heavy Equipment","Welding","Plumbing","Maintenance Mechanic","Process Improvement"],
+      "Parts Manager":["Parts Inventory","Supply Chain","Inventory Management","ERP Systems","Procurement","Customer Service","Logistics","Store Operations","POS Systems","Budgeting"],
+      "Fleet Manager":["Fleet Management","Supply Chain","Logistics","Route Planning","Budgeting","DOT Compliance","CDL Driving","Last-Mile Delivery","Warehouse Ops","Forklift Operation"],
+      "Detail Manager":["Vehicle Detailing","Customer Service","Dealership Ops","Team Management","Process Improvement","Auto Repair","Collision Repair","OSHA Safety","Parts Inventory"],
+      "Used Car Manager":["Automotive Sales","Dealership Ops","F&I Management","DMV Compliance","Negotiation","Customer Loyalty","B2C Sales","Communication","Auto Repair"],
+      "Body Shop Manager":["Collision Repair","Auto Repair","OSHA Safety","Team Management","Process Improvement","Budgeting","Parts Inventory","Welding","Electrical","Maintenance Mechanic"],
+      "Dealership General Manager":["Dealership Ops","Leadership","Budgeting","Automotive Sales","F&I Management","Team Management","DMV Compliance","Service Advising","Customer Loyalty","Business Development"],
+      "Real Estate Agent":["Real Estate Law","Market Analysis","Property Valuation","Negotiation","Communication","Customer Service","Lease Negotiation","Mortgage Processing","Commercial Leasing","Property Mgmt"],
+      "Property Manager":["Property Mgmt","Tenant Relations","Lease Negotiation","Facilities Mgmt","Budgeting","Communication","Maintenance Mechanic...skipped","Property Valuation","Real Estate Law"],
+      "Property Manager":["Property Mgmt","Tenant Relations","Lease Negotiation","Facilities Mgmt","Budgeting","Communication","Property Valuation","Real Estate Law","Construction Mgmt"],
+      "Leasing Consultant":["Lease Negotiation","Customer Service","Communication","Property Mgmt","Tenant Relations","Market Analysis","Commercial Leasing","Property Valuation","Real Estate Law","Facilities Mgmt"],
+      "Facilities Manager":["Facilities Mgmt","OSHA Safety","Vendor Management","Budgeting","Health & Safety","Supply Chain","ERP Systems","Process Improvement","Construction Mgmt","Logistics"],
+      "Commercial Broker":["Commercial Leasing","Market Analysis","Negotiation","Real Estate Law","Property Valuation","Business Development","Mortgage Processing","Communication","Property Mgmt","Lease Negotiation"],
+      "Appraiser":["Property Valuation","Market Analysis","Real Estate Law","Financial Analysis","Communication","Construction Mgmt","Blueprint Reading","Facilities Mgmt","Lease Negotiation","Market Analysis"],
+      "Mortgage Loan Officer":["Mortgage Processing","Financial Analysis","Communication","Regulatory Compliance","Customer Service","Accounting","Real Estate Law","Financial Modeling","Bookkeeping","Property Valuation"],
+      "Maintenance Supervisor":["OSHA Safety","Heavy Equipment","Blueprint Reading","Process Improvement","Team Management","Supply Chain","Welding","Electrical","Plumbing","HVAC"],
+      "Construction Project Manager":["Construction Mgmt","Blueprint Reading","Budgeting","Supply Chain","Risk Management","Team Management","OSHA Safety","Procurement","Schedule...skipped","Facilities Mgmt"],
+      "Construction Project Manager":["Construction Mgmt","Blueprint Reading","Budgeting","Supply Chain","Risk Management","Team Management","OSHA Safety","Procurement","Facilities Mgmt","Process Improvement"],
+      "Building Inspector":["Blueprint Reading","OSHA Safety","Construction Mgmt","Health & Safety","Regulatory Compliance","Process Improvement","Welding","Electrical","Plumbing","HVAC"],
+      "Executive Chef":["Culinary Arts","Menu Planning","Food Safety","Health Inspections","Leadership","Team Management","Inventory Management","POS Systems","Customer Service","Hospitality Mgmt","Event Planning"],
+      "Restaurant Manager":["POS Systems","Inventory Management","Customer Service","Food Safety","Health Inspections","Leadership","Hospitality Mgmt","Menu Planning","Budgeting","Team Management"],
+      "Hotel General Manager":["Hospitality Mgmt","Customer Service","Budgeting","Leadership","Event Planning","POS Systems","Food Safety","Inventory Management","Team Management","Communication"],
+      "Event Coordinator":["Event Planning","Communication","Budgeting","Customer Service","Vendor Management","Hospitality Mgmt","POS Systems","Food Safety","Social Media","Supply Chain"],
+      "Banquet Captain":["Event Planning","Customer Service","Communication","Hospitality Mgmt","POS Systems","Team Management","Food Safety","Inventory Management","Leadership","Budgeting"],
+      "Food & Beverage Director":["Hospitality Mgmt","Food Safety","Inventory Management","Budgeting","Leadership","POS Systems","Menu Planning","Vendor Management","Customer Service","Culinary Arts"],
+      "Sous Chef":["Culinary Arts","Food Safety","Menu Planning","Health Inspections","Inventory Management","Team Management","POS Systems","Leadership","Hospitality Mgmt","Customer Service"],
+      "Front Desk Supervisor":["Customer Service","Communication","POS Systems","Hospitality Mgmt","Event Planning","Team Management","Budgeting","Inventory Management","Leadership","Front Desk...skipped"],
+      "Front Desk Supervisor":["Customer Service","Communication","POS Systems","Hospitality Mgmt","Event Planning","Team Management","Budgeting","Inventory Management","Leadership","Facilities Mgmt"],
+      "Housekeeping Manager":["Team Management","Health & Safety","Inventory Management","Process Improvement","Customer Service","Leadership","Budgeting","Hospitality Mgmt","POS Systems","Communication"],
+      "Catering Sales Manager":["Event Planning","Business Development","Communication","Customer Service","Hospitality Mgmt","Budgeting","POS Systems","Food Safety","Vendor Management","Social Media","Sales...skipped"],
+      "Catering Sales Manager":["Event Planning","Business Development","Communication","Customer Service","Hospitality Mgmt","Budgeting","POS Systems","Food Safety","Vendor Management","Brand Strategy","Lead Generation"],
+      "Paralegal":["Legal Research","Contract Review","Litigation Support","Corporate Governance","Regulatory Compliance","Communication","IP Law","Due Diligence","Mediation","Privacy Law"],
+      "Legal Secretary":["Legal Research","Communication","Corporate Governance","Contract Review","Regulatory Compliance","Litigation Support","Due Diligence","IP Law","Mediation","Paralegal"],
+      "Compliance Officer":["Regulatory Compliance","Risk Management","Corporate Governance","Privacy Law","Communication","Due Diligence","Legal Research","Contract Review","IP Law","Stakeholder Mgmt"],
+      "Contract Administrator":["Contract Review","Procurement","ERP Systems","Vendor Management","Communication","Stakeholder Mgmt","Regulatory Compliance","Budgeting","Legal Research","Corporate Governance"],
+      "Legal Research Analyst":["Legal Research","Regulatory Compliance","Communication","Contract Review","IP Law","Corporate Governance","Litigation Support","Due Diligence","Privacy Law","Mediation"],
+      "Risk Manager":["Risk Management","Regulatory Compliance","Financial Analysis","Strategic Thinking","Communication","Budgeting","Corporate Governance","Legal Research","Due Diligence","Stakeholder Mgmt"],
+      "Privacy Officer":["Privacy Law","Regulatory Compliance","Risk Management","Corporate Governance","Communication","Contract Review","Legal Research","Due Diligence","IP Law","Data Science"],
+      "Regulatory Affairs Specialist":["Regulatory Compliance","Communication","Legal Research","Risk Management","Corporate Governance","Due Diligence","HIPAA Compliance","Contract Review","IP Law","Clinical Research"],
+      "Intellectual Property Analyst":["IP Law","Legal Research","Contract Review","Corporate Governance","Regulatory Compliance","Communication","Litigation Support","Due Diligence","Privacy Law","Mediation"],
+      "Mediator":["Mediation","Communication","Conflict Resolution","Negotiation","Legal Research","Emotional Intelligence","Stakeholder Mgmt","Contract Review","IP Law","Litigation Support"],
+      "Teacher":["Curriculum Design","Classroom Mgmt","Student Engagement","Communication","Assessment Design","E-Learning","LMS Platforms","Special Education","EdTech","Tutoring","Academic Research"],
+      "School Administrator":["Leadership","Budgeting","Communication","Strategic Thinking","Stakeholder Mgmt","Classroom Mgmt","Performance Management","Curriculum Design","Student Engagement","Team Management"],
+      "Instructional Designer":["Curriculum Design","E-Learning","LMS Platforms","EdTech","Assessment Design","Student Engagement","Classroom Mgmt","Tutoring","Academic Research","Communication"],
+      "Academic Advisor":["Student Engagement","Communication","Classroom Mgmt","LMS Platforms","EdTech","Curriculum Design","E-Learning","Tutoring","Special Education","Assessment Design"],
+      "Librarian":["LMS Platforms","EdTech","Communication","Student Engagement","Academic Research","E-Learning","Curriculum Design","Classroom Mgmt","Assessment Design","Tutoring"],
+      "School Counselor":["Communication","Student Engagement","Conflict Resolution","Classroom Mgmt","Emotional Intelligence","Mentoring","Curriculum Design","LMS Platforms","Special Education","Assessment Design"],
+      "Curriculum Developer":["Curriculum Design","Assessment Design","E-Learning","EdTech","LMS Platforms","Academic Research","Classroom Mgmt","Student Engagement","Instructional Design","Tutoring"],
+      "EdTech Specialist":["EdTech","LMS Platforms","E-Learning","Classroom Mgmt","Student Engagement","Curriculum Design","Assessment Design","Communication","Data Science","Tutoring"],
+      "Special Education Teacher":["Special Education","Classroom Mgmt","Student Engagement","Communication","Emotional Intelligence","Curriculum Design","E-Learning","LMS Platforms","Assessment Design","Mentoring"],
+      "ESL Instructor":["Communication","Classroom Mgmt","Student Engagement","E-Learning","LMS Platforms","Curriculum Design","Bilingual Communication","French Fluency","French Writing","Academic Research"],
+      "Welder":["Welding","Blueprint Reading","OSHA Safety","Heavy Equipment","CNC Machining","Process Improvement","Electrical","Plumbing","Maintenance Mechanic","Sheet Metal Worker...skipped"],
+      "Welder":["Welding","Blueprint Reading","OSHA Safety","Heavy Equipment","CNC Machining","Process Improvement","Electrical","Plumbing","Maintenance Mechanic","Supply Chain"],
+      "Electrician":["Electrical","Blueprint Reading","OSHA Safety","Heavy Equipment","Process Improvement","CNC Machining","Welding","Plumbing","Maintenance Mechanic","HVAC"],
+      "Plumber":["Plumbing","Blueprint Reading","OSHA Safety","Heavy Equipment","Process Improvement","Customer Service","Welding","Electrical","HVAC","Maintenance Mechanic"],
+      "HVAC Technician":["HVAC","Electrical","Blueprint Reading","OSHA Safety","Customer Service","Process Improvement","Plumbing","Maintenance Mechanic","Welding","Supply Chain"],
+      "Carpenter":["Carpentry","Blueprint Reading","OSHA Safety","Heavy Equipment","Process Improvement","Supply Chain","Welding","Electrical","Plumbing","Construction Mgmt"],
+      "CNC Operator":["CNC Machining","Blueprint Reading","OSHA Safety","Process Improvement","Heavy Equipment","Welding","Electrical","Plumbing","Maintenance Mechanic","Quality Inspector...skipped"],
+      "CNC Operator":["CNC Machining","Blueprint Reading","OSHA Safety","Process Improvement","Heavy Equipment","Welding","Electrical","Plumbing","Maintenance Mechanic","Supply Chain"],
+      "Heavy Equipment Operator":["Heavy Equipment","OSHA Safety","Blueprint Reading","Logistics","Route Planning","CDL Driving","Forklift Operation","Supply Chain","Warehouse Ops","DOT Compliance","Process Improvement"],
+      "Maintenance Mechanic":["OSHA Safety","Process Improvement","Blueprint Reading","Supply Chain","ERP Systems","Heavy Equipment","Welding","Electrical","Plumbing","Auto Repair"],
+      "Quality Inspector":["Process Improvement","OSHA Safety","Blueprint Reading","Six Sigma","Supply Chain","ERP Systems","Communication","Risk Management","CNC Machining","Heavy Equipment"],
+      "Sheet Metal Worker...skipped":["Sheet Metal...skipped"],
+      "Sheet Metal Worker":["Welding","Blueprint Reading","OSHA Safety","CNC Machining","Heavy Equipment","Process Improvement","Electrical","Plumbing","Auto Repair","Supply Chain"],
+      "Warehouse Supervisor":["Warehouse Ops","Supply Chain","Inventory Management","ERP Systems","Logistics","Team Management","Forklift Operation","Load Optimization","POS Systems","Process Improvement"],
+      "Logistics Coordinator":["Logistics","Supply Chain","Route Planning","ERP Systems","Procurement","Inventory Management","Freight Forwarding","Customs Brokerage","Last-Mile Delivery","Fleet Dispatch","Communication"],
+      "Truck Driver":["CDL Driving","DOT Compliance","Route Planning","Load Optimization","Fleet Dispatch","Last-Mile Delivery","Warehouse Ops","Forklift Operation","Logistics","Heavy Equipment","Supply Chain"],
+      "Supply Chain Analyst":["Supply Chain","ERP Systems","Inventory Management","Financial Analysis","Logistics","Procurement","Route Planning","Demand Planning","Freight Forwarding","Process Improvement","Statistics"],
+      "Shipping Clerk":["Warehouse Ops","Inventory Management","ERP Systems","Logistics","Communication","Supply Chain","POS Systems","Store Operations","Process Improvement","Customer Service"],
+      "Inventory Manager":["Inventory Management","ERP Systems","Supply Chain","Procurement","POS Systems","Loss Prevention","Vendor Management","Store Operations","Logistics","Demand Planner"],
+      "Procurement Specialist":["Procurement","ERP Systems","Supply Chain","Vendor Management","Negotiation","Budgeting","Financial Analysis","Contract Review","Stakeholder Mgmt","Logistics"],
+      "Freight Broker":["Freight Forwarding","Supply Chain","Logistics","Customs Brokerage","Negotiation","Communication","Route Planning","Warehouse Ops","Last-Mile Delivery","Business Development","Fleet Dispatch"],
+      "Distribution Center Manager":["Warehouse Ops","Supply Chain","Logistics","Inventory Management","ERP Systems","Team Management","Budgeting","Load Optimization","Process Improvement","POS Systems"],
+      "Demand Planner":["Supply Chain","ERP Systems","Inventory Management","Financial Analysis","Logistics","Procurement","Statistics","Route Planning","Demand...skipped","Data Science"],
+      "Demand Planner":["Supply Chain","ERP Systems","Inventory Management","Financial Analysis","Logistics","Procurement","Data Science","Power BI","Statistics","Route Planning"],
+      "Store Manager":["Store Operations","POS Systems","Customer Service","Leadership","Inventory Management","Loss Prevention","Visual Merchandising","Buying & Planning","Team Management","Vendor Management"],
+      "Visual Merchandiser":["Visual Merchandising","Graphic Design","Brand Strategy","Store Operations","Buying & Planning","Customer Experience","E-Commerce","POS Systems","Loss Prevention","Inventory Control"],
+      "Loss Prevention Manager":["Loss Prevention","Store Operations","Inventory Management","Risk Management","Communication","Leadership","POS Systems","Inventory Control","Surveillance...skipped","Visual Merchandising"],
+      "Loss Prevention Manager":["Loss Prevention","Store Operations","Inventory Management","Risk Management","Communication","Leadership","POS Systems","Inventory Control","Visual Merchandising","Team Management"],
+      "Buyer":["Buying & Planning","Vendor Management","Inventory Management","Supply Chain","Financial Analysis","Negotiation","E-Commerce","Visual Merchandising","POS Systems","Store Operations"],
+      "E-Commerce Manager":["E-Commerce","Supply Chain","Inventory Management","POS Systems","Vendor Management","SEO","Content Marketing","Growth Hacking","Visual Merchandising","Buying & Planning","Data Science"],
+      "Retail Sales Associate":["Customer Service","POS Systems","Store Operations","B2C Sales","Communication","Inventory Management","Loss Prevention","Visual Merchandising","Store Operations","Buying & Planning"],
+      "District Manager":["Leadership","Store Operations","Visual Merchandising","Inventory Management","Team Management","Budgeting","POS Systems","Buying & Planning","Loss Prevention","Vendor Management"],
+      "Merchandise Planner":["Buying & Planning","Inventory Management","Supply Chain","Financial Analysis","E-Commerce","Statistics","POS Systems","Visual Merchandising","Vendor Management","Store Operations"],
+      "Merchandise Planner":["Buying & Planning","Inventory Management","Supply Chain","Financial Analysis","E-Commerce","POS Systems","Visual Merchandising","Vendor Management","Store Operations"],
+      "Customer Service Lead":["Customer Service","Communication","Conflict Resolution","Team Management","POS Systems","Store Operations","Loss Prevention","Leadership","Inventory Management","E-Commerce"],
+      "Stock Clerk":["Inventory Management","Warehouse Ops","Supply Chain","POS Systems","Store Operations","Process Improvement","Logistics","Communication","Customer Service"],
+      "Bookkeeper":["Bookkeeping","Accounting","ERP Systems","Financial Analysis","Payroll","Communication","Regulatory Compliance","Budgeting","Procurement","Financial Modeling"],
+      "Staff Accountant":["Accounting","Financial Analysis","Bookkeeping","ERP Systems","Financial Modeling","Regulatory Compliance","Budgeting","Procurement","Risk Management","Strategic Thinking"],
+      "Controller":["Financial Analysis","Accounting","Budgeting","ERP Systems","Leadership","Strategic Thinking","Regulatory Compliance","Financial Modeling","Procurement","Risk Management"],
+      "Tax Preparer":["Accounting","Bookkeeping","Financial Analysis","ERP Systems","Regulatory Compliance","Communication","Budgeting","Payroll","Financial Modeling","Procurement"],
+      "Auditor":["Accounting","Financial Analysis","Regulatory Compliance","Risk Management","ERP Systems","Process Improvement","Budgeting","Leadership","Strategic Thinking","Communication"],
+      "Credit Analyst":["Financial Analysis","Accounting","Financial Modeling","ERP Systems","Risk Management","Communication","Budgeting","Procurement","Strategic Thinking","Negotiation"],
+      "Treasury Analyst":["Financial Analysis","Financial Modeling","Accounting","ERP Systems","Risk Management","Budgeting","Procurement","Strategic Thinking","Leadership","Negotiation"],
+      "Cost Accountant":["Accounting","Financial Analysis","ERP Systems","Supply Chain","Budgeting","Process Improvement","Procurement","Financial Modeling","Inventory Management","Regulatory Compliance"],
+      "Billing Specialist":["Accounting","ERP Systems","Communication","Financial Analysis","Regulatory Compliance","Bookkeeping","Payroll","Budgeting","Procurement","Customer Service"],
+      "Payroll Manager":["Payroll","Accounting","HRIS Systems","Regulatory Compliance","Communication","Compensation & Benefits","Financial Analysis","Budgeting","Bookkeeping","ERP Systems"],
+
+      "Store Manager":["Store Operations","POS Systems","Customer Service","Leadership","Inventory Management","Loss Prevention","Visual Merchandising","Buying & Planning","Team Management","Vendor Management"],
+      "Visual Merchandiser":["Visual Merchandising","Graphic Design","Brand Strategy","Store Operations","Buying & Planning","Customer Experience","E-Commerce","POS Systems","Loss Prevention","Inventory Control"],
+      "Retail Sales Associate":["Customer Service","POS Systems","Store Operations","B2C Sales","Communication","Inventory Management","Loss Prevention","Visual Merchandising","Store Operations","Buying & Planning"],
+      "District Manager":["Leadership","Store Operations","Visual Merchandising","Inventory Management","Team Management","Budgeting","POS Systems","Buying & Planning","Loss Prevention","Vendor Management"],
+      "Merchandise Planner":["Buying & Planning","Inventory Management","Supply Chain","Financial Analysis","E-Commerce","POS Systems","Visual Merchandising","Vendor Management","Store Operations","Statistics"],
+      "Customer Service Lead":["Customer Service","Communication","Conflict Resolution","Team Management","POS Systems","Loss Prevention","Leadership","Inventory Management","Store Operations","E-Commerce"],
+      "Stock Clerk":["Inventory Management","Warehouse Ops","Supply Chain","POS Systems","Store Operations","Process Improvement","Logistics","Communication","Customer Service","Vendor Management"],
+    };
+
+    const jobTitles = Object.keys(jobSkillMap);
+
+    const locations = ["Toronto, ON","Vancouver, BC","Calgary, AB","Montreal, QC","Quebec City, QC","Edmonton, AB"];
+
+    const JOBS_TOTAL = 2000;
+    const CANDIDATES_TOTAL = 5000;
+    const REQUIRED_SKILLS = 6;
 
     const jobsDatabase = [];
-    for (let i = 1; i <= 250; i++) {
-        const title = jobTitles[Math.floor(Math.random() * jobTitles.length)];
-        const reqSkills = [];
-        for(let k=0; k<4; k++) reqSkills.push(skillPool[Math.floor(Math.random() * skillPool.length)]);
-        const comp = companies[Math.floor(Math.random() * companies.length)];
-        const salStart = Math.floor(Math.random() * 60) + 60;
-        jobsDatabase.push({
-            id: i, title, company: comp,
-            location: Math.random() > 0.4 ? locations[Math.floor(Math.random() * locations.length)] : "Remote",
-            salary: "$" + salStart + "k - $" + (salStart + 40 + Math.floor(Math.random() * 40)) + "k",
-            skills: [...new Set(reqSkills)],
-            desc: `We are looking for a talented ${title} to join our team at ${comp}. You will be responsible for driving key initiatives and working with cross-functional teams to deliver outstanding results.`,
-            fullDesc: `### The Role\nWe are seeking a ${title} to lead innovative projects.\n\n### Requirements\n- 3+ years of experience in ${reqSkills[0]}\n- Strong understanding of ${reqSkills[1]}\n- Team management skills\n\n### Benefits\n- Competitive salary\n- Remote work options\n- Health insurance`
-        });
-    }
-
     const candidatesDatabase = [];
-    const firstNames = ["Alex", "Jordan", "Taylor", "Morgan", "Casey", "Riley", "Jamie", "Jessie", "Drew", "Quinn", "Avery", "Sage", "River", "Blake", "Reese"];
-    const lastNames = ["Smith", "Johnson", "Lee", "Patel", "Garcia", "Kim", "Jones", "Brown", "Miller", "Davis", "Wilson", "Taylor", "Moore", "Clark", "Hall"];
-    for (let i = 1; i <= 500; i++) {
-        const cSkills = [];
-        for(let k=0; k<5; k++) cSkills.push(skillPool[Math.floor(Math.random() * skillPool.length)]);
-        candidatesDatabase.push({ id: i, name: firstNames[Math.floor(Math.random() * firstNames.length)] + " " + lastNames[Math.floor(Math.random() * lastNames.length)], role: jobTitles[Math.floor(Math.random() * jobTitles.length)], skills: [...new Set(cSkills)], exp: Math.floor(Math.random() * 10) + 1 });
+    const applicantCountMap = new Map();
+    const matchesMap = new Map();
+
+    const firstNames = ["Alex","Jordan","Taylor","Morgan","Casey","Riley","Jamie","Jessie","Drew","Quinn","Avery","Sage","River","Blake","Reese","Cameron","Dakota","Emery","Finley","Harper","Kai","Logan","Peyton","Rowan","Sawyer","Charlie","Ellis","Frankie","Gray","Noel"];
+    const lastNames = ["Smith","Johnson","Lee","Patel","Garcia","Kim","Jones","Brown","Miller","Davis","Wilson","Taylor","Moore","Clark","Hall","Anderson","Thomas","Jackson","White","Harris","Martin","Robinson","Thompson","Young","Walker","Tremblay","Bouchard","Gagnon","Roy","Côté"];
+
+    for (let i = 0; i < CANDIDATES_TOTAL; i++) {
+      const cSkills = [];
+      for (let k = 0; k < 5; k++) cSkills.push(skillPool[Math.floor(Math.random() * skillPool.length)]);
+      candidatesDatabase.push({ id: i+1, name: firstNames[Math.floor(Math.random()*firstNames.length)]+" "+lastNames[Math.floor(Math.random()*lastNames.length)], role: jobTitles[Math.floor(Math.random()*jobTitles.length)], skills: [...new Set(cSkills)], exp: Math.floor(Math.random()*15)+1 });
     }
 
-    const matchesMap = new Map();
-    jobsDatabase.forEach(job => {
-        const numApplicants = Math.floor(Math.random() * 20) + 5;
-        const applicants = []; const usedIds = new Set();
-        for(let i=0; i<numApplicants; i++) {
-            const idx = Math.floor(Math.random() * candidatesDatabase.length);
-            if(usedIds.has(idx)) continue; usedIds.add(idx);
-            const c = candidatesDatabase[idx];
-            const score = 50 + (job.skills.filter(s => c.skills.includes(s)).length * 10) + Math.floor(Math.random() * 10);
-            applicants.push({ ...c, score: Math.min(99, score) });
-        }
-        matchesMap.set(job.id, applicants);
-    });
+    for (let i = 0; i < JOBS_TOTAL; i++) {
+      const title = jobTitles[Math.floor(Math.random()*jobTitles.length)];
+      const mapped = jobSkillMap[title] || null;
+      let allSkills;
+      if (mapped) {
+        allSkills = [...mapped];
+      } else {
+        allSkills = [];
+        for (let k = 0; k < 10; k++) allSkills.push(skillPool[Math.floor(Math.random()*skillPool.length)]);
+        allSkills = [...new Set(allSkills)];
+        while (allSkills.length < 10) allSkills.push(skillPool[Math.floor(Math.random()*skillPool.length)]);
+      }
+      const requiredSkills = allSkills.slice(0, REQUIRED_SKILLS);
+      const preferredSkills = allSkills.slice(REQUIRED_SKILLS);
+      const comp = companies[Math.floor(Math.random()*companies.length)];
+      const loc = locations[Math.floor(Math.random()*locations.length)];
+      const salStart = Math.floor(Math.random()*55)+40;
+      jobsDatabase.push({ id: i+1, title, company: comp, location: loc, salary: "$"+salStart+"k - $"+(salStart+25+Math.floor(Math.random()*40))+"k", skills: allSkills, requiredSkills, preferredSkills, desc: "We are looking for a talented "+title+" to join our team at "+comp+" in "+loc+".", fullDesc: "### The Role\nWe are seeking a "+title+" to lead innovative projects at our "+loc+" office.\n\n### Requirements\n- Experience with "+requiredSkills[0]+"\n- Strong knowledge of "+requiredSkills[1]+"\n- Familiarity with "+requiredSkills[2]+"\n\n### Nice to Have\n- "+preferredSkills[0]+"\n- "+preferredSkills[1]+"\n\n### Benefits\n- Competitive salary\n- Health & dental coverage\n- RRSP matching\n- Flexible work arrangements" });
+    }
+
+    for (let i = 0; i < 40; i++) generateApplicants(Math.floor(Math.random()*JOBS_TOTAL)+1);
+
+    function generateApplicants(jobId) {
+      if (matchesMap.has(jobId)) return matchesMap.get(jobId);
+      const job = jobsDatabase.find(j => j.id === jobId);
+      if (!job) return [];
+      const count = applicantCountMap.get(jobId) || (Math.floor(Math.random()*20)+5);
+      const applicants = []; const usedIdx = new Set();
+      for (let i = 0; i < count; i++) {
+        const idx = Math.floor(Math.random()*candidatesDatabase.length);
+        if (usedIdx.has(idx)) continue; usedIdx.add(idx);
+        const c = candidatesDatabase[idx];
+        const score = 50 + (job.requiredSkills.filter(s => c.skills.includes(s)).length * 8) + Math.floor(Math.random()*10);
+        applicants.push({ ...c, score: Math.min(99, score) });
+      }
+      matchesMap.set(jobId, applicants);
+      applicantCountMap.set(jobId, applicants.length);
+      return applicants;
+    }
 
     const myApplications = [];
     let currentTab = 'accepted';
-    function updateAppBadge() { const a = myApplications.filter(x => x.status === 'accepted').length; document.getElementById('appCountBadge').textContent = a; document.getElementById('acceptedCount').textContent = a; document.getElementById('rejectedCount').textContent = myApplications.filter(x => x.status === 'rejected').length; }
-
     let userSkills = new Set();
     let userLocation = '';
     let userExp = '';
     let filteredJobs = [...jobsDatabase];
+    let currentJobIndex = 0;
+    let selectedJobId = null;
+    let empSearchQuery = '';
+
+    function updateAppBadge() {
+      const a = myApplications.filter(x => x.status === 'accepted').length;
+      document.getElementById('appCountBadge').textContent = a;
+      document.getElementById('acceptedCount').textContent = a;
+      document.getElementById('rejectedCount').textContent = myApplications.filter(x => x.status === 'rejected').length;
+    }
 
     function buildFilterBody() {
-        const body = document.getElementById('filterBody');
-        let html = `
-            <div class="form-group">
-                <label><i class="fas fa-map-marker-alt"></i> Location</label>
-                <select class="input-style" id="filterLocation">
-                    <option value="">Any Location</option>
-                    <option value="Remote">Remote</option>
-                    ${locations.map(l => `<option value="${l}">${l}</option>`).join('')}
-                </select>
-            </div>
-            <div class="form-group">
-                <label><i class="fas fa-briefcase"></i> Experience Level</label>
-                <select class="input-style" id="filterExp">
-                    <option value="">Any Experience</option>
-                    <option value="entry">Entry Level (0-2 yrs)</option>
-                    <option value="mid">Mid Level (3-5 yrs)</option>
-                  <option value="senior">Senior Level (5+ yrs)</option>
-                    <option value="executive">Director / Executive</option>
-                </select>
-            </div>
-            <div class="form-group" style="margin-bottom:0;">
-                <label><i class="fas fa-code"></i> My Skills <span style="font-weight:400;color:var(--text-muted);font-size:0.8rem;">(select all that apply)</span></label>
-        `;
-        Object.entries(skillCategories).forEach(([category, skills]) => {
-            html += `<div class="skills-section-label"><i class="fas fa-chevron-right"></i> ${category}</div><div class="skills-grid">`;
-            skills.forEach(skill => {
-                const isActive = userSkills.has(skill);
-                html += `<div class="skill-chip${isActive ? ' active' : ''}" onclick="this.classList.toggle('active')"><i class="fas fa-check"></i> ${skill}</div>`;
-            });
-            html += '</div>';
-        });
+      const body = document.getElementById('filterBody');
+      let html = '<div class="form-group"><label><i class="fas fa-map-marker-alt"></i> Location</label><select class="input-style" id="filterLocation"><option value="">Any Location</option>'+locations.map(l => '<option value="'+l+'">'+l+'</option>').join('')+'</select></div><div class="form-group"><label><i class="fas fa-briefcase"></i> Experience Level</label><select class="input-style" id="filterExp"><option value="">Any Experience</option><option value="entry">Entry Level (0-2 yrs)</option><option value="mid">Mid Level (3-5 yrs)</option><option value="senior">Senior Level (5+ yrs)</option><option value="executive">Director / Executive</option></select></div><div class="form-group" style="margin-bottom:0;"><label><i class="fas fa-code"></i> My Skills <span style="font-weight:400;color:var(--text-muted);font-size:0.8rem;">(select all that apply)</span></label>';
+      Object.entries(skillCategories).forEach(([category, skills]) => {
+        html += '<div class="skills-section-label"><i class="fas fa-chevron-right"></i> '+category+'</div><div class="skills-grid">';
+        skills.forEach(skill => { html += '<div class="skill-chip'+(userSkills.has(skill)?' active':'')+'" onclick="this.classList.toggle(\'active\')"><i class="fas fa-check"></i> '+skill+'</div>'; });
         html += '</div>';
-        body.innerHTML = html;
-        document.getElementById('filterLocation').value = userLocation;
-        document.getElementById('filterExp').value = userExp;
+      });
+      html += '</div>'; body.innerHTML = html;
+      document.getElementById('filterLocation').value = userLocation;
+      document.getElementById('filterExp').value = userExp;
     }
 
     function openFilterPopup() { document.getElementById('filterPopup').classList.add('active'); buildFilterBody(); }
     function closeFilterPopup() { document.getElementById('filterPopup').classList.remove('active'); }
-
     function applyFilters() {
-        userSkills = new Set();
-        document.querySelectorAll('#filterBody .skill-chip.active').forEach(el => {
-            const text = el.textContent.trim();
-            skillPool.forEach(s => { if (text.includes(s)) userSkills.add(s); });
-        });
-        userLocation = document.getElementById('filterLocation').value;
-        userExp = document.getElementById('filterExp').value;
-        filteredJobs = jobsDatabase.filter(job => {
-            if (userLocation && job.location !== userLocation) return false;
-            if (userSkills.size > 0 && job.skills.filter(s => userSkills.has(s)).length === 0) return false;
-            return true;
-        });
-        if (userSkills.size > 0) filteredJobs.sort((a, b) => (b.skills.filter(s => userSkills.has(s)).length) - (a.skills.filter(s => userSkills.has(s)).length));
-        currentJobIndex = 0; renderCards(); closeFilterPopup(); updateFilterBtnState();
+      userSkills = new Set();
+      document.querySelectorAll('#filterBody .skill-chip.active').forEach(el => {
+        const text = el.textContent.trim();
+        skillPool.forEach(s => { if (text.includes(s)) userSkills.add(s); });
+      });
+      userLocation = document.getElementById('filterLocation').value;
+      userExp = document.getElementById('filterExp').value;
+      filteredJobs = jobsDatabase.filter(job => {
+        if (userLocation && job.location !== userLocation) return false;
+        if (userSkills.size > 0 && job.requiredSkills.filter(s => userSkills.has(s)).length === 0) return false;
+        return true;
+      });
+      if (userSkills.size > 0) filteredJobs.sort((a, b) => (b.requiredSkills.filter(s => userSkills.has(s)).length) - (a.requiredSkills.filter(s => userSkills.has(s)).length));
+      currentJobIndex = 0; renderCards(); closeFilterPopup(); updateFilterBtnState();
     }
-
-    function clearFilters() {
-        userSkills = new Set(); userLocation = ''; userExp = '';
-        filteredJobs = [...jobsDatabase]; currentJobIndex = 0;
-        renderCards(); closeFilterPopup(); updateFilterBtnState();
-    }
-
+    function clearFilters() { userSkills = new Set(); userLocation = ''; userExp = ''; filteredJobs = [...jobsDatabase]; currentJobIndex = 0; renderCards(); closeFilterPopup(); updateFilterBtnState(); }
     function updateFilterBtnState() { document.getElementById('filterNavBtn').classList.toggle('has-filters', userSkills.size > 0 || userLocation || userExp); }
-    function getMatchPercent(job) { if (!userSkills.size) return null; return Math.round((job.skills.filter(s => userSkills.has(s)).length / job.skills.length) * 100); }
-    function getMatchColor(pct) { if (pct >= 75) return 'var(--success)'; if (pct >= 50) return '#F59E0B'; if (pct >= 25) return '#F97316'; return 'var(--danger)'; }
 
-    let currentJobIndex = 0;
     const cardContainer = document.getElementById('cardContainer');
     const seekerDetails = document.getElementById('seekerDetails');
     let touchStartX = 0, touchStartY = 0, touchCurrentX = 0, isDragging = false;
     const SWIPE_THRESHOLD = 80;
-
     function getColorFromString(str) { let hash = 0; for (let i = 0; i < str.length; i++) hash = str.charCodeAt(i) + ((hash << 5) - hash); return ["#6366F1","#10B981","#F59E0B","#EF4444","#3B82F6","#8B5CF6","#EC4899","#14B8A6","#F97316"][Math.abs(hash) % 9]; }
     function getTopCard() { return cardContainer.querySelector('.job-card:last-child'); }
 
     function renderCards() {
-        cardContainer.innerHTML = '';
-        if (filteredJobs.length - currentJobIndex <= 0) {
-            const isFiltered = userSkills.size > 0 || userLocation || userExp;
-            cardContainer.innerHTML = `<div class="empty-state"><i class="fas ${isFiltered ? 'fa-filter' : 'fa-check-circle'}"></i><h3>${isFiltered ? 'No Matches Found' : 'All Done!'}</h3><p>${isFiltered ? 'Try adjusting your skills or location filters.' : 'No more jobs match your criteria.'}</p></div>`;
-            seekerDetails.innerHTML = `<div class="empty-state"><i class="fas fa-sliders-h"></i><h3>${isFiltered ? 'No Matches' : 'Great work!'}</h3><p>${isFiltered ? 'Try broadening your preferences.' : "You've reviewed all available positions."}</p></div>`;
-            return;
+      cardContainer.innerHTML = '';
+      const total = filteredJobs.length;
+      if (total - currentJobIndex <= 0) {
+        const isFiltered = userSkills.size > 0 || userLocation || userExp;
+        cardContainer.innerHTML = '<div class="empty-state"><i class="fas '+(isFiltered?'fa-filter':'fa-check-circle')+'"></i><h3>'+(isFiltered?'No Matches Found':'All Done!')+'</h3><p>'+(isFiltered?'Try adjusting your skills or location filters.':'You\'ve reviewed all '+JOBS_TOTAL.toLocaleString()+' listings!')+'</p></div>';
+        seekerDetails.innerHTML = '<div class="empty-state"><i class="fas fa-sliders-h"></i><h3>'+(isFiltered?'No Matches':'Great work!')+'</h3><p>'+(isFiltered?'Try broadening your preferences.':"You\'ve reviewed all available positions.")+'</p></div>';
+        return;
+      }
+      const hasFilters = userSkills.size > 0;
+      filteredJobs.slice(currentJobIndex, currentJobIndex + 2).reverse().forEach((job, idx) => {
+        const card = document.createElement('div'); card.className = 'job-card'; card.dataset.jobId = job.id;
+        card.style.transform = idx === 0 ? "scale(0.95) translateY(-10px)" : "scale(1)";
+        card.style.opacity = idx === 0 ? "0.7" : "1"; card.style.zIndex = idx === 0 ? "1" : "2";
+        const color = getColorFromString(job.company);
+        let tagsHTML = '';
+        if (hasFilters) {
+          tagsHTML += '<div class="tag-label"><i class="fas fa-star" style="color:#F59E0B;font-size:0.55rem;"></i> Required (6)</div><div class="job-tags">'+job.requiredSkills.map(s => '<span class="tag '+(userSkills.has(s)?'matched':'unmatched')+'">'+s+'</span>').join('')+'</div>';
+          tagsHTML += '<div class="tag-label"><i class="fas fa-plus-circle" style="color:var(--text-muted);font-size:0.55rem;"></i> Nice to have</div><div class="job-tags">'+job.preferredSkills.map(s => '<span class="tag preferred '+(userSkills.has(s)?'matched':'')+'">'+s+'</span>').join('')+'</div>';
+        } else {
+          tagsHTML += '<div class="tag-label"><i class="fas fa-star" style="color:#F59E0B;font-size:0.55rem;"></i> Required (6)</div><div class="job-tags">'+job.requiredSkills.map(s => '<span class="tag">'+s+'</span>').join('')+'</div>';
+          tagsHTML += '<div class="tag-label"><i class="fas fa-plus-circle" style="color:var(--text-muted);font-size:0.55rem;"></i> Nice to have</div><div class="job-tags">'+job.preferredSkills.map(s => '<span class="tag preferred">'+s+'</span>').join('')+'</div>';
         }
-        const hasFilters = userSkills.size > 0;
-        filteredJobs.slice(currentJobIndex, currentJobIndex + 2).reverse().forEach((job, idx) => {
-            const card = document.createElement('div'); card.className = 'job-card'; card.dataset.jobId = job.id;
-            card.style.transform = idx === 0 ? "scale(0.95) translateY(-10px)" : "scale(1)";
-            card.style.opacity = idx === 0 ? "0.7" : "1"; card.style.zIndex = idx === 0 ? "1" : "2";
-            const color = getColorFromString(job.company); const pct = getMatchPercent(job);
-            let matchBarHTML = '';
-            if (pct !== null) { const mColor = getMatchColor(pct); matchBarHTML = `<div class="card-match-bar"><div class="match-bar-inner"><span class="match-bar-label" style="color:${mColor}">${pct}% match</span><div class="match-bar-track"><div class="match-bar-fill" style="width:${pct}%;background:${mColor}"></div></div></div></div>`; }
-            const tagsHTML = hasFilters ? job.skills.map(s => `<span class="tag ${userSkills.has(s) ? 'matched' : 'unmatched'}">${s}</span>`).join('') : job.skills.map(s => `<span class="tag">${s}</span>`).join('');
-            card.innerHTML = `<div class="swipe-label like-label">ACCEPT</div><div class="swipe-label reject-label">REJECT</div><div class="card-hero"><div class="hero-logo" style="background-color:${color}">${job.company.substring(0,2)}</div></div><div class="card-content"><div class="card-header"><h3 class="card-title">${job.title}</h3><div class="card-company"><i class="fas fa-building"></i> ${job.company}</div></div><div class="card-meta-row"><div class="meta-badge"><i class="fas fa-map-marker-alt"></i> ${job.location}</div><div class="meta-badge"><i class="fas fa-dollar-sign"></i> ${job.salary}</div></div><div class="job-tags">${tagsHTML}</div><div class="desc-title">About the role</div><div class="desc-text">${job.desc}</div></div>${matchBarHTML}<div class="card-actions"><button class="swipe-btn reject" onclick="handleSwipe('left')"><i class="fas fa-times"></i></button><button class="swipe-btn like" onclick="handleSwipe('right')"><i class="fas fa-check"></i></button></div>`;
-            cardContainer.appendChild(card);
-        });
-        updateDetailsPanel(filteredJobs[currentJobIndex]);
+        card.innerHTML = '<div class="swipe-label like-label">ACCEPT</div><div class="swipe-label reject-label">REJECT</div><div class="card-hero"><div class="hero-logo" style="background-color:'+color+'">'+job.company.substring(0,2)+'</div></div><div class="card-content"><div class="card-header"><h3 class="card-title">'+job.title+'</h3><div class="card-company"><i class="fas fa-building"></i> '+job.company+'</div></div><div class="card-meta-row"><div class="meta-badge"><i class="fas fa-map-marker-alt"></i> '+job.location+'</div><div class="meta-badge"><i class="fas fa-dollar-sign"></i> '+job.salary+'</div></div>'+tagsHTML+'<div class="desc-title">About the role</div><div class="desc-text">'+job.desc+'</div></div><div class="card-progress">'+(currentJobIndex+1)+' of '+total.toLocaleString()+' matching jobs</div><div class="card-actions"><button class="swipe-btn reject" onclick="handleSwipe(\'left\')"><i class="fas fa-times"></i></button><button class="swipe-btn like" onclick="handleSwipe(\'right\')"><i class="fas fa-check"></i></button></div></div>';
+        cardContainer.appendChild(card);
+      });
+      updateDetailsPanel(filteredJobs[currentJobIndex]);
     }
 
     cardContainer.addEventListener('touchstart', (e) => { const c = getTopCard(); if (!c) return; touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY; isDragging = true; c.classList.add('dragging'); }, { passive: true });
-    cardContainer.addEventListener('touchmove', (e) => { if (!isDragging) return; const c = getTopCard(); if (!c) return; touchCurrentX = e.touches[0].clientX; const dx = touchCurrentX - touchStartX, dy = e.touches[0].clientY - touchStartY; if (Math.abs(dy) > Math.abs(dx) && Math.abs(dx) < 15) return; c.style.transform = `translateX(${dx}px) rotate(${dx * 0.08}deg)`; const p = Math.min(Math.abs(dx) / SWIPE_THRESHOLD, 1); c.querySelector('.like-label').style.opacity = dx > 0 ? p : 0; c.querySelector('.reject-label').style.opacity = dx < 0 ? p : 0; }, { passive: true });
+    cardContainer.addEventListener('touchmove', (e) => { if (!isDragging) return; const c = getTopCard(); if (!c) return; touchCurrentX = e.touches[0].clientX; const dx = touchCurrentX - touchStartX, dy = e.touches[0].clientY - touchStartY; if (Math.abs(dy) > Math.abs(dx) && Math.abs(dx) < 15) return; c.style.transform = 'translateX('+dx+'px) rotate('+(dx*0.08)+'deg)'; const p = Math.min(Math.abs(dx) / SWIPE_THRESHOLD, 1); c.querySelector('.like-label').style.opacity = dx > 0 ? p : 0; c.querySelector('.reject-label').style.opacity = dx < 0 ? p : 0; }, { passive: true });
     cardContainer.addEventListener('touchend', () => { if (!isDragging) return; const c = getTopCard(); if (!c) return; isDragging = false; c.classList.remove('dragging'); const dx = touchCurrentX - touchStartX; if (dx > SWIPE_THRESHOLD) handleSwipe('right'); else if (dx < -SWIPE_THRESHOLD) handleSwipe('left'); else { c.style.transform = 'scale(1)'; c.querySelector('.like-label').style.opacity = 0; c.querySelector('.reject-label').style.opacity = 0; } });
 
     function updateDetailsPanel(job) {
-        if (!job) return;
-        const pct = getMatchPercent(job);
-        let matchHTML = '';
-        if (pct !== null) { const mColor = getMatchColor(pct); matchHTML = `<h3 class="section-title"><i class="fas fa-chart-bar"></i> Match Analysis</h3><div class="match-analysis"><div class="match-score-large" style="color:${mColor}">${pct}% Match</div><p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1rem;">Based on your selected skills.</p><div class="skill-check-list">${job.skills.map(s => `<div class="skill-check ${userSkills.has(s)?'has':'missing'}"><i class="fas ${userSkills.has(s)?'fa-check-circle':'fa-circle'}"></i> ${s}</div>`).join('')}</div></div>`; }
-        else { matchHTML = `<h3 class="section-title"><i class="fas fa-sliders-h"></i> Set Preferences</h3><p style="color:var(--text-muted);font-size:0.95rem;">Open the <strong>Preferences</strong> panel to see match scores based on your skills.</p>`; }
-        seekerDetails.innerHTML = `<div class="details-header"><h1>${job.title}</h1><div class="details-company"><i class="fas fa-building" style="color:var(--primary)"></i> ${job.company} &bull; ${job.location}</div><div class="details-tags"><div class="d-tag"><i class="fas fa-money-bill-wave"></i> ${job.salary}</div><div class="d-tag"><i class="fas fa-clock"></i> Full-time</div></div><button class="apply-btn"><i class="fas fa-paper-plane"></i> Apply Now</button></div><div class="details-body"><h3 class="section-title"><i class="fas fa-align-left"></i> Job Description</h3><div class="section-content">${job.fullDesc.split('\n').map(p => `<p>${p}</p>`).join('')}</div>${matchHTML}</div>`;
+      if (!job) return;
+      const hasFilters = userSkills.size > 0;
+      let matchHTML = '';
+      if (hasFilters) {
+        const matchedCount = job.requiredSkills.filter(s => userSkills.has(s)).length;
+        const prefMatchedCount = job.preferredSkills.filter(s => userSkills.has(s)).length;
+        matchHTML = '<h3 class="section-title"><i class="fas fa-check-double"></i> Skill Match</h3><div class="skill-check-list">'+job.requiredSkills.map(s => '<div class="skill-check '+(userSkills.has(s)?'has':'missing')+'"><i class="fas '+(userSkills.has(s)?'fa-check-circle':'fa-circle')+'"></i> '+s+'</div>').join('')+'</div><div class="match-note"><i class="fas fa-info-circle"></i> '+matchedCount+' of 6 required skills matched'+(prefMatchedCount > 0 ? ', plus '+prefMatchedCount+' nice-to-have' : '')+'</div>';
+      } else {
+        matchHTML = '<h3 class="section-title"><i class="fas fa-sliders-h"></i> Set Preferences</h3><p style="color:var(--text-muted);font-size:0.95rem;">Open the <strong>Preferences</strong> panel to see which skills you match with each job.</p>';
+      }
+      const reqTags = job.requiredSkills.map(s => '<span class="tag">'+s+'</span>').join('');
+      const prefTags = job.preferredSkills.map(s => '<span class="tag preferred">'+s+'</span>').join('');
+      seekerDetails.innerHTML = '<div class="details-header"><h1>'+job.title+'</h1><div class="details-company"><i class="fas fa-building" style="color:var(--primary)"></i> '+job.company+' &bull; '+job.location+'</div><div class="details-tags"><div class="d-tag"><i class="fas fa-money-bill-wave"></i> '+job.salary+'</div><div class="d-tag"><i class="fas fa-clock"></i> Full-time</div></div><button class="apply-btn"><i class="fas fa-paper-plane"></i> Apply Now</button></div></div><div class="details-body"><h3 class="section-title"><i class="fas fa-align-left"></i> Job Description</h3><div class="section-content">'+job.fullDesc.split('\n').map(p => '<p>'+p+'</p>').join('')+'</div><h3 class="section-title"><i class="fas fa-tools"></i> All Skills</h3><div class="tag-label" style="margin-bottom:0.4rem;"><i class="fas fa-star" style="color:#F59E0B;font-size:0.55rem;"></i> Required (6)</div><div class="job-tags" style="margin-bottom:0.8rem;">'+reqTags+'</div><div class="tag-label" style="margin-bottom:0.4rem;"><i class="fas fa-plus-circle" style="color:var(--text-muted);font-size:0.55rem;"></i> Nice to have</div><div class="job-tags" style="margin-bottom:1.5rem;">'+prefTags+'</div>'+matchHTML+'</div>';
     }
 
     function handleSwipe(direction) {
-        const topCard = getTopCard(); if (!topCard) return;
-        const jobId = parseInt(topCard.dataset.jobId); const job = jobsDatabase.find(j => j.id === jobId);
-        if (direction === 'right') { topCard.classList.add('go-right'); const rc = candidatesDatabase[Math.floor(Math.random() * candidatesDatabase.length)]; const score = Math.min(99, 50 + (job.skills.filter(s => rc.skills.includes(s)).length * 10) + Math.floor(Math.random() * 20)); const arr = matchesMap.get(jobId) || []; arr.unshift({ ...rc, score, isNew: true }); matchesMap.set(jobId, arr); myApplications.unshift({ job, status: 'accepted', time: new Date() }); }
-        else { topCard.classList.add('go-left'); myApplications.unshift({ job, status: 'rejected', time: new Date() }); }
-        updateAppBadge();
-        setTimeout(() => { currentJobIndex++; renderCards(); if (document.getElementById('employerView').classList.contains('active')) { updateEmployerSidebar(); if (selectedJobId === jobId) renderCandidateGrid(jobId); } }, 300);
+      const topCard = getTopCard(); if (!topCard) return;
+      const jobId = parseInt(topCard.dataset.jobId); const job = jobsDatabase.find(j => j.id === jobId);
+      if (direction === 'right') {
+        topCard.classList.add('go-right');
+        const arr = generateApplicants(jobId);
+        const rc = candidatesDatabase[Math.floor(Math.random()*candidatesDatabase.length)];
+        const score = Math.min(99, 50 + (job.requiredSkills.filter(s => rc.skills.includes(s)).length * 8) + Math.floor(Math.random()*10));
+        arr.unshift({ ...rc, score, isNew: true });
+        applicantCountMap.set(jobId, arr.length);
+        myApplications.unshift({ job, status: 'accepted', time: new Date() });
+      } else {
+        topCard.classList.add('go-left');
+        myApplications.unshift({ job, status: 'rejected', time: new Date() });
+      }
+      updateAppBadge();
+      setTimeout(() => { currentJobIndex++; renderCards(); if (document.getElementById('employerView').classList.contains('active')) { updateEmployerSidebar(); if (selectedJobId === jobId) renderCandidateGrid(jobId); } }, 300);
     }
 
     function openAppsPopup() { document.getElementById('appsPopup').classList.add('active'); renderPopupTab(); }
@@ -519,73 +679,66 @@
     document.getElementById('appsPopup').addEventListener('click', (e) => { if (e.target === document.getElementById('appsPopup')) closeAppsPopup(); });
     document.getElementById('filterPopup').addEventListener('click', (e) => { if (e.target === document.getElementById('filterPopup')) closeFilterPopup(); });
     function switchTab(tab) { currentTab = tab; document.querySelectorAll('.popup-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab)); renderPopupTab(); }
-    function renderPopupTab() { const body = document.getElementById('popupBody'); const f = myApplications.filter(a => a.status === currentTab); if (!f.length) { body.innerHTML = `<div class="popup-empty"><i class="fas ${currentTab==='accepted'?'fa-check-double':'fa-ban'}"></i><p>${currentTab==='accepted'?"You haven't accepted any jobs yet. Swipe right to apply!":"No rejected jobs. Keep swiping!"}</p></div>`; return; } body.innerHTML = f.map(app => { const sc = app.status, ic = sc==='accepted'?'fa-check':'fa-times', lb = sc==='accepted'?'Accepted':'Rejected'; return `<div class="app-item"><div class="app-status-icon ${sc}"><i class="fas ${ic}"></i></div><div class="app-info"><h4>${app.job.title}</h4><p>${app.job.company} &bull; ${app.job.location} &bull; ${app.time.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</p></div><span class="app-status-text ${sc}">${lb}</span></div>`; }).join(''); }
+    function renderPopupTab() {
+      const body = document.getElementById('popupBody'); const f = myApplications.filter(a => a.status === currentTab);
+      if (!f.length) { body.innerHTML = '<div class="popup-empty"><i class="fas '+(currentTab==='accepted'?'fa-check-double':'fa-ban')+'"></i><p>'+(currentTab==='accepted'?"You haven't accepted any jobs yet. Swipe right to apply!":"No rejected jobs. Keep swiping!")+'</p></div>'; return; }
+      body.innerHTML = f.map(app => { const sc=app.status, ic=sc==='accepted'?'fa-check':'fa-times', lb=sc==='accepted'?'Accepted':'Rejected'; return '<div class="app-item"><div class="app-status-icon '+sc+'"><i class="fas '+ic+'"></i></div><div class="app-info"><h4>'+app.job.title+'</h4><p>'+app.job.company+' &bull; '+app.job.location+' &bull; '+app.time.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+'</p></div><span class="app-status-text '+sc+'">'+lb+'</span></div>'; }).join('');
+    }
 
     const employerJobList = document.getElementById('employerJobList');
     const mobileJobScroll = document.getElementById('mobileJobScroll');
     const employerMain = document.getElementById('employerMain');
-    let selectedJobId = null;
-
+    function getActiveEmployerJobs() {
+      const active = [];
+      matchesMap.forEach((applicants, jobId) => { const job = jobsDatabase.find(j => j.id === jobId); if (job) active.push({ job, count: applicants.length }); });
+      if (empSearchQuery) { const q = empSearchQuery.toLowerCase(); return active.filter(a => a.job.title.toLowerCase().includes(q) || a.job.company.toLowerCase().includes(q)); }
+      return active.sort((a, b) => b.count - a.count);
+    }
     function updateEmployerSidebar() {
-        employerJobList.innerHTML = ''; mobileJobScroll.innerHTML = '';
-        jobsDatabase.forEach(job => {
-            const count = matchesMap.has(job.id) ? matchesMap.get(job.id).length : 0;
-            const item = document.createElement('div'); item.className = 'job-list-item'; item.dataset.jobId = job.id; if(selectedJobId === job.id) item.classList.add('active');
-            item.innerHTML = `<div class="job-info"><h4>${job.title}</h4><span>${job.company}</span></div><div class="applicant-count">${count}</div>`;
-            item.onclick = () => selectJob(job.id); employerJobList.appendChild(item);
-            const pill = document.createElement('div'); pill.className = 'mobile-job-pill'; pill.dataset.jobId = job.id; if(selectedJobId === job.id) pill.classList.add('active');
-            pill.innerHTML = `<div class="pill-text"><span class="pill-title">${job.title}</span><span class="pill-company">${job.company}</span></div><span class="pill-count">${count}</span>`;
-            pill.onclick = () => selectJob(job.id); mobileJobScroll.appendChild(pill);
-        });
+      employerJobList.innerHTML = ''; mobileJobScroll.innerHTML = '';
+      const active = getActiveEmployerJobs();
+      document.getElementById('empCountNote').textContent = active.length + ' posting' + (active.length !== 1 ? 's' : '') + ' with candidates';
+      active.forEach(({ job, count }) => {
+        const item = document.createElement('div'); item.className = 'job-list-item'; item.dataset.jobId = job.id; if(selectedJobId === job.id) item.classList.add('active');
+        item.innerHTML = '<div class="job-info"><h4>'+job.title+'</h4><span>'+job.company+'</span></div><div class="applicant-count">'+count+'</div>';
+        item.onclick = () => selectJob(job.id); employerJobList.appendChild(item);
+        const pill = document.createElement('div'); pill.className = 'mobile-job-pill'; pill.dataset.jobId = job.id; if(selectedJobId === job.id) pill.classList.add('active');
+        pill.innerHTML = '<div class="pill-text"><span class="pill-title">'+job.title+'</span><span class="pill-company">'+job.company+'</span></div><span class="pill-count">'+count+'</span>';
+        pill.onclick = () => selectJob(job.id); mobileJobScroll.appendChild(pill);
+      });
+      if (!active.length) { employerJobList.innerHTML = '<div style="padding:2rem 0.5rem;text-align:center;color:var(--text-muted);font-size:0.82rem;"><i class="fas fa-user-clock" style="font-size:1.5rem;display:block;margin-bottom:0.5rem;color:var(--border);"></i>No candidates yet.<br>Swipe right on jobs to generate interest.</div>'; }
     }
-
+    function filterEmployerSidebar() { empSearchQuery = document.getElementById('empSearchInput').value.trim(); updateEmployerSidebar(); }
     function selectJob(jobId) {
-        selectedJobId = jobId;
-        document.querySelectorAll('.job-list-item').forEach(el => el.classList.toggle('active', parseInt(el.dataset.jobId) === jobId));
-        document.querySelectorAll('.mobile-job-pill').forEach(el => el.classList.toggle('active', parseInt(el.dataset.jobId) === jobId));
-        const activePill = mobileJobScroll.querySelector('.mobile-job-pill.active');
-        if (activePill) activePill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-        renderCandidateGrid(jobId);
+      selectedJobId = jobId;
+      document.querySelectorAll('.job-list-item').forEach(el => el.classList.toggle('active', parseInt(el.dataset.jobId) === jobId));
+      document.querySelectorAll('.mobile-job-pill').forEach(el => el.classList.toggle('active', parseInt(el.dataset.jobId) === jobId));
+      const activePill = mobileJobScroll.querySelector('.mobile-job-pill.active');
+      if (activePill) activePill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      renderCandidateGrid(jobId);
     }
-
     function renderCandidateGrid(jobId) {
-        const job = jobsDatabase.find(j => j.id === jobId);
-        const rawInterested = matchesMap.get(jobId) || [];
-        const interested = rawInterested.map(m => ({ ...m, displayScore: Math.min(96, Math.round(m.score * 1.2)) })).sort((a, b) => b.displayScore - a.displayScore);
-        let html = `<div style="margin-bottom:1.5rem;"><h2 style="margin-bottom:0.3rem;">${job.title}</h2><p style="color:var(--text-muted);">${interested.length} candidates interested</p></div><div class="sort-bar"><i class="fas fa-sort-amount-down"></i> Sorted by <strong>match percentage</strong> — highest first</div><div class="candidate-grid">`;
-        if (!interested.length) { html += `<div class="emp-welcome" style="grid-column:1/-1;"><i class="fas fa-user-clock"></i><p>No interested candidates yet.</p></div>`; }
-        else {
-          interested.forEach((m, i) => {
-            const r = i + 1, rc = r <= 3 ? `rank-${r}` : '';
-            html += `<div class="candidate-card ${rc}" style="${m.isNew ? 'border-left:4px solid var(--success);' : ''}">
-              <div class="rank-badge">#${r}</div>
-              <div class="match-badge">${m.displayScore}% Match</div>
-              <div class="card-top">
-                <div class="avatar">${m.name.split(' ').map(n => n[0]).join('')}</div>
-                <div class="info">
-                  <h3>${m.name}</h3>
-                  <p>${m.role} &bull; ${m.exp} yrs exp</p>
-                </div>
-              </div>
-              <div class="skill-tags">${m.skills.map(s => `<span class="tag">${s}</span>`).join('')}</div>
-              <div class="emp-actions">
-                <button class="btn btn-outline">Profile</button>
-                <button class="btn btn-primary">Contact</button>
-              </div>
-            </div>`;
-          });
-        }
-        html += '</div>';
-        employerMain.innerHTML = html;
+      const job = jobsDatabase.find(j => j.id === jobId);
+      const rawInterested = generateApplicants(jobId);
+      const interested = rawInterested.map(m => ({ ...m, displayScore: Math.min(96, Math.round(m.score * 1.2)) })).sort((a, b) => b.displayScore - a.displayScore);
+      let html = '<div style="margin-bottom:1.5rem;"><h2 style="margin-bottom:0.3rem;">'+job.title+'</h2><p style="color:var(--text-muted);">'+interested.length+' candidates interested &bull; '+job.company+' &bull; '+job.location+'</p></div><div class="sort-bar"><i class="fas fa-sort-amount-down"></i> Sorted by <strong>match percentage</strong> — highest first</div><div class="candidate-grid">';
+      if (!interested.length) { html += '<div class="emp-welcome" style="grid-column:1/-1;"><i class="fas fa-user-clock"></i><p>No interested candidates yet.</p></div>'; }
+      else {
+        interested.forEach((m, i) => {
+          const r = i+1, rc = r<=3?'rank-'+r:'';
+          html += '<div class="candidate-card '+rc+'" style="'+(m.isNew?'border-left:4px solid var(--success);':'')+'"><div class="rank-badge">#'+r+'</div><div class="match-badge">'+m.displayScore+'% Match</div><div class="card-top"><div class="avatar">'+m.name.split(' ').map(n=>n[0]).join('')+'</div><div class="info"><h3>'+m.name+'</h3><p>'+m.role+' &bull; '+m.exp+' yrs exp</p></div></div></div><div class="skill-tags">'+m.skills.map(s => '<span class="tag">'+s+'</span>').join('')+'</div><div class="emp-actions"><button class="btn btn-outline">Profile</button><button class="btn btn-primary">Contact</button></div></div></div>';
+        });
+      }
+      html += '</div>'; employerMain.innerHTML = html;
     }
-
     function switchView(viewName) {
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
-        if (viewName === 'seeker') { document.getElementById('seekerView').classList.add('active'); document.querySelector('.view-btn:nth-child(1)').classList.add('active'); }
-        else { document.getElementById('employerView').classList.add('active'); document.querySelector('.view-btn:nth-child(2)').classList.add('active'); updateEmployerSidebar(); }
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+      if (viewName === 'seeker') { document.getElementById('seekerView').classList.add('active'); document.querySelector('.view-btn:nth-child(1)').classList.add('active'); }
+      else { document.getElementById('employerView').classList.add('active'); document.querySelector('.view-btn:nth-child(2)').classList.add('active'); updateEmployerSidebar(); }
     }
 
+    filteredJobs = [...jobsDatabase];
     renderCards();
   </script>
 </body>
